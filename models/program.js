@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Division extends Model {
+  class Program extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,30 +11,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Division.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
-      Division.hasMany(models.UserDetail, {foreignKey: 'division_id', as: 'users'});
-      Division.hasMany(models.Program, {foreignKey: 'division_id', as: 'programs'});
+      Program.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
+      Program.hasMany(models.Event, {foreignKey: 'program_id', as: 'events'});
     }
   }
-  Division.init({
+  Program.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    department_id: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    type: {
+      type: DataTypes.ENUM('Conditional', 'Daily', 'Weekly', 'Monthly', 'Annually'),
+      allowNull: false
+    },
+    date_start: DataTypes.DATE,
+    date_end: DataTypes.DATE,
+    division_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Division',
-    tableName: 'division',
+    modelName: 'Program',
+    tableName: 'program',
     underscored: true,
     timestamps: true
   });
-  return Division;
+  return Program;
 };

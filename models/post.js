@@ -13,14 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Post.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
       Post.belongsTo(models.User, {foreignKey: 'author_id', as: 'author'});
+      Post.belongsTo(models.Event, {foreignKey: 'event_id', as: 'event'});
       Post.hasMany(models.Photo, {foreignKey: 'post_id', as: 'images'});
       Post.hasMany(models.Document, {foreignKey: 'post_id', as: 'attachments'});
-      Post.belongsTo(models.Event, {foreignKey: 'event_id', as: 'event', allowNull: true});
+      Post.hasOne(models.Appreciation, {foreignKey: 'post_id', as: 'appreciation'});
+      Post.hasMany(models.Comment, {foreignKey: 'post_id', as: 'comments'});
     }
   }
   Post.init({
     type: {
-      type: DataTypes.ENUM('article', 'press release', 'announcement'),
+      type: DataTypes.ENUM('Article', 'Press Release', 'Announcement'),
       allowNull: false
     },
     title: {

@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,59 +12,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
-      User.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
-      User.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
-      User.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
-      User.belongsTo(models.Document, {foreignKey: 'transcript_id', as: 'transcript'});
+      User.hasOne(models.UserDetail, {foreignKey: 'uuid', as: 'user_detail'});
+      User.hasMany(models.UserRole, {foreignKey: 'user_id', as: 'roles'});
+      User.hasMany(models.Post, {foreignKey: 'author_id', as: 'posts'});
+      User.hasMany(models.Comment, {foreignKey: 'user_id', as: 'comments'});
     }
   }
   User.init({
-    uuid: {
+    id: {
       type: DataTypes.UUID,
-      allowNull: false,
-      unique: true
+      primaryKey: true
     },
-    name: {
+    email: DataTypes.STRING,
+    username: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    photo_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    birth_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    linkedin_username: DataTypes.STRING,
-    instagram_username: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    telp: DataTypes.STRING,
-    member_since: DataTypes.DATEONLY,
-    division_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    position_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    scholarship: DataTypes.INTEGER,
-    nim: DataTypes.STRING,
-    study_program_id: DataTypes.INTEGER,
-    year: DataTypes.STRING,
-    smt1_grade: DataTypes.DECIMAL(4, 2),
-    smt2_grade: DataTypes.DECIMAL(4, 2),
-    smt3_grade: DataTypes.DECIMAL(4, 2),
-    smt4_grade: DataTypes.DECIMAL(4, 2),
-    smt5_grade: DataTypes.DECIMAL(4, 2),
-    smt6_grade: DataTypes.DECIMAL(4, 2),
-    smt7_grade: DataTypes.DECIMAL(4, 2),
-    smt8_grade: DataTypes.DECIMAL(4, 2),
-    transcript_id: DataTypes.INTEGER
+    token: DataTypes.STRING,
+    expire_at: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'User',

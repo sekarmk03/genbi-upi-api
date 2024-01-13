@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      program_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
       type: {
         type: Sequelize.ENUM('Online', 'Offline', 'Hybrid'),
         allowNull: false

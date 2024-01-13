@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Division extends Model {
+  class Appreciation extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,30 +11,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Division.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
-      Division.hasMany(models.UserDetail, {foreignKey: 'division_id', as: 'users'});
-      Division.hasMany(models.Program, {foreignKey: 'division_id', as: 'programs'});
+      Appreciation.belongsTo(models.Photo, {foreignKey: 'cover_id', as: 'cover'});
+      Appreciation.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post'})
     }
   }
-  Division.init({
-    name: {
+  Appreciation.init({
+    title: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    department_id: {
+    cover_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    description: {
+    given_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    instagram_url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    post_id: DataTypes.INTEGER,
+    caption: {
       type: DataTypes.TEXT,
       allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Division',
-    tableName: 'division',
+    modelName: 'Appreciation',
+    tableName: 'appreciation',
     underscored: true,
     timestamps: true
   });
-  return Division;
+  return Appreciation;
 };

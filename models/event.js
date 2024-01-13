@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Event.belongsTo(models.Photo, {foreignKey: 'thumbnail_id', as: 'thumbnail'});
       Event.belongsTo(models.Photo, {foreignKey: 'poster_id', as: 'poster'});
       Event.belongsTo(models.Photo, {foreignKey: 'banner_id', as: 'banner'});
+      Event.belongsTo(models.Program, {foreignKey: 'program_id', as: 'program'});
       Event.hasMany(models.Post, {foreignKey: 'event_id', as: 'posts'});
     }
   }
@@ -21,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    program_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     type: {
       type: DataTypes.ENUM('Online', 'Offline', 'Hybrid'),

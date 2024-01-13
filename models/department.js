@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Department.belongsTo(models.Photo, {foreignKey: 'cover_id', as: 'cover'});
       Department.hasMany(models.Division, {foreignKey: 'department_id', as: 'divisions'});
+      Department.hasMany(models.Post, {foreignKey: 'department_id', as: 'posts'});
     }
   }
   Department.init({

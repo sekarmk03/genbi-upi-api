@@ -2,29 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('auth', {
+    await queryInterface.createTable('program', {
       id: {
         allowNull: false,
-        autoIncrement: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER
       },
-      email: {
-        type: Sequelize.STRING
-      },
-      username: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      password: {
-        type: Sequelize.STRING,
+      description: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
-      token: {
-        type: Sequelize.STRING
+      type: {
+        type: Sequelize.ENUM('Conditional', 'Daily', 'Weekly', 'Monthly', 'Annually'),
+        allowNull: false
       },
-      expire_at: {
+      date_start: {
         type: Sequelize.DATE
+      },
+      date_end: {
+        type: Sequelize.DATE
+      },
+      division_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         field: 'created_at',
@@ -39,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('auth');
+    await queryInterface.dropTable('program');
   }
 };

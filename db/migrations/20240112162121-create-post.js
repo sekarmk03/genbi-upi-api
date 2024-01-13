@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       type: {
-        type: Sequelize.ENUM('article', 'press release', 'announcement'),
+        type: Sequelize.ENUM('Article', 'Press Release', 'Announcement'),
       },
       title: {
         type: Sequelize.STRING,

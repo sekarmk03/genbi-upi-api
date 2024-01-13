@@ -12,12 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Photo.belongsTo(models.File, {foreignKey: 'file_id', as: 'file'});
-      Photo.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post', allowNull: true});
-      Photo.hasMany(models.User, {foreignKey: 'photo_id', as: 'users'});
+      Photo.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post'});
+      Photo.hasMany(models.UserDetail, {foreignKey: 'photo_id', as: 'users'});
       Photo.hasMany(models.Department, {foreignKey: 'cover_id', as: 'departments'});
       Photo.hasMany(models.Event, {foreignKey: 'thubmnail_id', as: 'event_thumbnails'});
       Photo.hasMany(models.Event, {foreignKey: 'poster_id', as: 'event_posters'});
       Photo.hasMany(models.Event, {foreignKey: 'banner_id', as: 'event_banners'});
+      Photo.hasMany(models.Appreciation, {foreignKey: 'cover_id', as: 'appreciations'});
     }
   }
   Photo.init({
