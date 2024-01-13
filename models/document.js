@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Document.belongsTo(models.File, {foreignKey: 'file_id', as: 'file'});
+      Document.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post', allowNull: true});
+      Document.hasOne(models.User, {foreignKey: 'transcript_id', as: 'user_transcript'});
     }
   }
   Document.init({

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       File.hasMany(models.Photo, {foreignKey: 'file_id', as: 'photos'});
+      File.hasMany(models.Document, {foreignKey: 'file_id', as: 'documents'});
     }
   }
   File.init({

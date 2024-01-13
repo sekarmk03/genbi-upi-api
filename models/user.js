@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
       User.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
       User.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
+      User.belongsTo(models.Document, {foreignKey: 'transcript_id', as: 'transcript'});
     }
   }
   User.init({

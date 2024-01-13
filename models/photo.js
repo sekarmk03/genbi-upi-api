@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     caption: DataTypes.TEXT,
     category:{
-      type: DataTypes.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner', 'post_photo'),
+      type: DataTypes.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner', 'post_cover_image', 'post_other_image'),
       allowNull: false
     },
     featured: {
