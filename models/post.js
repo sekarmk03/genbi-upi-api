@@ -14,15 +14,44 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    type: DataTypes.ENUM('article', 'press release', 'report', 'news'),
-    title: DataTypes.STRING,
-    content: DataTypes.TEXT,
-    department_id: DataTypes.INTEGER,
-    author_id: DataTypes.INTEGER,
-    featured: DataTypes.BOOLEAN,
-    visitors: DataTypes.INTEGER,
-    event_id: DataTypes.INTEGER,
-    tag1: DataTypes.STRING,
+    type: {
+      type: DataTypes.ENUM('article', 'press release', 'announcement'),
+      allowNull: false
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    department_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    author_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    featured: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    visitors: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    event_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    tag1: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     tag2: DataTypes.STRING,
     tag3: DataTypes.STRING,
     tag4: DataTypes.STRING,

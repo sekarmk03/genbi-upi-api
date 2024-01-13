@@ -16,9 +16,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Division.init({
-    name: DataTypes.STRING,
-    department_id: DataTypes.INTEGER,
-    description: DataTypes.TEXT
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    department_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Division',

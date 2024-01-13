@@ -10,19 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       file_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       alt: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       caption: {
         type: Sequelize.TEXT
       },
       category: {
-        type: Sequelize.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner')
+        type: Sequelize.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner', 'post_photo'),
+        allowNull: false
       },
       featured: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
       },
       post_id: {
         type: Sequelize.INTEGER,

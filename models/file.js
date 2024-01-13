@@ -15,11 +15,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   File.init({
-    file_name: DataTypes.STRING,
-    imagekit_id: DataTypes.STRING,
-    imagekit_url: DataTypes.STRING,
-    imagekit_path: DataTypes.STRING,
-    mimetype: DataTypes.STRING
+    file_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    imagekit_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    imagekit_url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    imagekit_path: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    mimetype: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'File',

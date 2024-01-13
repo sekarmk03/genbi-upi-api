@@ -18,11 +18,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Photo.init({
-    file_id: DataTypes.INTEGER,
-    alt: DataTypes.STRING,
+    file_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    alt: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     caption: DataTypes.TEXT,
-    category: DataTypes.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner'),
-    featured: DataTypes.BOOLEAN,
+    category:{
+      type: DataTypes.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner', 'post_photo'),
+      allowNull: false
+    },
+    featured: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    },
     post_id: {
       type: DataTypes.INTEGER,
       allowNull: true

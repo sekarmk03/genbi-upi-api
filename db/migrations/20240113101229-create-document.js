@@ -2,24 +2,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('division', {
+    await queryInterface.createTable('document', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
+      category: {
+        type: Sequelize.ENUM('user_transcript', 'post_attachment'),
         allowNull: false
       },
-      department_id: {
+      file_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
+      post_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       createdAt: {
         field: 'created_at',
@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('division');
+    await queryInterface.dropTable('document');
   }
 };

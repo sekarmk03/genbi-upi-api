@@ -16,9 +16,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Department.init({
-    name: DataTypes.STRING,
-    cover_id: DataTypes.INTEGER,
-    description: DataTypes.TEXT
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    cover_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Department',

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Position extends Model {
+  class Document extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,21 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Position.hasMany(models.User, {foreignKey: 'position_id', as: 'users'});
     }
   }
-  Position.init({
-    name: {
-      type: DataTypes.STRING,
+  Document.init({
+    category: {
+      type: DataTypes.ENUM('user_transcript', 'post_attachment'),
       allowNull: false
     },
-    description: DataTypes.TEXT
+    file_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    }
   }, {
     sequelize,
-    modelName: 'Position',
-    tableName: 'position',
+    modelName: 'Document',
+    tableName: 'document',
     underscored: true,
     timestamps: true
   });
-  return Position;
+  return Document;
 };
