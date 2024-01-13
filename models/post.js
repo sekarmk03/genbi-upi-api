@@ -11,8 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Post.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
+      Post.belongsTo(models.User, {foreignKey: 'author_id', as: 'author'});
       Post.hasMany(models.Photo, {foreignKey: 'post_id', as: 'images'});
       Post.hasMany(models.Document, {foreignKey: 'post_id', as: 'attachments'});
+      Post.belongsTo(models.Event, {foreignKey: 'event_id', as: 'event', allowNull: true});
     }
   }
   Post.init({
