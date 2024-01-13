@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Event.belongsTo(models.Photo, {foreignKey: 'thumbnail_id', as: 'thumbnail'});
+      Event.belongsTo(models.Photo, {foreignKey: 'poster_id', as: 'poster'});
+      Event.belongsTo(models.Photo, {foreignKey: 'banner_id', as: 'banner'});
       Event.hasMany(models.Post, {foreignKey: 'event_id', as: 'posts'});
     }
   }
