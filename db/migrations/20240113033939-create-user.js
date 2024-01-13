@@ -15,19 +15,23 @@ module.exports = {
         unique: true
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       photo_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       birth_date: {
-        type: Sequelize.DATEONLY
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
       linkedin_username: {
         type: Sequelize.STRING
       },
       instagram_username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       telp: {
         type: Sequelize.STRING
@@ -36,10 +40,12 @@ module.exports = {
         type: Sequelize.DATEONLY
       },
       division_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       position_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       scholarship: {
         type: Sequelize.INTEGER
@@ -47,7 +53,7 @@ module.exports = {
       nim: {
         type: Sequelize.STRING
       },
-      study_id: {
+      study_program_id: {
         type: Sequelize.INTEGER
       },
       year: {

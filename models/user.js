@@ -14,22 +14,45 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
       User.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
       User.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
+      User.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
     }
   }
   User.init({
-    uuid: DataTypes.UUID,
-    name: DataTypes.STRING,
-    photo_id: DataTypes.INTEGER,
-    birth_date: DataTypes.DATEONLY,
+    uuid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    photo_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    birth_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
     linkedin_username: DataTypes.STRING,
-    instagram_username: DataTypes.STRING,
+    instagram_username: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     telp: DataTypes.STRING,
     member_since: DataTypes.DATEONLY,
-    division_id: DataTypes.INTEGER,
-    position_id: DataTypes.INTEGER,
+    division_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    position_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     scholarship: DataTypes.INTEGER,
     nim: DataTypes.STRING,
-    study_id: DataTypes.INTEGER,
+    study_program_id: DataTypes.INTEGER,
     year: DataTypes.STRING,
     smt1_grade: DataTypes.DECIMAL(4, 2),
     smt2_grade: DataTypes.DECIMAL(4, 2),
