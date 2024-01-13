@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
+      User.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
+      User.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
     }
   }
   User.init({
@@ -22,13 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     instagram_username: DataTypes.STRING,
     telp: DataTypes.STRING,
     member_since: DataTypes.DATEONLY,
-    department_id: DataTypes.INTEGER,
     division_id: DataTypes.INTEGER,
     position_id: DataTypes.INTEGER,
     scholarship: DataTypes.INTEGER,
     nim: DataTypes.STRING,
     study_id: DataTypes.INTEGER,
-    faculty_id: DataTypes.INTEGER,
     year: DataTypes.STRING,
     smt1_grade: DataTypes.DECIMAL(4, 2),
     smt2_grade: DataTypes.DECIMAL(4, 2),

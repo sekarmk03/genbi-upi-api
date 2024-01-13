@@ -35,9 +35,6 @@ module.exports = {
       member_since: {
         type: Sequelize.DATEONLY
       },
-      department_id: {
-        type: Sequelize.INTEGER
-      },
       division_id: {
         type: Sequelize.INTEGER
       },
@@ -51,9 +48,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       study_id: {
-        type: Sequelize.INTEGER
-      },
-      faculty_id: {
         type: Sequelize.INTEGER
       },
       year: {
