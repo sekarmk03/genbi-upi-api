@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Photo.belongsTo(models.File, {foreignKey: 'file_id', as: 'file'});
       Photo.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post'});
-      Photo.hasMany(models.UserDetail, {foreignKey: 'photo_id', as: 'users'});
+      Photo.hasMany(models.Awardee, {foreignKey: 'photo_id', as: 'awardee_photo'});
       Photo.hasMany(models.Department, {foreignKey: 'cover_id', as: 'departments'});
       Photo.hasMany(models.Event, {foreignKey: 'thubmnail_id', as: 'event_thumbnails'});
       Photo.hasMany(models.Event, {foreignKey: 'poster_id', as: 'event_posters'});
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     caption: DataTypes.TEXT,
     category:{
-      type: DataTypes.ENUM('department_cover', 'user_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner', 'post_cover_image', 'post_other_image'),
+      type: DataTypes.ENUM('department_cover', 'awardee_photo', 'appreciation_cover', 'event_thumbnail', 'event_poster', 'event_banner', 'post_cover_image', 'post_other_image'),
       allowNull: false
     },
     featured: {

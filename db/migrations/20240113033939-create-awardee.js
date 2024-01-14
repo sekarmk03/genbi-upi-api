@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('user_detail', {
+    await queryInterface.createTable('awardee', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -59,28 +59,52 @@ module.exports = {
       year: {
         type: Sequelize.STRING
       },
-      smt1_grade: {
+      smt1_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt2_grade: {
+      smt2_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt3_grade: {
+      smt3_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt4_grade: {
+      smt4_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt5_grade: {
+      smt5_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt6_grade: {
+      smt6_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt7_grade: {
+      smt7_ip: {
         type: Sequelize.DECIMAL(4, 2)
       },
-      smt8_grade: {
+      smt8_ip: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt1_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt2_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt3_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt4_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt5_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt6_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt7_ipk: {
+        type: Sequelize.DECIMAL(4, 2)
+      },
+      smt8_ipk: {
         type: Sequelize.DECIMAL(4, 2)
       },
       transcript_id: {
@@ -99,6 +123,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('user_detail');
+    await queryInterface.dropTable('awardee');
   }
 };

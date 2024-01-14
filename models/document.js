@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Document.belongsTo(models.File, {foreignKey: 'file_id', as: 'file'});
       Document.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post'});
-      Document.hasOne(models.UserDetail, {foreignKey: 'transcript_id', as: 'user_transcript'});
+      Document.hasOne(models.Awardee, {foreignKey: 'transcript_id', as: 'awardee_transcript'});
     }
   }
   Document.init({
     category: {
-      type: DataTypes.ENUM('user_transcript', 'post_attachment'),
+      type: DataTypes.ENUM('awardee_transcript', 'post_attachment'),
       allowNull: false
     },
     file_id: {

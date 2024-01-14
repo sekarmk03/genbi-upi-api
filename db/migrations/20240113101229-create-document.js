@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       category: {
-        type: Sequelize.ENUM('user_transcript', 'post_attachment'),
+        type: Sequelize.ENUM('awardee_transcript', 'post_attachment'),
         allowNull: false
       },
       file_id: {

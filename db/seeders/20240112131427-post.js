@@ -27,7 +27,9 @@ module.exports = {
       tag2: "Goals",
       tag3: "Resolutions",
       tag4: "Year End",
-      tag5: "2024"
+      tag5: "2024",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Press Release",
@@ -48,7 +50,9 @@ module.exports = {
       tag2: "Nature",
       tag3: "Photo Competition",
       tag4: "Winter",
-      tag5: "South Downs"
+      tag5: "South Downs",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Press Release",
@@ -63,7 +67,9 @@ module.exports = {
       tag2: "Strategic Partnership",
       tag3: "Collaboration",
       tag4: "Press Briefing",
-      tag5: "Space Missions"
+      tag5: "Space Missions",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Article",
@@ -78,7 +84,9 @@ module.exports = {
       tag2: "Marine Life",
       tag3: "Coral Reefs",
       tag4: "Diving Adventures",
-      tag5: "Ocean Mysteries"
+      tag5: "Ocean Mysteries",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Press Release",
@@ -93,7 +101,9 @@ module.exports = {
       tag2: "Cancer Treatment",
       tag3: "Innovation",
       tag4: "Press Event",
-      tag5: "Oncology"
+      tag5: "Oncology",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Article",
@@ -108,7 +118,9 @@ module.exports = {
       tag2: "Technology Trends",
       tag3: "Machine Learning",
       tag4: "Ethical AI",
-      tag5: "Innovation"
+      tag5: "Innovation",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Article",
@@ -123,7 +135,9 @@ module.exports = {
       tag2: "Green Revolution",
       tag3: "Environmental Consciousness",
       tag4: "Eco-Friendly Innovations",
-      tag5: "Climate Action"
+      tag5: "Climate Action",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Article",
@@ -138,7 +152,9 @@ module.exports = {
       tag2: "Cosmic Discoveries",
       tag3: "Space Exploration",
       tag4: "Celestial Phenomena",
-      tag5: "Stargazing"
+      tag5: "Stargazing",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Press Release",
@@ -153,7 +169,9 @@ module.exports = {
       tag2: "Tech Giants",
       tag3: "Market Performance",
       tag4: "Press Release Briefing",
-      tag5: "Economic Trends"
+      tag5: "Economic Trends",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Article",
@@ -168,7 +186,9 @@ module.exports = {
       tag2: "Global Flavors",
       tag3: "Food Trends",
       tag4: "International Cuisine",
-      tag5: "Gastronomy"
+      tag5: "Gastronomy",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Article",
@@ -183,7 +203,9 @@ module.exports = {
       tag2: "Year-End",
       tag3: "Memories",
       tag4: "2023",
-      tag5: "Farewell"
+      tag5: "Farewell",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Press Release",
@@ -198,7 +220,9 @@ module.exports = {
       tag2: "Carbon Neutrality",
       tag3: "Sustainability",
       tag4: "Press Release Event",
-      tag5: "Corporate Responsibility"
+      tag5: "Corporate Responsibility",
+      created_at: new Date(),
+      updated_at: new Date()
     },
     {
       type: "Press Release",
@@ -213,7 +237,9 @@ module.exports = {
       tag2: "Innovation",
       tag3: "Clean Technology",
       tag4: "Press Conference",
-      tag5: "Sustainability"
+      tag5: "Sustainability",
+      created_at: new Date(),
+      updated_at: new Date()
     },
    ], {});
   },
