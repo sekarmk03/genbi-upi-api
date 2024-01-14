@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     cover_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     description: {
       type: DataTypes.TEXT,

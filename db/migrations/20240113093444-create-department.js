@@ -15,7 +15,7 @@ module.exports = {
       },
       cover_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       description: {
         type: Sequelize.TEXT,
