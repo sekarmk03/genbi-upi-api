@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Awardee.belongsTo(models.User, {foreignKey: 'uuid', as: 'user_account'});
       Awardee.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
+      Awardee.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
       Awardee.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
       Awardee.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
       Awardee.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
@@ -44,9 +45,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     telp: DataTypes.STRING,
     member_since: DataTypes.DATEONLY,
-    division_id: {
+    department_id: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    division_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     position_id: {
       type: DataTypes.INTEGER,

@@ -16,19 +16,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   StudyProgram.init({
-    code: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
     faculty_id: {
-      type:DataTypes.INTEGER,
-      allowNull: false,
-      unique: true
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    jenjang: {
+      type: DataTypes.ENUM('D1', 'D2', 'D3', 'S1', 'S2', 'S3', 'Profesi', 'Doktoral', 'SPS'),
+      allowNull: true
     }
   }, {
     sequelize,

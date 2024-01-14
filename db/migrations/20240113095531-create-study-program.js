@@ -9,19 +9,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      code: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
       name: {
         type: Sequelize.STRING,
         allowNull: false
       },
       faculty_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true
+        allowNull: false
+      },
+      jenjang: {
+        type: Sequelize.ENUM('D1', 'D2', 'D3', 'S1', 'S2', 'S3', 'Profesi', 'Doktoral', 'SPS'),
+        allowNull: true
       },
       createdAt: {
         field: 'created_at',

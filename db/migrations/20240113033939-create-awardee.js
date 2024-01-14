@@ -39,9 +39,13 @@ module.exports = {
       member_since: {
         type: Sequelize.DATEONLY
       },
-      division_id: {
+      department_id: {
         type: Sequelize.INTEGER,
         allowNull: false
+      },
+      division_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       position_id: {
         type: Sequelize.INTEGER,

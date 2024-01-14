@@ -15,11 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Faculty.init({
-    code: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
