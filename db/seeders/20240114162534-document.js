@@ -15,8 +15,18 @@ module.exports = {
    await queryInterface.bulkInsert('document', [
     {
       category: "awardee_transcript",
-      file_id: Math.floor(Math.random() * 6) + 4
-    }
+      file_id: 5,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      category: "awardee_transcript",
+      file_id: 6,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 
@@ -27,5 +37,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('document', null, {});
   }
 };

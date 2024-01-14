@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     jenjang: {
-      type: DataTypes.ENUM('D1', 'D2', 'D3', 'S1', 'S2', 'S3', 'Profesi', 'Doktoral', 'SPS'),
+      type: DataTypes.STRING,
       allowNull: true
     }
   }, {

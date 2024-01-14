@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('Conditional', 'Daily', 'Weekly', 'Monthly', 'Annually'),
+        type: Sequelize.STRING,
         allowNull: false
       },
       date_start: {

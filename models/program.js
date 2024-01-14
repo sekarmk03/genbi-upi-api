@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     type: {
-      type: DataTypes.ENUM('Conditional', 'Daily', 'Weekly', 'Monthly', 'Annually'),
+      type: DataTypes.STRING,
       allowNull: false
     },
     date_start: DataTypes.DATE,

@@ -14,7 +14,7 @@ module.exports = {
     */
    await queryInterface.bulkInsert('awardee', [
     {
-      uuid: "78ae90af-cfc9-4a7b-ba32-0fc7f593e40a",
+      user_id: 1,
       name: "Eka Tiara Nur Fitriana",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2001-11-28",
@@ -45,12 +45,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "51b972b0-609c-4a8a-a74b-2e662ef4efc8",
+      user_id: 2,
       name: "Shafa Salsabila",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2002-08-19",
@@ -81,12 +81,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "e4c3358b-846c-42b0-b4b5-97a61f13cefb",
+      user_id: 3,
       name: "Muhammad Azar Nuzy",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2001-11-06",
@@ -117,12 +117,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "d98a7247-8137-4a01-82f0-950e2bb4fe3e",
+      user_id: 4,
       name: "Sekar Madu Kusumawardani",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2002-07-03",
@@ -153,12 +153,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "0f34e63f-c25b-4c4a-8a0d-89c704e340db",
+      user_id: 5,
       name: "Azaki Shaleh Albany",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2002-08-03",
@@ -189,12 +189,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "a7c69f5a-d19e-492a-8e5d-15e36d3ec39a",
+      user_id: 6,
       name: "Neysa Ardhina",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2002-02-21",
@@ -225,12 +225,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "31e523f8-891b-48d3-9f4e-7007eeb6c7eb",
+      user_id: 7,
       name: "Denis Erlangga Maulana",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2001-10-01",
@@ -261,12 +261,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "f9cc33cd-9c0d-4cbf-af3a-6a53c3f0de7d",
+      user_id: 8,
       name: "Nadira Arevia Hermawan",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2002-10-27",
@@ -297,12 +297,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "7bfcc72b-ff7d-4eaa-b79c-7a42d2a99c1d",
+      user_id: 9,
       name: "Mochammad Diponegoro",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2001-09-27",
@@ -333,12 +333,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "c67d4a15-b1f5-4e94-9a5e-17739a509b8b",
+      user_id: 10,
       name: "Davu Raissa Elazar",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2003-05-10",
@@ -369,12 +369,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "e10b1ea1-11f5-4959-9e1b-2c74c4a0d447",
+      user_id: 11,
       name: "Dwi Novia Al Husaeni",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2000-12-04",
@@ -405,12 +405,12 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      uuid: "24d71915-6313-430c-bc37-85db5c662a9b",
+      user_id: 12,
       name: "Tsalsabilla Nurfitriyatna Putri",
       photo_id: Math.floor(Math.random() * 4) + 1,
       birth_date: "2001-12-12",
@@ -441,7 +441,7 @@ module.exports = {
       smt6_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt7_ipk: 3 + parseFloat(Math.random().toFixed(2)),
       smt8_ipk: 3 + parseFloat(Math.random().toFixed(2)),
-      transcript_id: Math.floor(Math.random() * 2) + 5,
+      transcript_id: Math.floor(Math.random() * 2) + 1,
       created_at: new Date(),
       updated_at: new Date()
     },

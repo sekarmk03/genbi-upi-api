@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Post.init({
     type: {
-      type: DataTypes.ENUM('Article', 'Press Release', 'Announcement'),
+      type: DataTypes.STRING,
       allowNull: false
     },
     title: {

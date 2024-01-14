@@ -18,11 +18,11 @@ module.exports = {
         allowNull: true
       },
       type: {
-        type: Sequelize.ENUM('Online', 'Offline', 'Hybrid'),
+        type: Sequelize.STRING,
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('Coming Soon', 'Open Registration', 'Closed Registration', 'Ongoing', 'Finished'),
+        type: Sequelize.STRING,
         allowNull: false
       },
       thumbnail_id: {

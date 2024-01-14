@@ -28,11 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     type: {
-      type: DataTypes.ENUM('Online', 'Offline', 'Hybrid'),
+      type: DataTypes.STRING,
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM('Coming Soon', 'Open Registration', 'Closed Registration', 'Ongoing', 'Finished'),
+      type: DataTypes.STRING,
       allowNull: false
     },
     thumbnail_id: {

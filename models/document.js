@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Document.init({
     category: {
-      type: DataTypes.ENUM('awardee_transcript', 'post_attachment'),
+      type: DataTypes.STRING,
       allowNull: false
     },
     file_id: {

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Awardee.belongsTo(models.User, {foreignKey: 'uuid', as: 'user_account'});
+      Awardee.belongsTo(models.User, {foreignKey: 'user_id', as: 'user_account'});
       Awardee.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
       Awardee.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
       Awardee.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
@@ -21,10 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Awardee.init({
-    uuid: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      unique: true
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
