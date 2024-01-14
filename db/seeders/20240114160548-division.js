@@ -16,119 +16,119 @@ module.exports = {
     {
       name: "CEO",
       department_id: 1,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Administration",
       department_id: 2,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Finance",
       department_id: 3,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Creative",
       department_id: 4,
-      description: null,
+      description: "divisi yang bertugas untuk mengelola sosial media dan website GenBi UPI",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "ABC",
       department_id: 4,
-      description: null,
+      description: "divisi yang bertugas membuat konten yang diperlukan untuk publikasi di sosial media dan website GenBi UPI",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Business",
       department_id: 5,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Event",
       department_id: 5,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Physical Health",
       department_id: 6,
-      description: null,
+      description: "berfokus pada kesehatan fisik",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Mental Health",
       department_id: 6,
-      description: null,
+      description: "berfokus pada kesehatan mental",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Internal",
       department_id: 7,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "External",
       department_id: 7,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Research & Development",
       department_id: 8,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Event",
       department_id: 8,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "EduAction",
       department_id: 9,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "EduContent",
       department_id: 9,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Social",
       department_id: 10,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
     {
       name: "Environment",
       department_id: 10,
-      description: null,
+      description: "",
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -140,8 +140,8 @@ module.exports = {
      * Add commands to revert seed here.
      *
      * Example:
-     * await queryInterface.bulkDelete('People', null, {});
+     * await queryInterface.bulkDelete('People', "", {});
      */
-    await queryInterface.bulkDelete('division', null, {});
+    await queryInterface.bulkDelete('division', "", {});
   }
 };

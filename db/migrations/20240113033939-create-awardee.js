@@ -119,7 +119,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        field: 'created_at',
+        field: 'updated_at',
         allowNull: false,
         type: Sequelize.DATE
       }
