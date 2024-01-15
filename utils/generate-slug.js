@@ -9,7 +9,7 @@ const generateSlug = (title) => {
     .replace(/['"()]/g, '')         // Remove quotes and parentheses
     .replace(/[^a-z0-9-]/g, ' ')    // Replace non-alphanumeric characters with space
     .trim()                         // Trim leading and trailing spaces
-    const dateStr =  + "_" + new Date().toISOString().split('T')[0].replace(/-/g, '');
+    const dateStr =  new Date().toISOString().split('T')[0].replace(/-/g, '');
 
     return `${slug}_${dateStr}`;
 }

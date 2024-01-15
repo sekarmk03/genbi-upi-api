@@ -73,7 +73,8 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Post',
     tableName: 'post',
     underscored: true,
-    timestamps: true
+    timestamps: true,
+    freezeTableName: true
   });
   return Post;
 };

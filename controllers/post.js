@@ -1,5 +1,8 @@
 const { Post, Department, User, Awardee } = require('../models');
 const err = require('../common/custom_error');
+const { postSvc } = require('../services');
+const paginate = require('../utils/generate-pagination');
+const halson = require('halson');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -13,37 +16,32 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const posts = await Post.findAndCountAll({
-                order: [
-                    [sort, type]
-                ],
-                include: [
-                    {
-                        model: Department,
-                        as: 'department',
-                        attributes: ['id', 'name']
-                    },
-                    {
-                        model: User,
-                        as: 'author',
-                        attributes: ['uuid'],
-                        include: {
-                            model: Awardee,
-                            as: 'awardee',
-                            attributes: ['name']
-                        }
-                    },
-                    {
-                        model: 
-                    }
-                ],
-                limit: limit,
-                offset: start
+            let posts;
+            if (!req.user) {
+                posts = await postSvc.getAllPostPublic(sort, type, start, limit);
+            }
+            // else if admin
+            // else if creator
+
+            const pagination = paginate(posts.count, posts.rows.length, limit, page, start, end);
+
+            const postResources = posts.rows.map((post) => {
+                const res = halson(post.toJSON())
+                .addLink('self', `/posts/${post.id}`)
+
+                return res;
             });
 
+            const response = {
+                status: 'OK',
+                message: 'Get all posts success',
+                pagination,
+                data: postResources
+            }
 
+            return res.status(200).json(response);
         } catch (error) {
-            
+            next(error);
         }
     }
 }
