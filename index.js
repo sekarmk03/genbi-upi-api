@@ -8,6 +8,7 @@ const app = express();
 process.env.TZ = "Asia/Jakarta";
 
 app.use(morgan('dev'));
+app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(cors({
     origin: "*",
