@@ -6,7 +6,7 @@ var imagekit = new ImageKit({
     urlEndpoint : "https://ik.imagekit.io/sekarmadu/"
 });
 
-imagekit.getFileDetails("65a3c2a588c257da33cb95e0", function(error, result) {
+imagekit.getFileDetails("65a54f2588c257da332556e7", function(error, result) {
     if(error) console.log(error);
     else console.log(result);
 });

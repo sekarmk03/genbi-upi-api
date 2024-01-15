@@ -43,5 +43,22 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+    
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const post = await postSvc.getPostById(id);
+
+            if (!post) return err.not_found(res, "Post not found!");
+
+            return res.status(200).json({
+                status: 'OK',
+                message: "Get detail post success",
+                data: post
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
