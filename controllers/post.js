@@ -1,6 +1,5 @@
-const { Post, Department, User, Awardee } = require('../models');
 const err = require('../common/custom_error');
-const { postSvc } = require('../services');
+const { postSvc, commentSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 
@@ -27,7 +26,7 @@ module.exports = {
 
             const postResources = posts.rows.map((post) => {
                 const res = halson(post.toJSON())
-                .addLink('self', `/posts/${post.id}`)
+                .addLink('self', `/posts/${post.id}`);
 
                 return res;
             });
@@ -47,8 +46,8 @@ module.exports = {
     
     show: async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const post = await postSvc.getPostById(id);
+            const { postId } = req.params;
+            const post = await postSvc.getPostById(postId);
 
             if (!post) return err.not_found(res, "Post not found!");
 
@@ -57,6 +56,35 @@ module.exports = {
                 message: "Get detail post success",
                 data: post
             });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    comments: async (req, res, next) => {
+        try {
+            const { postId } = req.params;
+            let {
+                sort = "created_at", type = "desc"
+            } = req.query;
+
+            const comments = await commentSvc.getCommentsByPost(postId, sort, type);
+
+            let commentResources = comments.map((comment) => {
+                const res = halson(comment.toJSON())
+                .addLink('reply', `/comments/${comment.id}/reply`);
+                
+                res.countReplies = comment.replies.length;
+                return res;
+            });
+
+            const response = {
+                status: 'OK',
+                message: 'Get comments by post success',
+                data: commentResources
+            }
+
+            return res.status(200).json(response);
         } catch (error) {
             next(error);
         }
