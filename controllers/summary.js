@@ -1,8 +1,10 @@
+const { Post } = require('../models');
+
 module.exports = {
     home: async (req, res, next) => {
         try {
             let events = 0;
-            let posts = 0;
+            let posts = await Post.count();
             let years = 5;
             let visitors = 0;
             let awardees = 0;
