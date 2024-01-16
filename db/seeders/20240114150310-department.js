@@ -83,6 +83,13 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date(),
     },
+    {
+      name: "Bank Indonesia",
+      cover_id: null,
+      description: "",
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
    ], {});
   },
 

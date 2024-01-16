@@ -13,6 +13,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
       program_id: {
         type: Sequelize.INTEGER,
         allowNull: true
@@ -58,6 +63,14 @@ module.exports = {
       },
       registration_link: {
         type: Sequelize.STRING
+      },
+      start_reg_date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      end_reg_date: {
+        type: Sequelize.DATE,
+        allowNull: false
       },
       contact: {
         type: Sequelize.STRING

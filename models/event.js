@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     program_id: {
       type: DataTypes.INTEGER,
       allowNull: true
@@ -65,6 +70,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     location_url: DataTypes.STRING,
     registration_link: DataTypes.STRING,
+    start_reg_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    end_reg_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     contact: DataTypes.STRING,
     tag1: {
       type: DataTypes.STRING,

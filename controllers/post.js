@@ -65,12 +65,19 @@ module.exports = {
         try {
             const { postId } = req.params;
             let {
-                sort = "created_at", type = "desc"
+                sort = "created_at", type = "desc", page = "1", limit = "10"
             } = req.query;
 
-            const comments = await commentSvc.getCommentsByPost(postId, sort, type);
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
 
-            let commentResources = comments.map((comment) => {
+            const comments = await commentSvc.getCommentsByPost(postId, sort, type, start, limit);
+
+            const pagination = paginate(comments.count, comments.rows.length, limit, page, start, end);
+
+            let commentResources = comments.rows.map((comment) => {
                 const res = halson(comment.toJSON())
                 .addLink('reply', `/comments/${comment.id}/reply`);
                 
@@ -81,6 +88,7 @@ module.exports = {
             const response = {
                 status: 'OK',
                 message: 'Get comments by post success',
+                pagination,
                 data: commentResources
             }
 
