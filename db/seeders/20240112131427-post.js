@@ -30,6 +30,7 @@ module.exports = {
       tag3: "Resolutions",
       tag4: "Year End",
       tag5: "2024",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -54,6 +55,7 @@ module.exports = {
       tag3: "Photo Competition",
       tag4: "Winter",
       tag5: "South Downs",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -72,6 +74,7 @@ module.exports = {
       tag3: "Collaboration",
       tag4: "Press Briefing",
       tag5: "Space Missions",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -90,6 +93,7 @@ module.exports = {
       tag3: "Coral Reefs",
       tag4: "Diving Adventures",
       tag5: "Ocean Mysteries",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -108,6 +112,7 @@ module.exports = {
       tag3: "Innovation",
       tag4: "Press Event",
       tag5: "Oncology",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -126,6 +131,7 @@ module.exports = {
       tag3: "Machine Learning",
       tag4: "Ethical AI",
       tag5: "Innovation",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -144,6 +150,7 @@ module.exports = {
       tag3: "Environmental Consciousness",
       tag4: "Eco-Friendly Innovations",
       tag5: "Climate Action",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -162,6 +169,7 @@ module.exports = {
       tag3: "Space Exploration",
       tag4: "Celestial Phenomena",
       tag5: "Stargazing",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -180,6 +188,7 @@ module.exports = {
       tag3: "Market Performance",
       tag4: "Press Release Briefing",
       tag5: "Economic Trends",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -198,6 +207,7 @@ module.exports = {
       tag3: "Food Trends",
       tag4: "International Cuisine",
       tag5: "Gastronomy",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -216,6 +226,7 @@ module.exports = {
       tag3: "Memories",
       tag4: "2023",
       tag5: "Farewell",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -234,6 +245,7 @@ module.exports = {
       tag3: "Sustainability",
       tag4: "Press Release Event",
       tag5: "Corporate Responsibility",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -252,6 +264,7 @@ module.exports = {
       tag3: "Clean Technology",
       tag4: "Press Conference",
       tag5: "Sustainability",
+      search: null,
       created_at: new Date(),
       updated_at: new Date()
     },

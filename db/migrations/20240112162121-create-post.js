@@ -67,6 +67,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      search: {
+        allowNull: true,
+        type: Sequelize.TSVECTOR
+      },
       createdAt: {
         field: 'created_at',
         allowNull: false,
@@ -78,8 +82,24 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.sequelize.query(`
+      UPDATE "post" SET
+        "search" = setweight(to_tsvector('indonesian', "title"), 'A') || ' ' ||
+        setweight(to_tsvector('english', "title"), 'B') || ' ' ||
+        setweight(to_tsvector('indonesian', "content"), 'C') || ' ' ||
+        setweight(to_tsvector('english', "content"), 'D') :: tsvector;
+    `);
+
+    await queryInterface.addIndex('post', {
+      fields: ['search'],
+      using: 'GIN',
+      name: 'idx_search',
+    });
   },
+
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeIndex('post', 'idx_search');
     await queryInterface.dropTable('post');
   }
 };

@@ -96,5 +96,40 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    search: async (req, res, next) => {
+        try {
+            let {
+                page = "1", limit = "10", keyword = ''
+            } = req.query;
+
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
+
+            const posts = await postSvc.getPostsByKeyword(keyword, start, limit);
+
+            const pagination = paginate(posts.count, posts.rows.length, limit, page, start, end);
+
+            const postResources = posts.rows.map((post) => {
+                const res = halson(post.toJSON())
+                .addLink('self', `/posts/${post.id}`);
+
+                return res;
+            });
+
+            const response = {
+                status: 'OK',
+                message: `Search ${keyword} posts success.`,
+                pagination,
+                data: postResources
+            }
+
+            return res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
     }
 }

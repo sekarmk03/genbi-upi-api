@@ -1,4 +1,5 @@
-const { Post, Department, User, Awardee, Event, Photo, Document, File } = require('../models');
+const { Post, Department, User, Awardee, Event, Photo, Document, File, Sequelize } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
     getAllPostPrivate: async (sort, sortType, startPage, limit) => {
@@ -102,5 +103,39 @@ module.exports = {
         });
 
         return post;
+    },
+
+    getPostsByKeyword: async (keyword, startPage, limit) => {
+        const posts = await Post.findAndCountAll({
+            attributes: ['id', 'title', 'slug', 'type', 'content', 'department_id', [
+                Sequelize.literal(`
+                    ts_rank(search, websearch_to_tsquery('indonesian', '${keyword}')) +
+                    ts_rank(search, websearch_to_tsquery('english', '${keyword}')) +
+                    ts_rank(search, websearch_to_tsquery('simple', '${keyword}'))
+                `),
+                'rank'
+            ]],
+            where: {
+                [Op.or]: [
+                    Sequelize.literal(`search @@ websearch_to_tsquery('indonesian', '${keyword}')`),
+                    Sequelize.literal(`search @@ websearch_to_tsquery('english', '${keyword}')`),
+                    Sequelize.literal(`search @@ websearch_to_tsquery('simple', '${keyword}')`)
+                ],
+            },
+            include: [
+                {
+                    model: Department,
+                    as: 'department',
+                    attributes: ['id', 'name']
+                }
+            ],
+            order: [
+                [Sequelize.literal('rank DESC')],
+            ],
+            limit: limit,
+            offset: startPage
+        });
+
+        return posts;
     }
 }

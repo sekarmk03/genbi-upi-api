@@ -67,7 +67,8 @@ module.exports = (sequelize, DataTypes) => {
     tag2: DataTypes.STRING,
     tag3: DataTypes.STRING,
     tag4: DataTypes.STRING,
-    tag5: DataTypes.STRING
+    tag5: DataTypes.STRING,
+    search: DataTypes.TSVECTOR
   }, {
     sequelize,
     modelName: 'Post',
