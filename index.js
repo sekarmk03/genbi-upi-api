@@ -20,8 +20,8 @@ app.use('/api/v1', router);
 
 app.get('/', (req, res) => {
     const ip_addr = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    res.render('page/welcome', { ip_addr });
-})
+    res.render('welcome', { ip_addr });
+});
 
 app.use((req, res, next) => {
     return res.status(404).json({
