@@ -2,6 +2,8 @@ const err = require('../common/custom_error');
 const { postSvc, commentSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
+const pure = require('../utils/textPurify');
+const Fuse = require('fuse.js');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -25,7 +27,7 @@ module.exports = {
             const pagination = paginate(posts.count, posts.rows.length, limit, page, start, end);
 
             const postResources = posts.rows.map((post) => {
-                const res = halson(post.toJSON())
+                let res = halson(post.toJSON())
                 .addLink('self', `/posts/${post.id}`);
 
                 return res;
@@ -46,15 +48,38 @@ module.exports = {
     
     show: async (req, res, next) => {
         try {
-            const { postId } = req.params;
-            const post = await postSvc.getPostById(postId);
-
+            const { id } = req.params;
+            const post = await postSvc.getPostById(id);
+            
             if (!post) return err.not_found(res, "Post not found!");
+            
+            const searchedData = await postSvc.getSimilarPosts(post, 10);
+
+            const fuse = new Fuse(searchedData, {
+                keys: ['title', 'content']
+            });
+
+            const queryOptions = {
+                keys: ['title', 'content'],
+            };
+
+            const searchResults = fuse.search({
+                $or: [
+                    { title: post.title },
+                    { content: post.content },
+                ],
+            }, queryOptions);
+
+            const similarPosts = searchResults
+            .filter(result => result.item.title !== post.title && result.item.content !== post.content)
+            .map(({ item }) => item);
+
+            // const similarPosts = fuse.search(queryTitle).map(({item}) => (item));
 
             return res.status(200).json({
                 status: 'OK',
                 message: "Get detail post success",
-                data: post
+                data: {post, similarPosts}
             });
         } catch (error) {
             next(error);
@@ -63,7 +88,7 @@ module.exports = {
 
     comments: async (req, res, next) => {
         try {
-            const { postId } = req.params;
+            const { id } = req.params;
             let {
                 sort = "created_at", type = "desc", page = "1", limit = "10"
             } = req.query;
@@ -73,7 +98,7 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const comments = await commentSvc.getCommentsByPost(postId, sort, type, start, limit);
+            const comments = await commentSvc.getCommentsByPost(id, sort, type, start, limit);
 
             const pagination = paginate(comments.count, comments.rows.length, limit, page, start, end);
 
@@ -124,6 +149,33 @@ module.exports = {
                 status: 'OK',
                 message: `Search ${keyword} posts success.`,
                 pagination,
+                data: postResources
+            }
+
+            return res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    similar: async (req, res, next) => {
+        try {
+            const { post_id } = req.query;
+            const findPost = await postSvc.getPostById(post_id);
+
+            const limit = 10;
+            const posts = await postSvc.getSimilarPosts(findPost.title, limit);
+
+            const postResources = posts.map((post) => {
+                const res = halson(post.toJSON())
+                .addLink('self', `/posts/${post.id}`);
+
+                return res;
+            });
+
+            const response = {
+                status: 'OK',
+                message: `Get similar posts to post_id ${post_id} success`,
                 data: postResources
             }
 

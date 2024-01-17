@@ -223,6 +223,36 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    {
+      file_id: 11,
+      alt: 'article-2.jpeg',
+      caption: "[caption] Reflecting on 2023: A Journey Through Memories",
+      category: 'post_cover_image',
+      featured: false,
+      post_id: 14,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      file_id: 12,
+      alt: 'article-3.jpeg',
+      caption: "[caption] 2023 in Retrospect: Navigating the Journey of Reflection",
+      category: 'post_cover_image',
+      featured: false,
+      post_id: 15,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      file_id: 13,
+      alt: 'Barbados_Blue_Bond_Hawksbill_Shane_Gross.jpg',
+      caption: "[caption] A Farewell to 2023: Reflecting on the Journey",
+      category: 'post_cover_image',
+      featured: false,
+      post_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 
