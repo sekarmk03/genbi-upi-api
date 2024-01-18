@@ -9,7 +9,7 @@ module.exports = {
     index: async (req, res, next) => {
         try {
             let {
-                sort = "created_at", type = "desc", page = "1", limit = "10"
+                sort = "created_at", type = "desc", page = "1", limit = "10", filter = ''
             } = req.query;
 
             page = parseInt(page);
@@ -19,7 +19,7 @@ module.exports = {
 
             let posts;
             if (!req.user) {
-                posts = await postSvc.getAllPostPublic(sort, type, start, limit);
+                posts = await postSvc.getAllPostPublic(filter, sort, type, start, limit);
             }
             // else if admin
             // else if creator

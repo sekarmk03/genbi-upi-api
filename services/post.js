@@ -40,9 +40,23 @@ module.exports = {
         return posts;
     },
     
-    getAllPostPublic: async (sort, sortType, startPage, limit) => {
+    getAllPostPublic: async (filter, sort, sortType, startPage, limit) => {
         const posts = await Post.findAndCountAll({
             attributes: repository.postAttr,
+            where: {
+                [Op.or]: [
+                    {
+                        type: {
+                            [Op.iLike]: `%${filter}%`
+                        }
+                    },
+                    {
+                        '$department.name$': {
+                            [Op.iLike]: `%${filter}%`,
+                        },
+                    },
+                ]
+            },
             order: [
                 [sort, sortType]
             ],
@@ -125,7 +139,17 @@ module.exports = {
                 [Op.or]: [
                     Sequelize.literal(`search @@ websearch_to_tsquery('indonesian', '${keyword}')`),
                     Sequelize.literal(`search @@ websearch_to_tsquery('english', '${keyword}')`),
-                    Sequelize.literal(`search @@ websearch_to_tsquery('simple', '${keyword}')`)
+                    Sequelize.literal(`search @@ websearch_to_tsquery('simple', '${keyword}')`),
+                    {
+                        '$department.name$': {
+                            [Op.iLike]: `%${keyword}%`,
+                        },
+                    },
+                    {
+                        '$author.awardee.name$': {
+                            [Op.iLike]: `%${keyword}%`,
+                        },
+                    },
                 ],
             },
             include: [
@@ -133,6 +157,21 @@ module.exports = {
                     model: Department,
                     as: 'department',
                     attributes: ['id', 'name']
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['id'],
+                    include: {
+                        model: Awardee,
+                        as: 'awardee',
+                        attributes: ['name']
+                    }
+                },
+                {
+                    model: Event,
+                    as: 'event',
+                    attributes: ['id', 'title']
                 }
             ],
             order: [
