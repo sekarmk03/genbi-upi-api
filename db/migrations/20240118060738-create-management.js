@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('program', {
+    await queryInterface.createTable('management', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,31 +13,34 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      photo_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      video_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       description: {
         type: Sequelize.TEXT,
         allowNull: false
       },
-      type: {
-        type: Sequelize.STRING,
+      vision: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
-      implementation_desc: {
-        type: Sequelize.STRING,
+      mission: {
+        type: Sequelize.ARRAY(Sequelize.TEXT),
         allowNull: false
       },
-      date_start: {
-        type: Sequelize.DATEONLY
+      period_year: {
+        type: Sequelize.STRING
       },
-      date_end: {
-        type: Sequelize.DATEONLY
+      period_start_date: {
+        type: Sequelize.DATE
       },
-      department_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      management_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+      period_end_date: {
+        type: Sequelize.DATE
       },
       createdAt: {
         field: 'created_at',
@@ -52,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('program');
+    await queryInterface.dropTable('management');
   }
 };

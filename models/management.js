@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Program extends Model {
+  class Management extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,43 +11,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Program.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
-      Program.hasMany(models.Event, {foreignKey: 'program_id', as: 'events'});
     }
   }
-  Program.init({
+  Management.init({
     name: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    photo_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    video_id: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    type: {
-      type: DataTypes.STRING,
+    vision: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
-    implementation_desc: {
-      type: DataTypes.STRING,
+    mission: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false
     },
-    date_start: DataTypes.DATEONLY,
-    date_end: DataTypes.DATEONLY,
-    department_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    management_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+    period_year: DataTypes.STRING,
+    period_start_date: DataTypes.DATE,
+    period_end_date: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'Program',
-    tableName: 'program',
+    modelName: 'Management',
+    tableName: 'management',
     underscored: true,
     timestamps: true
   });
-  return Program;
+  return Management;
 };

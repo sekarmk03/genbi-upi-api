@@ -220,6 +220,24 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    { // 24
+      file_name: "genbi-upi-makrab-video.mp4",
+      imagekit_id: "65a8c70788c257da337c9545",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/genbi-upi-makrab-video.mp4",
+      imagekit_path: "/genbi_upi/genbi-upi-makrab-video.mp4",
+      mimetype: "video/mp4",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 25
+      file_name: "genbi2324.png",
+      imagekit_id: "65a8c8f588c257da3387f85b",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/genbi2324.png",
+      imagekit_path: "/genbi_upi/genbi2324.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 

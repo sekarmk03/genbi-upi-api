@@ -13,7 +13,7 @@ module.exports = {
      * }], {});
     */
    await queryInterface.bulkInsert('photo', [
-    {
+    { //
       file_id: 1,
       alt: 'avatar-default1.jpg',
       caption: null,
@@ -63,7 +63,7 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
-    {
+    { // 6
       file_id: 8,
       alt: 'article-4.jpeg',
       caption: "[caption] Winter Scene Wins South Downs Photo Competition",
@@ -113,7 +113,7 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
-    {
+    { // 11
       file_id: 13,
       alt: 'Barbados_Blue_Bond_Hawksbill_Shane_Gross.jpg',
       caption: "[caption] The Green Revolution: Sustainable Living in 2024",
@@ -163,7 +163,7 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
-    {
+    { // 16
       file_id: 18,
       alt: 'blue-People-in-nature-azure-cartoon-sky-happy-1994921-wallhere.com.jpg',
       caption: "[caption] Environmental Initiative: Companies Unite for Carbon Neutrality",
@@ -213,7 +213,7 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
-    {
+    { // 21
       file_id: 23,
       alt: 'post-detail-2f924d1c390baf5402b51b8596f246c8.jpeg',
       caption: "[caption] What We're Reading: Goodbye 2023, hello 2024",
@@ -250,6 +250,26 @@ module.exports = {
       category: 'post_cover_image',
       featured: false,
       post_id: 6,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    {
+      file_id: 24,
+      alt: 'genbi-upi-makrab-video.mp4',
+      caption: "[caption] genbi-upi-makrab-2022",
+      category: 'management_video',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 26
+      file_id: 25,
+      alt: 'genbi2324.png',
+      caption: "[caption] genbi-upi-2324",
+      category: 'management_photo',
+      featured: false,
+      post_id: null,
       created_at: new Date(),
       updated_at: new Date()
     },
