@@ -17,15 +17,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        defaultValue: null
-      },
       level: {
         type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: 0
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
       },
       content: {
         type: Sequelize.TEXT,

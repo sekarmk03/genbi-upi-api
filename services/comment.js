@@ -1,4 +1,4 @@
-const { Comment, User, Awardee } = require('../models');
+const { Comment } = require('../models');
 
 module.exports = {
     getCommentsByPost: async (post_id, sort, sortType, startPage, limit) => {
@@ -9,28 +9,8 @@ module.exports = {
             },
             include: [
                 {
-                    model: User,
-                    as: 'user',
-                    attributes: ['username'],
-                    include: {
-                        model: Awardee,
-                        as: 'awardee',
-                        attributes: ['name']
-                    }
-                },
-                {
                     model: Comment,
                     as: 'replies',
-                    include: {
-                        model: User,
-                        as: 'user',
-                        attributes: ['username'],
-                        include: {
-                            model: Awardee,
-                            as: 'awardee',
-                            attributes: ['name']
-                        }
-                    }
                 }
             ],
             order: [
@@ -41,5 +21,31 @@ module.exports = {
         });
 
         return comments;
+    },
+
+    addNewComment: async (post_id, comment_id, level, name, content) => {
+        const newComment = await Comment.create({
+            post_id,
+            comment_id,
+            level,
+            name,
+            content
+        });
+
+        return newComment;
+    },
+
+    getCommentById: async (id) => {
+        const comment = await Comment.findOne({
+            where: {id: id},
+            include: [
+                {
+                    model: Comment,
+                    as: 'replies',
+                }
+            ]
+        });
+
+        return comment;
     }
 }

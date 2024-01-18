@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Comment.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post'});
-      Comment.belongsTo(models.User, {foreignKey: 'user_id', as: 'user'});
       Comment.hasMany(models.Comment, {foreignKey: 'comment_id', as: 'replies'});
     }
   }
@@ -25,15 +24,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: null
-    },
     level: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null
     },
     content: {
       type: DataTypes.TEXT,

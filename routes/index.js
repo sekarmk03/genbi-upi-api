@@ -4,6 +4,7 @@ const router = express.Router();
 const summary = require('./summary');
 const post = require('./post');
 const contact = require('./contact');
+const comment = require('./comment');
 
 router.get('/', (req, res) => {
     const ip_addr = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -12,5 +13,6 @@ router.get('/', (req, res) => {
 router.use('/summary', summary);
 router.use('/posts', post);
 router.use('/contact', contact);
+router.use('/comments', comment);
 
 module.exports = router;
