@@ -58,7 +58,7 @@ module.exports = {
       alt: 'hero-1.webp',
       caption: "[caption] What We're Reading: Goodbye 2023, hello 2024",
       category: 'post_cover_image',
-      featured: false,
+      featured: true,
       post_id: 1,
       created_at: new Date(),
       updated_at: new Date()
@@ -68,7 +68,7 @@ module.exports = {
       alt: 'article-4.jpeg',
       caption: "[caption] Winter Scene Wins South Downs Photo Competition",
       category: 'post_cover_image',
-      featured: false,
+      featured: true,
       post_id: 2,
       created_at: new Date(),
       updated_at: new Date()
@@ -78,7 +78,7 @@ module.exports = {
       alt: 'article-1.jpeg',
       caption: "[caption] Corporate Announcement: Strategic Partnership for Space Exploration",
       category: 'post_cover_image',
-      featured: false,
+      featured: true,
       post_id: 3,
       created_at: new Date(),
       updated_at: new Date()
@@ -88,7 +88,7 @@ module.exports = {
       alt: 'isola.jpg',
       caption: "[caption] Exploring the Wonders of Underwater Life",
       category: 'post_cover_image',
-      featured: false,
+      featured: true,
       post_id: 4,
       created_at: new Date(),
       updated_at: new Date()
@@ -98,7 +98,7 @@ module.exports = {
       alt: 'article-2.jpeg',
       caption: "[caption] Medical Breakthrough: Advancements in Cancer Treatment",
       category: 'post_cover_image',
-      featured: false,
+      featured: true,
       post_id: 5,
       created_at: new Date(),
       updated_at: new Date()

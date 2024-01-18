@@ -23,7 +23,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 5,
       event_id: null,
       tag1: "Memories",
       tag2: "Goals",
@@ -31,8 +31,8 @@ module.exports = {
       tag4: "YearEnd",
       tag5: "2024",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 5 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 5 * 60 * 1000))
     },
     {
       type: "Press Release",
@@ -48,7 +48,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 10,
       event_id: Math.floor(Math.random() * 16),
       tag1: "Photography",
       tag2: "Nature",
@@ -56,8 +56,8 @@ module.exports = {
       tag4: "Winter",
       tag5: "SouthDowns",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 4 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 4 * 60 * 1000))
     },
     {
       type: "Press Release",
@@ -67,7 +67,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 2,
       event_id: Math.floor(Math.random() * 16),
       tag1: "Space",
       tag2: "Partnership",
@@ -75,8 +75,8 @@ module.exports = {
       tag4: "PressBriefing",
       tag5: "Missions",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 4 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 4 * 60 * 1000))
     },
     {
       type: "Article",
@@ -86,7 +86,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 7,
       event_id: null,
       tag1: "Underwater",
       tag2: "MarineLife",
@@ -94,8 +94,8 @@ module.exports = {
       tag4: "DivingAdventures",
       tag5: "OceanMysteries",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 3 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 3 * 60 * 1000))
     },
     {
       type: "Press Release",
@@ -105,7 +105,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 11,
       event_id: Math.floor(Math.random() * 16),
       tag1: "Medical",
       tag2: "CancerTreatment",
@@ -113,8 +113,8 @@ module.exports = {
       tag4: "Cancer",
       tag5: "Oncology",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 3 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 3 * 60 * 1000))
     },
     {
       type: "Article",
@@ -124,7 +124,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 3,
       event_id: null,
       tag1: "ArtificialIntelligence",
       tag2: "Technology",
@@ -132,8 +132,8 @@ module.exports = {
       tag4: "AI",
       tag5: "Innovation",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 2 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 2 * 60 * 1000))
     },
     {
       type: "Article",
@@ -143,7 +143,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 9,
       event_id: null,
       tag1: "Sustainable",
       tag2: "GreenRevolution",
@@ -151,8 +151,8 @@ module.exports = {
       tag4: "EcoFriendly",
       tag5: "ClimateAction",
       search: null,
-      created_at: new Date(),
-      updated_at: new Date()
+      created_at: new Date((Date.now() + 1 * 60 * 1000)),
+      updated_at: new Date((Date.now() + 1 * 60 * 1000))
     },
     {
       type: "Article",
@@ -162,7 +162,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 1,
       event_id: null,
       tag1: "Astronomy",
       tag2: "Cosmic",
@@ -181,7 +181,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 10,
       event_id: Math.floor(Math.random() * 16),
       tag1: "Financial",
       tag2: "TechGiants",
@@ -200,7 +200,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 6,
       event_id: null,
       tag1: "Culinary",
       tag2: "GlobalFlavors",
@@ -219,7 +219,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 4,
       event_id: null,
       tag1: "Reflection",
       tag2: "YearEnd",
@@ -238,7 +238,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 4,
       event_id: Math.floor(Math.random() * 16),
       tag1: "Environmental",
       tag2: "CarbonNeutral",
@@ -257,7 +257,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 1,
       event_id: Math.floor(Math.random() * 16),
       tag1: "Renewable",
       tag2: "Innovation",
@@ -276,7 +276,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 8,
       event_id: null,
       tag1: "Reflection",
       tag2: "Life",
@@ -295,7 +295,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 10,
       event_id: null,
       tag1: "Reflection",
       tag2: "Retrospective",
@@ -314,7 +314,7 @@ module.exports = {
       department_id: Math.floor(Math.random() * 11) + 2,
       author_id: Math.floor(Math.random() * 12) + 1,
       featured: (Math.random() < 0.5),
-      visitors: 0,
+      visitors: 2,
       event_id: null,
       tag1: "Reflection",
       tag2: "Life",
