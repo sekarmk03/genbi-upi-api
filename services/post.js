@@ -208,5 +208,13 @@ module.exports = {
         });
 
         return posts;
+    },
+
+    updateVisitors: async (post) => {
+        const update = await post.update({
+            visitors: post.visitors + 1
+        });
+
+        return update;
     }
 }

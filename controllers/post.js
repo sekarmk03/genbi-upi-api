@@ -183,5 +183,31 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    visitors: async (req, res, next) => {
+        try {
+            let { post_id } = req.body;
+            post_id = parseInt(post_id);
+
+            const post = await postSvc.getPostById(post_id);
+            if (!post) return err.not_found(res, "Post not found!");
+
+            const update = await postSvc.updateVisitors(post);
+            if (!update || update == 0) return err.bad_request(res, "Visitors failed to add!");
+
+            const updatedPost = await postSvc.getPostById(post_id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: `Visitors post_id ${post_id} successfully increased by 1`,
+                data: {
+                    id: updatedPost.id,
+                    visitors: updatedPost.visitors
+                }
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
