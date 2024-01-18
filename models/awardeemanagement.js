@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // AwardeeManagement.belongsTo(models.Awardee, { foreignKey: 'awardee_id', as: 'awardee_management' });
+      // AwardeeManagement.belongsTo(models.Management, { foreignKey: 'management_id', as: 'awardee_management' });
     }
   }
   AwardeeManagement.init({

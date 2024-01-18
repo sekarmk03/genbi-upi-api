@@ -6,7 +6,7 @@ const repository = {
 };
 
 module.exports = {
-    getAllPostPrivate: async (sort, sortType, startPage, limit) => {
+    getPostsPrivate: async (sort, sortType, startPage, limit) => {
         const posts = await Post.findAndCountAll({
             order: [
                 [sort, sortType]
@@ -40,7 +40,7 @@ module.exports = {
         return posts;
     },
     
-    getAllPostPublic: async (filter, sort, sortType, startPage, limit) => {
+    getPostsPublic: async (filter, sort, sortType, startPage, limit) => {
         const posts = await Post.findAndCountAll({
             attributes: repository.postAttr,
             where: {

@@ -42,6 +42,10 @@ module.exports = {
       period_end_date: {
         type: Sequelize.DATE
       },
+      is_active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
       createdAt: {
         field: 'created_at',
         allowNull: false,

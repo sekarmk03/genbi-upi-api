@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Management.belongsTo(models.Photo, { foreignKey: 'photo_id', as: 'photo' });
+      Management.belongsTo(models.Photo, { foreignKey: 'video_id', as: 'video' });
+      Management.hasMany(models.Program, { foreignKey: 'management_id', as: 'programs' });
+      Management.belongsToMany(models.Awardee, { through: models.AwardeeManagement, foreignKey: 'management_id', as: 'awardees' });
     }
   }
   Management.init({
@@ -40,7 +44,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     period_year: DataTypes.STRING,
     period_start_date: DataTypes.DATE,
-    period_end_date: DataTypes.DATE
+    period_end_date: DataTypes.DATE,
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Management',

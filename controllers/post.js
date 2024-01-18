@@ -19,7 +19,7 @@ module.exports = {
 
             let posts;
             if (!req.user) {
-                posts = await postSvc.getAllPostPublic(filter, sort, type, start, limit);
+                posts = await postSvc.getPostsPublic(filter, sort, type, start, limit);
             }
             // else if admin
             // else if creator

@@ -33,6 +33,7 @@ module.exports = {
       period_year: '23.24',
       period_start_date: new Date(),
       period_end_date: new Date(),
+      is_active: true,
       created_at: new Date(),
       updated_at: new Date()
     }
