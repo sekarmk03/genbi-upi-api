@@ -1,4 +1,5 @@
-const { Management, Awardee, AwardeeManagement, Photo, File, Division } = require('../models');
+const { Management, Awardee, AwardeeManagement, Photo, File, Department, Division } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
     getManagements: async (sort, sortType, startPage, limit) => {
@@ -58,11 +59,25 @@ module.exports = {
                     through: {
                         model: AwardeeManagement,
                     },
-                    include: {
-                        model: Division,
-                        as: 'division',
-                        attributes: ['name']
-                    }
+                    include: [
+                        {
+                            model: Department,
+                            as: 'department',
+                            attributes: ['name'],
+                            where: {
+                                [Op.or]: [
+                                    { name: 'CEO'},
+                                    { name: 'Administration' },
+                                    { name: 'Finance' }
+                                ]
+                            }
+                        },
+                        {
+                            model: Division,
+                            as: 'division',
+                            attributes: ['name']
+                        }
+                    ]
                 }
             ]
         });

@@ -14,21 +14,7 @@ module.exports = {
     */
    await queryInterface.bulkInsert('department', [
     {
-      name: "CEO",
-      cover_id: null,
-      description: "",
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-    {
-      name: "Administration",
-      cover_id: null,
-      description: "",
-      created_at: new Date(),
-      updated_at: new Date(),
-    },
-    {
-      name: "Finance",
+      name: "Executive",
       cover_id: null,
       description: "",
       created_at: new Date(),
@@ -44,14 +30,14 @@ module.exports = {
     {
       name: "Economic",
       cover_id: null,
-      description: "Departemen Ekonomic GenBI UPI merupakan departemen yang berperan dalam memfasilitasi internal GenBI UPI maupun masyarakat umum dalam hal-hal yang berkaitan dengan bidang ekonomi, seperti investasi, bisnis UKM dan berita-berita ekonomi lainnya.",
+      description: "Departemen yang berperan dalam memfasilitasi internal GenBI UPI maupun masyarakat umum dalam hal-hal yang berkaitan dengan bidang ekonomi, seperti investasi, bisnis UKM dan berita-berita ekonomi lainnya.",
       created_at: new Date(),
       updated_at: new Date(),
     },
     {
       name: "Healthcare",
       cover_id: null,
-      description: "Healthcare department merupakan departemen yang berfokus pada bidang kesehatan. Healthcare departemen bertanggung jawab untuk menyelenggarakan program yang berhubungan dengan kesehatan fisik dan kesejahteraan mental para anggota GenBI UPI",
+      description: "Healthcare department merupakan departemen yang berfokus pada bidang kesehatan. Healthcare departemen bertanggung jawab untuk menyelenggarakan program yang berhubungan dengan kesehatan fisik dan kesejahteraan mental para anggota GenBI UPI.",
       created_at: new Date(),
       updated_at: new Date(),
     },
