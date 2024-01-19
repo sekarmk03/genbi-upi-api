@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { managementSvc } = require('../services');
+const { managementSvc, departmentSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 
@@ -43,10 +43,18 @@ module.exports = {
         try {
             const management = await managementSvc.getActiveManagement();
 
+            const depts = await departmentSvc.getDepartments();
+            const departments = depts.map(department => {
+                const departmentResource = halson(department.toJSON())
+                    .addLink('self', `/departments/${department.id}`)
+
+                return departmentResource;
+            });
+
             return res.status(200).json({
                 status: 'OK',
                 message: 'Get active management success',
-                data: management
+                data: { management, departments }
             });
         } catch (error) {
             next(error);

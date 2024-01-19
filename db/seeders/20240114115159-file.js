@@ -238,6 +238,69 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    { // 26
+      file_name: "marketing.png",
+      imagekit_id: "65a9f61388c257da3372455b",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/marketing.png",
+      imagekit_path: "/genbi_upi/marketing.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 27
+      file_name: "economic.png",
+      imagekit_id: "65a9f61388c257da3372462f",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/economic.png",
+      imagekit_path: "/genbi_upi/economic.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 28
+      file_name: "healthcare.png",
+      imagekit_id: "65a9f61388c257da337245d3",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/healthcare.png",
+      imagekit_path: "/genbi_upi/healthcare.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 29
+      file_name: "public_relation.png",
+      imagekit_id: "65a9f61388c257da3372444f",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/public_relation.png",
+      imagekit_path: "/genbi_upi/public_relation.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 30
+      file_name: "human_resources.png",
+      imagekit_id: "65a9f61388c257da33724616",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/human_resources.png",
+      imagekit_path: "/genbi_upi/human_resources.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 31
+      file_name: "education.png",
+      imagekit_id: "65a9f61488c257da3372482a",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/education.png",
+      imagekit_path: "/genbi_upi/education.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 32
+      file_name: "social_environment.png",
+      imagekit_id: "65a9f61388c257da337245fe",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/social_environment.png",
+      imagekit_path: "/genbi_upi/social_environment.png",
+      mimetype: "image/png",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 

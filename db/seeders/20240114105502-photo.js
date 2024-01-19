@@ -273,6 +273,76 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    { // 27
+      file_id: 26,
+      alt: 'marketing.png',
+      caption: "[caption] marketing-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 28
+      file_id: 27,
+      alt: 'economic.png',
+      caption: "[caption] economic-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 29
+      file_id: 28,
+      alt: 'healthcare.png',
+      caption: "[caption] healthcare-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 30
+      file_id: 29,
+      alt: 'public_relation.png',
+      caption: "[caption] public_relation-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 31
+      file_id: 30,
+      alt: 'human_resources.png',
+      caption: "[caption] human_resources-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 32
+      file_id: 31,
+      alt: 'education.png',
+      caption: "[caption] education-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 33
+      file_id: 32,
+      alt: 'social_environment.png',
+      caption: "[caption] social_environment-genbi-upi-2324",
+      category: 'department_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 
