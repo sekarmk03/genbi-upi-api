@@ -6,31 +6,19 @@ const halson = require('halson');
 module.exports = {
     index: async (req, res, next) => {
         try {
-            let {
-                sort = "created_at", type = "desc", page = "1", limit = "10", filter = ''
-            } = req.query;
+            const { options = 'true' } = req.query;
 
-            page = parseInt(page);
-            limit = parseInt(limit);
-            let start = 0 + (page - 1) * limit;
-            let end = page * limit;
-
-            const managements = await managementSvc.getManagements(sort, type, start, limit);
-
-            const pagination = paginate(managements.count, managements.rows.length, limit, page, start, end);
-
-            const managementResources = managements.rows.map((management) => {
-                let res = halson(management.toJSON())
-                .addLink('self', `/managements/${management.id}`);
-
-                return res;
-            });
+            let managements;
+            if (options == 'true') {
+                managements = await managementSvc.getManagementsOptions();
+            } else {
+                managements = await managementSvc.getManagementsFull();
+            }
 
             const response = {
                 status: 'OK',
                 message: 'Get all managements success',
-                pagination,
-                data: managementResources
+                data: managements
             };
 
             return res.status(200).json(response);
@@ -74,6 +62,10 @@ module.exports = {
         try {
             const { id } = req.params;
             const { management_id } = req.query;
+
+            let management = await managementSvc.getManagementById(management_id);
+
+            if (!management) return err.not_found(res, "Management not found!");
 
             let department = await departmentSvc.getDepartmentById(id, management_id);
 

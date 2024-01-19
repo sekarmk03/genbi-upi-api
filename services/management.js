@@ -2,28 +2,32 @@ const { Management, Awardee, ManagementAwardee, Photo, File, Department, Positio
 const { Op } = require('sequelize');
 
 module.exports = {
-    getManagements: async (sort, sortType, startPage, limit) => {
-        const managements = await Management.findAndCountAll({
+    getManagementsFull: async () => {
+        const managements = await Management.findAll({
             order: [
-                [sort, sortType]
+                ['created_at', 'desc']
             ],
-            include: [
-                {
-                    model: Photo,
-                    as: 'photo',
-                    attributes: ['alt', 'caption'],
-                    include: {
-                        model: File,
-                        as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
-                    }
-                }
-            ],
-            limit: limit,
-            offset: startPage
         });
 
         return managements;
+    },
+
+    getManagementsOptions: async () => {
+        const managements = await Management.findAll({
+            attributes: ['id', 'name', 'period_year'],
+            order: [
+                ['created_at', 'desc']
+            ],
+        });
+
+        return managements;
+    },
+
+    getManagementById: async (id) => {
+        const management = await Management.findOne({
+            where: { id },
+        });
+        return management;
     },
 
     getActiveManagement: async () => {
