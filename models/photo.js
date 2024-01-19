@@ -14,13 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       Photo.belongsTo(models.File, {foreignKey: 'file_id', as: 'file'});
       Photo.belongsTo(models.Post, {foreignKey: 'post_id', as: 'post'});
       Photo.hasMany(models.Awardee, {foreignKey: 'photo_id', as: 'awardee_photo'});
-      Photo.hasMany(models.Department, {foreignKey: 'cover_id', as: 'departments'});
       Photo.hasMany(models.Event, {foreignKey: 'thubmnail_id', as: 'event_thumbnails'});
       Photo.hasMany(models.Event, {foreignKey: 'poster_id', as: 'event_posters'});
       Photo.hasMany(models.Event, {foreignKey: 'banner_id', as: 'event_banners'});
       Photo.hasMany(models.Appreciation, {foreignKey: 'cover_id', as: 'appreciations'});
       Photo.hasMany(models.ManagementDepartment, {foreignKey: 'cover_id', as: 'management_departments_cover'});
-      Photo.hasMany(models.Management, {foreignKey: 'cover_id', as: 'management_cover'});
+      Photo.hasMany(models.Management, {foreignKey: 'photo_id', as: 'management_cover'});
     }
   }
   Photo.init({

@@ -1,37 +1,29 @@
-const { Department, File, Photo } = require('../models');
+const { Department, File, Photo, Management, ManagementDepartment } = require('../models');
 
 module.exports = {
-    getDepartments: async () => {
+    getDepartments: async (management_id) => {
         const departments = await Department.findAll({
-            include: {
-                model: Photo,
-                as: 'cover',
-                attributes: ['alt'],
-                include: {
-                    model: File,
-                    as: 'file',
-                    attributes: ['imagekit_url', 'mimetype']
+            attributes: ['id', 'name'],
+            include: [
+                {
+                    model: ManagementDepartment,
+                    as: 'management_department',
+                    attributes: ['cover_id'],
+                    where: { management_id },
+                    include: {
+                        model: Photo,
+                        as: 'cover',
+                        attributes: ['alt'],
+                        include: {
+                            model: File,
+                            as: 'file',
+                            attributes: ['imagekit_url', 'mimetype']
+                        }
+                    }
                 }
-            }
+            ]
         });
 
         return departments;
-    },
-
-    getDepartmentById: async (id) => {
-        const department = await Department.findByPk(id, {
-            include: {
-                model: Photo,
-                as: 'cover',
-                attributes: ['alt'],
-                include: {
-                    model: File,
-                    as: 'file',
-                    attributes: ['imagekit_url', 'mimetype']
-                }
-            }
-        });
-
-        return department;
     },
 };

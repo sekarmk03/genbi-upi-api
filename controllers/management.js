@@ -43,7 +43,7 @@ module.exports = {
         try {
             const management = await managementSvc.getActiveManagement();
 
-            const depts = await departmentSvc.getDepartments();
+            const depts = await departmentSvc.getDepartments(management.id);
             const departments = depts.map(department => {
                 const departmentResource = halson(department.toJSON())
                     .addLink('self', `/departments/${department.id}`)
