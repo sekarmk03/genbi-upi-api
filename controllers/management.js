@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { managementSvc, departmentSvc } = require('../services');
+const { managementSvc, departmentSvc, programSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 
@@ -41,13 +41,13 @@ module.exports = {
 
     active: async (req, res, next) => {
         try {
-            let {period_year = ''} = req.query;
+            let {year = ''} = req.query;
 
             let management;
-            if (!period_year || period_year == '') {
+            if (!year || year == '') {
                 management = await managementSvc.getActiveManagement();
             } else {
-                management = await managementSvc.getManagementByPeriodYear(period_year);
+                management = await managementSvc.getManagementByYear(year);
             }
 
             if (!management) return err.not_found(res, "Management not found!");
@@ -55,7 +55,7 @@ module.exports = {
             const depts = await departmentSvc.getDepartments(management.id);
             const departments = depts.map(department => {
                 const departmentResource = halson(department.toJSON())
-                    .addLink('self', `/departments/${department.id}`)
+                    .addLink('self', `/managements/department/${department.id}?management_id=${management.id}`)
 
                 return departmentResource;
             });
@@ -64,6 +64,35 @@ module.exports = {
                 status: 'OK',
                 message: 'Get active management success',
                 data: { management, departments }
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    department: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const { management_id } = req.query;
+
+            let department = await departmentSvc.getDepartmentById(id, management_id);
+
+            if (!department) return err.not_found(res, "Department not found!");
+
+            const manager = await managementSvc.getManagerByDepartment(id, management_id);
+
+            if (!manager) return err.not_found(res, "Manager not found!");
+
+            const programs = await programSvc.getProgramByDepartment(id, management_id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Get department success',
+                data: {
+                    ...department.toJSON(),
+                    manager,
+                    programs
+                }
             });
         } catch (error) {
             next(error);

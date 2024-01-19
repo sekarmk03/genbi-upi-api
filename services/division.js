@@ -1,0 +1,1 @@
+const { Department, File, Photo, Management, ManagementDepartment, Division } = require('../models');
