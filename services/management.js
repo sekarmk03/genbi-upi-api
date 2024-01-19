@@ -89,4 +89,68 @@ module.exports = {
 
         return management;
     },
+
+    getManagementByPeriodYear: async (period_year) => {
+        const management = await Management.findOne({
+            where: {
+                period_year: period_year
+            },
+            include: [
+                {
+                    model: Photo,
+                    as: 'photo',
+                    attributes: ['alt', 'caption'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: Photo,
+                    as: 'video',
+                    attributes: ['alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: Awardee,
+                    as: 'awardees',
+                    attributes: ['id', 'name', 'linkedin_username', 'instagram_username'],
+                    through: {
+                        model: ManagementAwardee,
+                        attributes: []
+                    },
+                    include: [
+                        {
+                            model: Department,
+                            as: 'department',
+                            attributes: ['name'],
+                            where: { name: 'Executive' }
+                        },
+                        {
+                            model: Position,
+                            as: 'position',
+                            attributes: ['name']
+                        },
+                        {
+                            model: Photo,
+                            as: 'photo',
+                            attributes: ['alt', 'caption'],
+                            include: {
+                                model: File,
+                                as: 'file',
+                                attributes: ['imagekit_url', 'mimetype']
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+
+        return management;
+    },
 };

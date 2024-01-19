@@ -41,7 +41,16 @@ module.exports = {
 
     active: async (req, res, next) => {
         try {
-            const management = await managementSvc.getActiveManagement();
+            let {period_year = ''} = req.query;
+
+            let management;
+            if (!period_year || period_year == '') {
+                management = await managementSvc.getActiveManagement();
+            } else {
+                management = await managementSvc.getManagementByPeriodYear(period_year);
+            }
+
+            if (!management) return err.not_found(res, "Management not found!");
 
             const depts = await departmentSvc.getDepartments(management.id);
             const departments = depts.map(department => {
