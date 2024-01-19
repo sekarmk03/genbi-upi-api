@@ -1,4 +1,4 @@
-const { Management, Awardee, AwardeeManagement, Photo, File, Department, Division } = require('../models');
+const { Management, Awardee, AwardeeManagement, Photo, File, Department, Position } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -58,23 +58,18 @@ module.exports = {
                     attributes: ['id', 'name', 'linkedin_username', 'instagram_username'],
                     through: {
                         model: AwardeeManagement,
+                        attributes: []
                     },
                     include: [
                         {
                             model: Department,
                             as: 'department',
                             attributes: ['name'],
-                            where: {
-                                [Op.or]: [
-                                    { name: 'CEO'},
-                                    { name: 'Administration' },
-                                    { name: 'Finance' }
-                                ]
-                            }
+                            where: { name: 'Executive' }
                         },
                         {
-                            model: Division,
-                            as: 'division',
+                            model: Position,
+                            as: 'position',
                             attributes: ['name']
                         }
                     ]

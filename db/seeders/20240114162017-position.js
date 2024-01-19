@@ -20,13 +20,13 @@ module.exports = {
       updated_at: new Date()
     },
     {
-      name: "Administration Officer",
+      name: "Finance Officer",
       description: null,
       created_at: new Date(),
       updated_at: new Date()
     },
     {
-      name: "Finance Officer",
+      name: "Administration Officer",
       description: null,
       created_at: new Date(),
       updated_at: new Date()
