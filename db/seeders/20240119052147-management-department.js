@@ -12,78 +12,62 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert('awardee_management', [
+   await queryInterface.bulkInsert('management_department', [
     {
-      awardee_id: 1,
       management_id: 1,
+      department_id: 1,
+      cover_id: null,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 2,
       management_id: 1,
+      department_id: 2,
+      cover_id: 27,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 3,
       management_id: 1,
+      department_id: 3,
+      cover_id: 28,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 4,
       management_id: 1,
+      department_id: 4,
+      cover_id: 29,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 5,
       management_id: 1,
+      department_id: 5,
+      cover_id: 30,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 6,
       management_id: 1,
+      department_id: 6,
+      cover_id: 31,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 7,
       management_id: 1,
+      department_id: 7,
+      cover_id: 32,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
     {
-      awardee_id: 8,
       management_id: 1,
+      department_id: 8,
+      cover_id: 33,
       created_at: new Date(),
-      updated_at: new Date()
-    },
-    {
-      awardee_id: 9,
-      management_id: 1,
-      created_at: new Date(),
-      updated_at: new Date()
-    },
-    {
-      awardee_id: 10,
-      management_id: 1,
-      created_at: new Date(),
-      updated_at: new Date()
-    },
-    {
-      awardee_id: 11,
-      management_id: 1,
-      created_at: new Date(),
-      updated_at: new Date()
-    },
-    {
-      awardee_id: 12,
-      management_id: 1,
-      created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
     },
    ], {});
   },
@@ -95,6 +79,5 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('awardee_management', null, {});
   }
 };

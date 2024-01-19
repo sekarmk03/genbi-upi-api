@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class AwardeeManagement extends Model {
+  class ManagementAwardee extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,25 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // AwardeeManagement.belongsTo(models.Awardee, { foreignKey: 'awardee_id', as: 'awardee_management' });
-      // AwardeeManagement.belongsTo(models.Management, { foreignKey: 'management_id', as: 'awardee_management' });
+      // ManagementAwardee.belongsTo(models.Awardee, { foreignKey: 'awardee_id', as: 'awardee_management' });
+      // ManagementAwardee.belongsTo(models.Management, { foreignKey: 'management_id', as: 'awardee_management' });
     }
   }
-  AwardeeManagement.init({
+  ManagementAwardee.init({
+    management_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     awardee_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    management_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
   }, {
     sequelize,
-    modelName: 'AwardeeManagement',
-    tableName: 'awardee_management',
+    modelName: 'ManagementAwardee',
+    tableName: 'management_awardee',
     underscored: true,
     timestamps: true
   });
-  return AwardeeManagement;
+  return ManagementAwardee;
 };

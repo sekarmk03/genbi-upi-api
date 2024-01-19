@@ -15,16 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       Department.hasMany(models.Division, {foreignKey: 'department_id', as: 'divisions'});
       Department.hasMany(models.Awardee, {foreignKey: 'department_id', as: 'awardees'});
       Department.hasMany(models.Post, {foreignKey: 'department_id', as: 'posts'});
+      Department.belongsToMany(models.Management, {through: 'ManagementDepartment', foreignKey: 'department_id', as: 'management'});
     }
   }
   Department.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    cover_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     },
     description: {
       type: DataTypes.TEXT,

@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       Photo.hasMany(models.Event, {foreignKey: 'poster_id', as: 'event_posters'});
       Photo.hasMany(models.Event, {foreignKey: 'banner_id', as: 'event_banners'});
       Photo.hasMany(models.Appreciation, {foreignKey: 'cover_id', as: 'appreciations'});
+      Photo.hasMany(models.ManagementDepartment, {foreignKey: 'cover_id', as: 'management_departments_cover'});
+      Photo.hasMany(models.Management, {foreignKey: 'cover_id', as: 'management_cover'});
     }
   }
   Photo.init({
