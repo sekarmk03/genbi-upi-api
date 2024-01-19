@@ -7,6 +7,7 @@ const contact = require('./contact');
 const comment = require('./comment');
 const photo = require('./photo');
 const management = require('./management');
+const appreciation = require('./appreciation');
 
 router.get('/', (req, res) => {
     const ip_addr = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -18,5 +19,6 @@ router.use('/contact', contact);
 router.use('/comments', comment);
 router.use('/photos', photo);
 router.use('/managements', management);
+router.use('/appreciations', appreciation);
 
 module.exports = router;

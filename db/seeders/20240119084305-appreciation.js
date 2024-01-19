@@ -15,7 +15,7 @@ module.exports = {
    await queryInterface.bulkInsert('appreciation', [
     {
       title: 'GenBI Awarding January 2023',
-      cover_id: 1,
+      cover_id: 34,
       given_date: '2023-02-03',
       instagram_url: 'https://www.instagram.com/p/CoMfOQRBuRP',
       post_id: null,
@@ -39,7 +39,7 @@ module.exports = {
     },
     {
       title: 'Apresiasi Prestasi Sobat GenBI Januari 2023',
-      cover_id: 1,
+      cover_id: 33,
       given_date: '2023-02-10',
       instagram_url: 'https://www.instagram.com/p/Coe2VVshxwR',
       post_id: null,
@@ -51,7 +51,7 @@ module.exports = {
     },
     {
       title: 'GenBI Awarding February 2023',
-      cover_id: 1,
+      cover_id: 35,
       given_date: '2023-03-02',
       instagram_url: 'https://www.instagram.com/p/CpRkwJKhKhH',
       post_id: null,
@@ -76,7 +76,7 @@ module.exports = {
     },
     {
       title: 'Apresiasi Prestasi Sobat GenBI Februari 2023',
-      cover_id: 1,
+      cover_id: 33,
       given_date: '2023-03-10',
       instagram_url: 'https://www.instagram.com/p/CpmFlm9BOi2',
       post_id: null,
@@ -88,7 +88,7 @@ module.exports = {
     },
     {
       title: 'GenBI Awarding Maret 2023',
-      cover_id: 1,
+      cover_id: 36,
       given_date: '2023-04-02',
       instagram_url: 'https://www.instagram.com/p/Cqm1yU1hIVP',
       post_id: null,
@@ -113,7 +113,7 @@ module.exports = {
     },
     {
       title: 'Apresiasi Prestasi Sobat GenBI Maret 2023',
-      cover_id: 1,
+      cover_id: 33,
       given_date: '2023-04-10',
       instagram_url: 'https://www.instagram.com/p/Cq2IM1dBSYM',
       post_id: null,
@@ -125,7 +125,7 @@ module.exports = {
     },
     {
       title: 'GenBI Awarding April 2023',
-      cover_id: 1,
+      cover_id: 37,
       given_date: '2023-05-02',
       instagram_url: 'https://www.instagram.com/p/CsJE4aOBpyF',
       post_id: null,
@@ -150,7 +150,7 @@ module.exports = {
     },
     {
       title: 'GenBI Awarding Mei 2023',
-      cover_id: 1,
+      cover_id: 38,
       given_date: '2023-06-02',
       instagram_url: 'https://www.instagram.com/p/CtgwNlBBuwd',
       post_id: null,

@@ -5,5 +5,6 @@ const comment = require('./comment');
 const photo = require('./photo');
 const management = require('./management');
 const department = require('./department');
+const appreciation = require('./appreciation');
 
-module.exports = { summary, post, contact, comment, photo, management, department };
+module.exports = { summary, post, contact, comment, photo, management, department, appreciation };

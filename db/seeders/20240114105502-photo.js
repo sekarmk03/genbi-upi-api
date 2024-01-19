@@ -343,6 +343,66 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    { // 34
+      file_id: 33,
+      alt: 'bangga.jpg',
+      caption: "[caption] genbi-bangga-2023",
+      category: 'appreciation_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 35
+      file_id: 34,
+      alt: 'awarding-january-23.jpg',
+      caption: "[caption] genbi-awarding-2023",
+      category: 'appreciation_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 36
+      file_id: 35,
+      alt: 'awarding-february-23.jpg',
+      caption: "[caption] genbi-awarding-2023",
+      category: 'appreciation_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 37
+      file_id: 36,
+      alt: 'awarding-march-23.jpg',
+      caption: "[caption] genbi-awarding-2023",
+      category: 'appreciation_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 38
+      file_id: 37,
+      alt: 'awarding-april-23.jpg',
+      caption: "[caption] genbi-awarding-2023",
+      category: 'appreciation_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 39
+      file_id: 38,
+      alt: 'awarding-may-23.jpg',
+      caption: "[caption] genbi-awarding-2023",
+      category: 'appreciation_cover',
+      featured: false,
+      post_id: null,
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 

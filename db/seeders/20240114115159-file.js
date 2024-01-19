@@ -301,6 +301,60 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    { // 33
+      file_name: "bangga.jpg",
+      imagekit_id: "65aa456f88c257da33c501ef",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/bangga.jpg",
+      imagekit_path: "/genbi_upi/bangga.jpg",
+      mimetype: "image/jpeg",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 34
+      file_name: "awarding-january-23.jpg",
+      imagekit_id: "65aa457088c257da33c50520",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/awarding-january-23.jpg",
+      imagekit_path: "/genbi_upi/awarding-january-23.jpg",
+      mimetype: "image/jpeg",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 35
+      file_name: "awarding-february-23.jpg",
+      imagekit_id: "65aa457088c257da33c50444",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/awarding-february-23.jpg",
+      imagekit_path: "/genbi_upi/awarding-february-23.jpg",
+      mimetype: "image/jpeg",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 36
+      file_name: "awarding-march-23.jpg",
+      imagekit_id: "65aa456f88c257da33c4ff37",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/awarding-march-23.jpg",
+      imagekit_path: "/genbi_upi/awarding-march-23.jpg",
+      mimetype: "image/jpeg",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 37
+      file_name: "awarding-april-23.jpg",
+      imagekit_id: "65aa456f88c257da33c5028c",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/awarding-april-23.jpg",
+      imagekit_path: "/genbi_upi/awarding-april-23.jpg",
+      mimetype: "image/jpeg",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
+    { // 38
+      file_name: "awarding-may-23.jpg",
+      imagekit_id: "65aa457088c257da33c50530",
+      imagekit_url: "https://ik.imagekit.io/sekarmadu/genbi_upi/awarding-may-23.jpg",
+      imagekit_path: "/genbi_upi/awarding-may-23.jpg",
+      mimetype: "image/jpeg",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 
