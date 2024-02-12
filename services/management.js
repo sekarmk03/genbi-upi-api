@@ -39,7 +39,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'photo',
-                    attributes: ['alt', 'caption'],
+                    attributes: ['id', 'alt', 'caption'],
                     include: {
                         model: File,
                         as: 'file',
@@ -49,7 +49,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'video',
-                    attributes: ['alt'],
+                    attributes: ['id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
@@ -79,7 +79,7 @@ module.exports = {
                         {
                             model: Photo,
                             as: 'photo',
-                            attributes: ['alt', 'caption'],
+                            attributes: ['id', 'alt'],
                             include: {
                                 model: File,
                                 as: 'file',
@@ -103,7 +103,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'photo',
-                    attributes: ['alt', 'caption'],
+                    attributes: ['id', 'alt', 'caption'],
                     include: {
                         model: File,
                         as: 'file',
@@ -113,7 +113,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'video',
-                    attributes: ['alt'],
+                    attributes: ['id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
@@ -143,7 +143,7 @@ module.exports = {
                         {
                             model: Photo,
                             as: 'photo',
-                            attributes: ['alt', 'caption'],
+                            attributes: ['id', 'alt', 'caption'],
                             include: {
                                 model: File,
                                 as: 'file',
@@ -182,7 +182,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'photo',
-                    attributes: ['alt', 'caption'],
+                    attributes: ['id', 'alt', 'caption'],
                     include: {
                         model: File,
                         as: 'file',
@@ -217,7 +217,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'photo',
-                    attributes: ['alt'],
+                    attributes: ['id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',

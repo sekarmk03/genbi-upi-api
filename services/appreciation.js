@@ -7,7 +7,7 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'cover',
-                    attributes: ['alt', 'caption'],
+                    attributes: ['id', 'alt', 'caption'],
                     include: [
                         {
                             model: File,

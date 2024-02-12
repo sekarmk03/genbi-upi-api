@@ -2,6 +2,7 @@ const err = require('../common/custom_error');
 const { managementSvc, departmentSvc, programSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
+const { management: managementTransformer, department: departmentTransformer } = require('../common/response_transformer');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -51,7 +52,10 @@ module.exports = {
             return res.status(200).json({
                 status: 'OK',
                 message: 'Get active management success',
-                data: { management, departments }
+                data: {
+                    management: managementTransformer.managementDetail(management),
+                    departments: departmentTransformer.departmentListPreview(departments.slice(1))
+                }
             });
         } catch (error) {
             next(error);
@@ -77,16 +81,19 @@ module.exports = {
 
             const programs = await programSvc.getProgramByDepartment(id, management_id);
 
+            const rawdata = {
+                ...department.toJSON(),
+                manager,
+                programs
+            }
+
             return res.status(200).json({
                 status: 'OK',
                 message: 'Get department success',
-                data: {
-                    ...department.toJSON(),
-                    manager,
-                    programs
-                }
+                data: departmentTransformer.departmentDetail(rawdata)
             });
         } catch (error) {
+            console.log(error);
             next(error);
         }
     }

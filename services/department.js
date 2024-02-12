@@ -14,7 +14,7 @@ module.exports = {
                     include: {
                         model: Photo,
                         as: 'cover',
-                        attributes: ['alt'],
+                        attributes: ['id', 'alt'],
                         include: {
                             model: File,
                             as: 'file',
@@ -46,7 +46,7 @@ module.exports = {
                                 {
                                     model: Photo,
                                     as: 'photo',
-                                    attributes: ['alt'],
+                                    attributes: ['id', 'alt'],
                                     include: {
                                         model: File,
                                         as: 'file',
@@ -76,7 +76,7 @@ module.exports = {
                     include: {
                         model: Photo,
                         as: 'cover',
-                        attributes: ['alt'],
+                        attributes: ['id', 'alt'],
                         include: {
                             model: File,
                             as: 'file',
