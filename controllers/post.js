@@ -2,7 +2,7 @@ const err = require('../common/custom_error');
 const { postSvc, commentSvc, departmentSvc, photoSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
-const { post: postTransformer } = require('../common/response_transformer');
+const { post: postTransformer, comment: commentTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');
 
 module.exports = {
@@ -125,7 +125,7 @@ module.exports = {
                 status: 'OK',
                 message: 'Get comments by post success',
                 pagination,
-                data: commentResources
+                data: commentTransformer.commentList(commentResources)
             }
 
             return res.status(200).json(response);

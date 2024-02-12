@@ -17,8 +17,8 @@ module.exports = {
             if (post.rank) newpost.rank = post.rank;
             if (post.author) newpost.author = post.author.awardee.name;
             if (post.images) newpost.image_cover = imageTransformer.imageDetail(post.images[0]);
-            if (post.created_at) newpost.created_at = post.created_at;
-            if (post.updated_at) newpost.updated_at = post.updated_at;
+            if (post.created_at || post.createdAt) newpost.created_at = (post.created_at ?? post.createdAt);
+            if (post.updated_at || post.updatedAt) newpost.updated_at = (post.updated_at ?? post.updatedAt);
             if (post._links) newpost._links = post._links;
 
             return newpost;
@@ -44,10 +44,10 @@ module.exports = {
             author: post.author.awardee.name,
             event: post.event,
             images: imageTransformer.imageList(post.images),
-            created_at: post.created_at,
-            updated_at: post.updated_at
         }
         
+        if (post.created_at || post.createdAt) newpost.created_at = (post.created_at ?? post.createdAt);
+        if (post.updated_at || post.updatedAt) newpost.updated_at = (post.updated_at ?? post.updatedAt);
         if (post._links) newpost._links = post._links
 
         return newpost;
