@@ -5,5 +5,6 @@ const management = require('./management');
 const awardee = require('./awardee');
 const department = require('./department');
 const division = require('./division');
+const appreciation = require('./appreciation');
 
-module.exports = { post, image, comment, management, awardee, department, division };
+module.exports = { post, image, comment, management, awardee, department, division, appreciation };

@@ -1,8 +1,8 @@
 const { Appreciation, Photo, File } = require('../models');
 
 module.exports = {
-    getAppreciations: async () => {
-        const appreciations = await Appreciation.findAll({
+    getAppreciations: async (sort, sortType, startPage, limit) => {
+        const appreciations = await Appreciation.findAndCountAll({
             include: [
                 {
                     model: Photo,
@@ -18,8 +18,11 @@ module.exports = {
                 }
             ],
             order: [
-                ['created_at', 'DESC']
-            ]
+                [sort, sortType]
+            ],
+            limit: limit,
+            offset: startPage,
+            distinct: true
         });
 
         return appreciations;
