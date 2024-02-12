@@ -50,7 +50,6 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
-            console.log(error);
             next(error);
         }
     },
@@ -88,7 +87,10 @@ module.exports = {
             return res.status(200).json({
                 status: 'OK',
                 message: "Get detail post success",
-                data: {post, similarPosts}
+                data: {
+                    post: postTransformer.postDetail(post),
+                    similarPosts: postTransformer.postList(similarPosts)
+                }
             });
         } catch (error) {
             next(error);
