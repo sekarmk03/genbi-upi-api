@@ -9,19 +9,17 @@ module.exports = {
                 type: post.type,
                 content: post.content,
                 visitors: post.visitors,
-                tags: [
-                    post.tag1,
-                    post.tag2,
-                    post.tag3,
-                    post.tag4,
-                    post.tag5,
-                ],
                 department_id: post.department_id,
                 department_name: post.department.name,
             }
 
-            if (post.images) newpost.images = imageTransformer.imageList(post.images);
-            if (post._links) newpost._links = post.links;
+            if (post.tag1) newpost.tags = [ post.tag1, post.tag2, post.tag3, post.tag4, post.tag5 ];
+            if (post.rank) newpost.rank = post.rank;
+            if (post.author) newpost.author = post.author.awardee.name;
+            if (post.images) newpost.image_cover = imageTransformer.imageDetail(post.images[0]);
+            if (post.created_at) newpost.created_at = post.created_at;
+            if (post.updated_at) newpost.updated_at = post.updated_at;
+            if (post._links) newpost._links = post._links;
 
             return newpost;
         });

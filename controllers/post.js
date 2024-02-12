@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { postSvc, commentSvc, departmentSvc } = require('../services');
+const { postSvc, commentSvc, departmentSvc, photoSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 const { post: postTransformer } = require('../common/response_transformer');
@@ -149,18 +149,25 @@ module.exports = {
 
             const pagination = paginate(posts.count, posts.rows.length, limit, page, start, end);
 
-            const postResources = posts.rows.map((post) => {
-                const res = halson(post.toJSON())
-                .addLink('self', `/posts/${post.id}`);
+            // const postResources = posts.rows.map((post) => {
+            //     const res = halson(post.toJSON())
+            //     .addLink('self', `/posts/${post.id}`);
 
+            //     // res.images = await photoSvc.getPhotosByPostId(post.id);
+            //     return res;
+            // });
+
+            const postResources = await Promise.all(posts.rows.map(async (post) => {
+                const res = halson(post.toJSON()).addLink('self', `/posts/${post.id}`);
+                res.images = await photoSvc.getPhotosByPostId(post.id);
                 return res;
-            });
+            }));
 
             const response = {
                 status: 'OK',
                 message: `Search ${keyword} posts success.`,
                 pagination,
-                data: postResources
+                data: postTransformer.postList(postResources)
             }
 
             return res.status(200).json(response);

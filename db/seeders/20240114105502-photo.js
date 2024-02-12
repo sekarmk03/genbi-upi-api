@@ -249,7 +249,7 @@ module.exports = {
       caption: "[caption] A Farewell to 2023: Reflecting on the Journey",
       category: 'post_cover_image',
       featured: false,
-      post_id: 6,
+      post_id: 16,
       created_at: new Date(),
       updated_at: new Date()
     },

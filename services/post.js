@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 
 const repository = {
     postAttrDetail: ['id', 'title', 'type', 'slug', 'content', 'visitors', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'department_id', 'author_id', 'created_at', 'updated_at'],
+    postAttr: ['id', 'title', 'type', 'slug', 'content', 'visitors', 'department_id', 'author_id', 'created_at', 'updated_at'],
 };
 
 module.exports = {
@@ -42,7 +43,7 @@ module.exports = {
     
     getPostsPublic: async (filter, sort, sortType, startPage, limit) => {
         const posts = await Post.findAndCountAll({
-            attributes: repository.postAttrDetail,
+            attributes: repository.postAttr,
             where: {
                 [Op.or]: [
                     typeof filter === 'string' ? {
@@ -79,96 +80,6 @@ module.exports = {
             limit: limit,
             offset: startPage,
             distinct: true
-        });
-
-        return posts;
-    },
-
-    getPosts: async (sort, sortType, startPage, limit) => {
-        let filter = 'marketing';
-        const posts = await Post.findAndCountAll({
-            attributes: repository.postAttrDetail,
-            order: [
-                [sort, sortType]
-            ],
-            include: [
-                {
-                    model: Department,
-                    as: 'department',
-                    attributes: ['id', 'name']
-                },
-                {
-                    model: Photo,
-                    as: 'images',
-                    attributes: ['id', 'category', 'alt'],
-                    include: {
-                        model: File,
-                        as: 'file',
-                        attributes: ['id', 'imagekit_url']
-                    },
-                }
-            ],
-            where: {
-                [Op.or]: [
-                    {
-                        type: {
-                            [Op.iLike]: `%${filter}%`
-                        }
-                    },
-                    filter ? {
-                        '$department.name$': {
-                          [Op.iLike]: `%${filter}%`,
-                        },
-                    } : {},
-                ]
-            },
-            limit: limit,
-            offset: startPage,
-            distinct: true
-        });
-
-        return posts;
-    },
-
-    getPostsPublicFilter: async (filter, sort, sortType, startPage, limit) => {
-        const posts = await Post.findAndCountAll({
-            attributes: repository.postAttrDetail,
-            where: {
-                [Op.or]: [
-                    {
-                        type: {
-                            [Op.iLike]: `%${filter}%`
-                        }
-                    },
-                    {
-                        '$department.name$': {
-                            [Op.iLike]: `%${filter}%`,
-                        },
-                    },
-                ]
-            },
-            order: [
-                [sort, sortType]
-            ],
-            include: [
-                {
-                    model: Department,
-                    as: 'department',
-                    attributes: ['id', 'name']
-                },
-                {
-                    model: Photo,
-                    as: 'images',
-                    attributes: ['id', 'category', 'alt'],
-                    include: {
-                        model: File,
-                        as: 'file',
-                        attributes: ['id', 'imagekit_url']
-                    },
-                }
-            ],
-            limit: limit,
-            offset: startPage,
         });
 
         return posts;
@@ -227,7 +138,7 @@ module.exports = {
 
     getPostsByKeyword: async (keyword, startPage, limit) => {
         const posts = await Post.findAndCountAll({
-            attributes: ['id', 'title', 'slug', 'type', 'content', 'department_id', [
+            attributes: [...repository.postAttr, [
                 Sequelize.literal(`
                     ts_rank(search, websearch_to_tsquery('indonesian', '${keyword}')) +
                     ts_rank(search, websearch_to_tsquery('english', '${keyword}')) +
@@ -268,11 +179,6 @@ module.exports = {
                         attributes: ['name']
                     }
                 },
-                {
-                    model: Event,
-                    as: 'event',
-                    attributes: ['id', 'title']
-                }
             ],
             order: [
                 [Sequelize.literal('rank DESC')],

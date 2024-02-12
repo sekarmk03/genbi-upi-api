@@ -16,5 +16,21 @@ module.exports = {
         });
 
         return photos;
+    },
+
+    getPhotosByPostId: async (post_id) => {
+        const photos = await Photo.findAll({
+            attributes: ['id', 'category', 'alt'],
+            where: {
+                post_id: post_id
+            },
+            include: {
+                model: File,
+                as: 'file',
+                attributes: ['id', 'imagekit_url']
+            },
+        });
+
+        return photos;
     }
 };

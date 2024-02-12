@@ -17,7 +17,8 @@ module.exports = {
                 [sort, sortType]
             ],
             limit: limit,
-            offset: startPage
+            offset: startPage,
+            distinct: true
         });
 
         return comments;
