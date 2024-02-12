@@ -7,6 +7,6 @@ router.get('/search', post.search);
 router.get('/similar', post.similar);
 router.get('/:id', post.show);
 router.get('/:id/comments', post.comments);
-router.post('/visitors/add', post.visitors);
+router.get('/:id/visitors/add', post.visitors);
 
 module.exports = router;

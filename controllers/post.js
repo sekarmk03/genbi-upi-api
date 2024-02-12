@@ -205,7 +205,7 @@ module.exports = {
 
     visitors: async (req, res, next) => {
         try {
-            let { post_id } = req.body;
+            let { id: post_id } = req.params;
             post_id = parseInt(post_id);
 
             const post = await postSvc.getPostById(post_id);
