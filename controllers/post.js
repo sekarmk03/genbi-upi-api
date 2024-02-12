@@ -2,7 +2,7 @@ const err = require('../common/custom_error');
 const { postSvc, commentSvc, departmentSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
-const pure = require('../utils/textPurify');
+const { post: postTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');
 
 module.exports = {
@@ -45,11 +45,12 @@ module.exports = {
                 status: 'OK',
                 message: 'Get all posts success',
                 pagination,
-                data: postResources
-            }
+                data: postTransformer.postList(postResources)
+            };
 
             return res.status(200).json(response);
         } catch (error) {
+            console.log(error);
             next(error);
         }
     },
