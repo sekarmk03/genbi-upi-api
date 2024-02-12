@@ -1,13 +1,13 @@
-const { Post } = require('../models');
+const { Post, Awardee, Management, Event } = require('../models');
 
 module.exports = {
     home: async (req, res, next) => {
         try {
-            let events = 0;
+            let events = await Event.count();
             let posts = await Post.count();
-            let years = 5;
-            let visitors = 0;
-            let awardees = 0;
+            let years = await Management.count();
+            let visitors = await Post.sum('visitors');
+            let awardees = await Awardee.count();
 
             return res.status(200).json({
                 status: 'OK',
