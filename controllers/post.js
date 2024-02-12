@@ -117,7 +117,7 @@ module.exports = {
                 const res = halson(comment.toJSON())
                 .addLink('reply', `/comments/${comment.id}/reply`);
                 
-                res.countReplies = comment.replies.length;
+                // res.countReplies = comment.replies.length;
                 return res;
             });
 

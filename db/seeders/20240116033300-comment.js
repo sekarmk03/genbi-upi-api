@@ -283,6 +283,15 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     },
+    { // p5 // r11 // c31
+      post_id: 5,
+      comment_id: null,
+      level: 0,
+      name: "Anonim",
+      content: "Can't wait for the next articles! Love it.",
+      created_at: new Date(),
+      updated_at: new Date()
+    },
    ], {});
   },
 

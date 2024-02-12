@@ -4,6 +4,7 @@ const { commentVal } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const halson = require('halson');
+const { comment: commentTransformer } = require('../common/response_transformer');
 
 module.exports = {
     create: async (req, res, next) => {
@@ -27,7 +28,7 @@ module.exports = {
             return res.status(201).json({
                 status: 'CREATED',
                 message: 'New comment successfully created',
-                data: commentResource
+                data: commentTransformer.commentDetail(commentResource)
             });
         } catch (error) {
             next(error);
@@ -56,7 +57,7 @@ module.exports = {
             return res.status(201).json({
                 status: 'CREATED',
                 message: 'New reply comment successfully created',
-                data: newComment
+                data: commentTransformer.commentDetail(newComment)
             });
         } catch (error) {
             next(error);
