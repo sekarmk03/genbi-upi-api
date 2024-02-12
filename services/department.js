@@ -1,4 +1,5 @@
 const { Department, File, Photo, Management, ManagementDepartment, Division, Awardee, ManagementAwardee } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
     getDepartments: async (management_id) => {
@@ -84,6 +85,19 @@ module.exports = {
                     }
                 }
             ]
+        });
+
+        return department;
+    },
+
+    getDepartmentIdByName: async (name) => {
+        const department = await Department.findOne({
+            where: {
+                name: {
+                    [Op.iLike]: `%${name}%`
+                }
+            },
+            attributes: ['id'],
         });
 
         return department;

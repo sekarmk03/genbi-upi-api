@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { postSvc, commentSvc } = require('../services');
+const { postSvc, commentSvc, departmentSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 const pure = require('../utils/textPurify');
@@ -16,6 +16,14 @@ module.exports = {
             limit = parseInt(limit);
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
+
+            let dept_id;
+            if (filter != '') {
+                dept_id = await departmentSvc.getDepartmentIdByName(filter);
+                if (dept_id) {
+                    filter = dept_id.id;
+                }
+            }
 
             let posts;
             if (!req.user) {
