@@ -93,5 +93,44 @@ module.exports = {
         });
 
         return event;
+    },
+
+    getSimilarEvents: async (event) => {
+        const events = await Event.findAll({
+            where: {
+                [Op.or]: [
+                    { tag2: { [Op.iLike]: `%${event.tag2}%` } },
+                    { tag2: { [Op.iLike]: `%${event.tag3}%` } },
+                    { tag2: { [Op.iLike]: `%${event.tag4}%` } },
+                    { tag2: { [Op.iLike]: `%${event.tag5}%` } },
+                    { tag3: { [Op.iLike]: `%${event.tag2}%` } },
+                    { tag3: { [Op.iLike]: `%${event.tag3}%` } },
+                    { tag3: { [Op.iLike]: `%${event.tag4}%` } },
+                    { tag3: { [Op.iLike]: `%${event.tag5}%` } },
+                    { tag4: { [Op.iLike]: `%${event.tag2}%` } },
+                    { tag4: { [Op.iLike]: `%${event.tag3}%` } },
+                    { tag4: { [Op.iLike]: `%${event.tag4}%` } },
+                    { tag4: { [Op.iLike]: `%${event.tag5}%` } },
+                    { tag5: { [Op.iLike]: `%${event.tag2}%` } },
+                    { tag5: { [Op.iLike]: `%${event.tag3}%` } },
+                    { tag5: { [Op.iLike]: `%${event.tag4}%` } },
+                    { tag5: { [Op.iLike]: `%${event.tag5}%` } },
+                ]
+            },
+            include: [
+                {
+                    model: Photo,
+                    as: 'thumbnail',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+            ],
+        });
+
+        return events;
     }
 };

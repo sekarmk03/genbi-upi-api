@@ -1,7 +1,9 @@
+const err = require('../common/custom_error');
 const { eventSvc, postSvc } = require('../services');
 const halson = require('halson');
 const paginate = require('../utils/generate-pagination');
 const { event: eventTransformer, post: postTransformer } = require('../common/response_transformer');
+const Fuse = require('fuse.js');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -42,22 +44,33 @@ module.exports = {
             const { id } = req.params;
 
             const event = await eventSvc.getEventById(id);
-
-            if (!event) {
-                return res.status(404).json({
-                    status: 'Not Found',
-                    message: 'Event not found'
-                });
-            }
+            if (!event) return err.not_found(res, "Event not found!");
 
             const posts = await postSvc.getPostsByEventId(id);
-
             event.posts = postTransformer.postList(posts);
+
+            const similarData = await eventSvc.getSimilarEvents(event);
+            const fuse = new Fuse(similarData, {
+                keys: ['title', 'description']
+            });
+            const queryOptions = {
+                keys: ['title', 'description']
+            };
+            const similarFuseResults = fuse.search({
+                $or: [
+                    { title: event.title },
+                    { description: event.description }
+                ]
+            }, queryOptions);
+            const recommendationEvents = similarFuseResults.filter(result => result.item.title !== event.title && result.item.description !== event.description).map(({item}) => item);
 
             return res.status(200).json({
                 status: 'OK',
                 message: 'Event successfully retrieved',
-                data: eventTransformer.eventDetail(event)
+                data: {
+                    event: eventTransformer.eventDetail(event),
+                    recommendations: eventTransformer.eventListPreview(recommendationEvents)
+                }
             });
         } catch (error) {
             next(error);
