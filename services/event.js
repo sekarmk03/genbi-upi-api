@@ -4,6 +4,15 @@ const { Op } = require('sequelize');
 module.exports = {
     getEventsPublic: async (sort, sortType, startPage, limit, filter) => {
         const events = await Event.findAndCountAll({
+            where: {
+                [Op.or]: [
+                    {
+                        status: {
+                            [Op.iLike]: `%${filter}%`
+                        }
+                    },
+                ]
+            },
             include: [
                 {
                     model: Photo,
