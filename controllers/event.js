@@ -15,7 +15,7 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const events = await eventSvc.getEvents(sort, type, start, limit, filter);
+            const events = await eventSvc.getEventsPublic(sort, type, start, limit, filter);
 
             const pagination = paginate(events.count, events.rows.length, limit, page, start, end);
 
@@ -30,7 +30,30 @@ module.exports = {
                 status: 'OK',
                 message: 'Events successfully retrieved',
                 pagination,
-                data: eventTransformer.eventList(eventResources)
+                data: eventTransformer.eventListPreview(eventResources)
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const event = await eventSvc.getEventById(id);
+
+            if (!event) {
+                return res.status(404).json({
+                    status: 'Not Found',
+                    message: 'Event not found'
+                });
+            }
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Event successfully retrieved',
+                data: eventTransformer.eventDetail(event)
             });
         } catch (error) {
             next(error);
