@@ -261,5 +261,32 @@ module.exports = {
         });
 
         return update;
+    },
+
+    getPostsByEventId: async (eventId) => {
+        const posts = await Post.findAll({
+            where: {
+                event_id: eventId
+            },
+            include: [
+                {
+                    model: Department,
+                    as: 'department',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Photo,
+                    as: 'images',
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['id', 'imagekit_url']
+                    },
+                    attributes: ['id', 'category', 'alt', 'caption']
+                },
+            ]
+        });
+
+        return posts;
     }
 }

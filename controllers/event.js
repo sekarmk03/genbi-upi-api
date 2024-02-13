@@ -1,7 +1,7 @@
-const { eventSvc } = require('../services');
+const { eventSvc, postSvc } = require('../services');
 const halson = require('halson');
 const paginate = require('../utils/generate-pagination');
-const { event: eventTransformer } = require('../common/response_transformer');
+const { event: eventTransformer, post: postTransformer } = require('../common/response_transformer');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -49,6 +49,10 @@ module.exports = {
                     message: 'Event not found'
                 });
             }
+
+            const posts = await postSvc.getPostsByEventId(id);
+
+            event.posts = postTransformer.postList(posts);
 
             return res.status(200).json({
                 status: 'OK',

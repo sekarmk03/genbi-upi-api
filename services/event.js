@@ -1,4 +1,4 @@
-const { Event, File, Photo, Post, Program, Department, Management } = require('../models');
+const { Event, File, Photo, Program, Department, Management } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -71,11 +71,6 @@ module.exports = {
                         as: 'file',
                         attributes: ['imagekit_url', 'mimetype']
                     }
-                },
-                {
-                    model: Post,
-                    as: 'posts',
-                    attributes: ['id', 'title', 'slug'],
                 },
                 {
                     model: Program,
