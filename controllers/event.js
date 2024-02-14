@@ -75,5 +75,36 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    search: async (req, res, next) => {
+        try {
+            let {
+                page = "1", limit = "10", keyword = ''
+            } = req.query;
+
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
+
+            const events = await eventSvc.getEventsByKeyword(keyword, start, limit);
+
+            const pagination = paginate(events.count, events.rows.length, limit, page, start, end);
+
+            const eventResources = events.rows.map((event) => {
+                const res = halson(event.toJSON()).addLink('self', `/events/${event.id}`);
+                return res;
+            });
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Events successfully retrieved',
+                pagination,
+                data: eventTransformer.eventListPreview(eventResources)
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 };

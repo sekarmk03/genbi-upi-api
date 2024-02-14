@@ -132,5 +132,35 @@ module.exports = {
         });
 
         return events;
+    },
+
+    getEventsByKeyword: async (keyword, startPage, limit) => {
+        const events = await Event.findAndCountAll({
+            where: {
+                [Op.or]: [
+                    { title: { [Op.iLike]: `%${keyword}%` } },
+                    { tag2: { [Op.iLike]: `%${keyword}%` } },
+                    { tag3: { [Op.iLike]: `%${keyword}%` } },
+                    { tag4: { [Op.iLike]: `%${keyword}%` } },
+                    { tag5: { [Op.iLike]: `%${keyword}%` } },
+                ]
+            },
+            include: [
+                {
+                    model: Photo,
+                    as: 'thumbnail',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+            ],
+            limit: limit,
+            offset: startPage
+        });
+
+        return events;
     }
 };

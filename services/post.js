@@ -184,7 +184,8 @@ module.exports = {
                 [Sequelize.literal('rank DESC')],
             ],
             limit: limit,
-            offset: startPage
+            offset: startPage,
+            distinct: true
         });
 
         return posts;
