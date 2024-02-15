@@ -41,11 +41,17 @@ module.exports = {
             ],
             department_id: post.department_id,
             department_name: post.department.name,
-            author: post.author.awardee.name,
+            // author: post.author.awardee.name,
             event: post.event,
             // images: imageTransformer.imageList(post.images),
         }
         
+        if (post.author) {
+            newpost.author = {
+                name: post.author.awardee.name,
+                photo: imageTransformer.imageDetail(post.author.awardee.photo),
+            }
+        }
         if (post.images) {
             newpost.image_cover = imageTransformer.imageDetail(post.images[0]);
             if (post.images.length > 1) {

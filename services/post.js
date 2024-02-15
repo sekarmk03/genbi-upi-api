@@ -99,11 +99,23 @@ module.exports = {
                     model: User,
                     as: 'author',
                     attributes: ['uuid'],
-                    include: {
-                        model: Awardee,
-                        as: 'awardee',
-                        attributes: ['name']
-                    }
+                    include: [
+                        {
+                            model: Awardee,
+                            as: 'awardee',
+                            attributes: ['name'],
+                            include: {
+                                model: Photo,
+                                as: 'photo',
+                                attributes: ['id', 'alt', 'caption'],
+                                include: {
+                                    model: File,
+                                    as: 'file',
+                                    attributes: ['imagekit_url']
+                                }
+                            }
+                        },
+                    ]
                 },
                 {
                     model: Event,
