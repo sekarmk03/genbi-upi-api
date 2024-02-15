@@ -87,7 +87,7 @@ module.exports = {
 
     getPostById: async (id) => {
         const post = await Post.findOne({
-            attributes: repository.postAttrDetail,
+            // attributes: repository.postAttrDetail,
             where: { id: id },
             include: [
                 {
