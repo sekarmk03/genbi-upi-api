@@ -43,9 +43,17 @@ module.exports = {
             department_name: post.department.name,
             author: post.author.awardee.name,
             event: post.event,
-            images: imageTransformer.imageList(post.images),
+            // images: imageTransformer.imageList(post.images),
         }
         
+        if (post.images) {
+            newpost.image_cover = imageTransformer.imageDetail(post.images[0]);
+            if (post.images.length > 1) {
+                newpost.images = imageTransformer.imageList(post.images.slice(1));
+            } else {
+                newpost.images = [];
+            }
+        }
         if (post.created_at || post.createdAt) newpost.created_at = (post.created_at ?? post.createdAt);
         if (post.updated_at || post.updatedAt) newpost.updated_at = (post.updated_at ?? post.updatedAt);
         if (post.attachments) newpost.attachments = post.attachments;
