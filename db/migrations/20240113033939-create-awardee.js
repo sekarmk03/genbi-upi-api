@@ -23,7 +23,6 @@ module.exports = {
       },
       birth_date: {
         type: Sequelize.DATEONLY,
-        allowNull: false
       },
       linkedin_username: {
         type: Sequelize.STRING
@@ -37,18 +36,6 @@ module.exports = {
       },
       member_since: {
         type: Sequelize.DATEONLY
-      },
-      department_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      division_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
-      position_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
       },
       scholarship: {
         type: Sequelize.INTEGER

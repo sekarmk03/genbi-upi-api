@@ -13,12 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Awardee.belongsTo(models.User, {foreignKey: 'user_id', as: 'user_account'});
       Awardee.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
-      Awardee.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
-      Awardee.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
-      Awardee.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
+      // Awardee.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
+      // Awardee.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
+      // Awardee.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
       Awardee.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
       Awardee.belongsTo(models.Document, {foreignKey: 'transcript_id', as: 'transcript'});
-      Awardee.belongsToMany(models.Management, {through: models.ManagementAwardee, foreignKey: 'awardee_id', as: 'managements'});
+      // Awardee.belongsToMany(models.Management, {through: models.ManagementAwardee, foreignKey: 'awardee_id', as: 'managements'});
+      Awardee.hasMany(models.AwardeeManagement, {foreignKey: 'awardee_id', as: 'awardee_managements'});
     }
   }
   Awardee.init({
@@ -36,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     birth_date: {
       type: DataTypes.DATEONLY,
-      allowNull: false
     },
     linkedin_username: DataTypes.STRING,
     instagram_username: {
@@ -45,18 +45,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     telp: DataTypes.STRING,
     member_since: DataTypes.DATEONLY,
-    department_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    division_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    position_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     scholarship: DataTypes.INTEGER,
     nim: DataTypes.STRING,
     study_program_id: DataTypes.INTEGER,
