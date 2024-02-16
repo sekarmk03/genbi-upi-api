@@ -52,7 +52,7 @@ module.exports = {
                 photo: imageTransformer.imageDetail(post.author.awardee.photo),
             }
         }
-        if (post.images) {
+        if (post.images.length > 0) {
             newpost.image_cover = imageTransformer.imageDetail(post.images[0]);
             if (post.images.length > 1) {
                 newpost.images = imageTransformer.imageList(post.images.slice(1));
