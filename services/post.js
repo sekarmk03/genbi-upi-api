@@ -140,7 +140,7 @@ module.exports = {
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['id', 'imagekit_url']
+                        attributes: ['id', 'file_name', 'imagekit_url']
                     },
                     attributes: ['id', 'category']
                 }

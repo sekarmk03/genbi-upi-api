@@ -1,4 +1,5 @@
 const imageTransformer = require('./image');
+const documentTransformer = require('./document');
 
 module.exports = {
     postList: (posts) => {
@@ -62,7 +63,7 @@ module.exports = {
         }
         if (post.created_at || post.createdAt) newpost.created_at = (post.created_at ?? post.createdAt);
         if (post.updated_at || post.updatedAt) newpost.updated_at = (post.updated_at ?? post.updatedAt);
-        if (post.attachments) newpost.attachments = post.attachments;
+        if (post.attachments) newpost.attachments = documentTransformer.documentList(post.attachments);
         if (post._links) newpost._links = post._links
 
         return newpost;
