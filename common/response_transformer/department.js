@@ -21,10 +21,9 @@ module.exports = {
         let newdepartment = {
             id: department.id,
             name: department.name,
-            cover: imageTransformer.imageDetail(department.management_department[0].cover),
+            cover: imageTransformer.imageDetail(department.cover),
             description: department.description,
-            manager: awardeeTransformer.awardeeDetailPreview(department.manager),
-            divisions: divisionTransformer.divisionList(department.divisions),
+            divisions: department.divisions,
             programs: department.programs
         }
 

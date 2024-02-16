@@ -1,4 +1,4 @@
-const { sequelize, Department, File, Photo, Division } = require('../models');
+const { sequelize, Department, File, Photo, Division, Program } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -47,6 +47,11 @@ module.exports = {
                     as: 'divisions',
                     attributes: ['id', 'name', 'description'],
                 },
+                {
+                    model: Program,
+                    as: 'programs',
+                    attributes: ['id', 'name', 'description', 'implementation_desc']
+                }
             ]
         });
 

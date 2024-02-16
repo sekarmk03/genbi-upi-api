@@ -7,7 +7,7 @@ module.exports = {
                 id: division.id,
                 name: division.name,
                 description: division.description,
-                awardees: awardeeTransformer.awardeeListPreview(division.awardees)
+                awardees: awardeeTransformer.awardeeListPreview(division.awardee_managements)
             }
 
             return newdivision;
