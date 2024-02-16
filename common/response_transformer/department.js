@@ -8,7 +8,8 @@ module.exports = {
             let newdepartment = {
                 id: department.id,
                 name: department.name,
-                cover: imageTransformer.imageDetail(department.management_department[0].cover),
+                description: department.description,
+                cover: imageTransformer.imageDetail(department.cover),
                 _links: department._links
             }
 

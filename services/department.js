@@ -1,26 +1,25 @@
-const { Department, File, Photo, Management, ManagementDepartment, Division, Awardee, ManagementAwardee } = require('../models');
+const { Department, File, Photo, Division } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
-    getDepartments: async (management_id) => {
+    getDepartments: async () => {
         const departments = await Department.findAll({
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'description', 'cover_id'],
             include: [
                 {
-                    model: ManagementDepartment,
-                    as: 'management_department',
-                    attributes: ['cover_id'],
-                    where: { management_id },
+                    model: Photo,
+                    as: 'cover',
+                    attributes: ['id', 'alt'],
                     include: {
-                        model: Photo,
-                        as: 'cover',
-                        attributes: ['id', 'alt'],
-                        include: {
-                            model: File,
-                            as: 'file',
-                            attributes: ['imagekit_url', 'mimetype']
-                        }
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
                     }
+                },
+                {
+                    model: Division,
+                    as: 'divisions',
+                    attributes: ['id', 'name', 'description']
                 }
             ]
         });
@@ -28,62 +27,26 @@ module.exports = {
         return departments;
     },
 
-    getDepartmentById: async (id, management_id) => {
+    getDepartmentById: async (id) => {
         const department = await Department.findOne({
             where: { id },
-            attributes: ['id', 'name', 'description'],
+            attributes: ['id', 'name', 'description', 'cover_id'],
             include: [
+                {
+                    model: Photo,
+                    as: 'cover',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
                 {
                     model: Division,
                     as: 'divisions',
                     attributes: ['id', 'name', 'description'],
-                    include: [
-                        {
-                            model: Awardee,
-                            as: 'awardees',
-                            attributes: ['id', 'name', 'linkedin_username', 'instagram_username'],
-                            include: [
-                                {
-                                    model: Photo,
-                                    as: 'photo',
-                                    attributes: ['id', 'alt'],
-                                    include: {
-                                        model: File,
-                                        as: 'file',
-                                        attributes: ['imagekit_url', 'mimetype']
-                                    }
-                                },
-                                {
-                                    model: Management,
-                                    as: 'managements',
-                                    attributes: [],
-                                    through: {
-                                        model: ManagementAwardee,
-                                        attributes: []
-                                    },
-                                    where: {
-                                        id: management_id
-                                    },
-                                }
-                            ]
-                        }
-                    ]
                 },
-                {
-                    model: ManagementDepartment,
-                    as: 'management_department',
-                    attributes: ['management_id'],
-                    include: {
-                        model: Photo,
-                        as: 'cover',
-                        attributes: ['id', 'alt'],
-                        include: {
-                            model: File,
-                            as: 'file',
-                            attributes: ['imagekit_url', 'mimetype']
-                        }
-                    }
-                }
             ]
         });
 
@@ -101,5 +64,26 @@ module.exports = {
         });
 
         return department;
+    },
+
+    getDepartmentsByManagementId: async (managementId) => {
+        const departments = await Department.findAll({
+            where: { management_id: managementId },
+            attributes: ['id', 'name', 'description', 'cover_id'],
+            include: [
+                {
+                    model: Photo,
+                    as: 'cover',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+            ]
+        });
+
+        return departments;
     }
 };

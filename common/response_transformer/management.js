@@ -1,5 +1,4 @@
 const imageTransformer = require('./image');
-const awardeeTransformer = require('./awardee');
 
 module.exports = {
     managementDetail: (management) => {
@@ -13,11 +12,10 @@ module.exports = {
             period_start_date: management.period_start_date,
             period_end_date: management.period_end_date,
             is_active: management.is_active,
-            created_at: management.createdAt,
-            updated_at: management.updatedAt,
+            created_at: (management.createdAt ?? management.created_at),
+            updated_at: (management.updatedAt ?? management.updated_at),
             photo: imageTransformer.imageDetail(management.photo),
             video: imageTransformer.imageDetail(management.video),
-            awardees: awardeeTransformer.awardeeList(management.awardees)
         };
 
         return newmanagement;

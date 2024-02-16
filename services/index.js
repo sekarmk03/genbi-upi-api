@@ -6,5 +6,16 @@ const departmentSvc = require('./department');
 const programSvc = require('./program');
 const appreciationSvc = require('./appreciation');
 const eventSvc = require('./event');
+const awardeeSvc = require('./awardee');
 
-module.exports = { postSvc, commentSvc, photoSvc, managementSvc, departmentSvc, programSvc, appreciationSvc, eventSvc };
+module.exports = {
+    postSvc,
+    commentSvc,
+    photoSvc,
+    managementSvc,
+    departmentSvc,
+    programSvc,
+    appreciationSvc,
+    eventSvc,
+    awardeeSvc
+};
