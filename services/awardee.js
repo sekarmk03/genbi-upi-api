@@ -7,7 +7,7 @@ module.exports = {
             where: {
                 management_id: managementId,
                 position_id: {
-                    [Op.in]: [1, 2, 3]
+                    [Op.in]: [1, 2, 3, 7, 8, 9, 10]
                 },
             },
             include: [
@@ -34,6 +34,11 @@ module.exports = {
                     attributes: ['id', 'name']
                 },
                 {
+                    model: Division,
+                    as: 'division',
+                    attributes: ['id', 'name']
+                },
+                {
                     model: Department,
                     as: 'department',
                     attributes: ['id', 'name'],
@@ -51,7 +56,9 @@ module.exports = {
         const manager = await AwardeeManagement.findOne({
             where: {
                 department_id: departmentId,
-                position_id: 4
+                position_id: {
+                    [Op.in]: [4, 11]
+                }
             },
             include: [
                 {
@@ -95,21 +102,33 @@ module.exports = {
                 model: AwardeeManagement,
                 as: 'awardee_managements',
                 attributes: ['id'],
-                include: {
-                    model: Awardee,
-                    as: 'awardee',
-                    attributes: ['id', 'name', 'linkedin_username', 'instagram_username'],
-                    include: {
-                        model: Photo,
-                        as: 'photo',
-                        attributes: ['id', 'alt', 'caption'],
+                include: [
+                    {
+                        model: Awardee,
+                        as: 'awardee',
+                        attributes: ['id', 'name', 'linkedin_username', 'instagram_username'],
                         include: {
-                            model: File,
-                            as: 'file',
-                            attributes: ['imagekit_url', 'mimetype']
+                            model: Photo,
+                            as: 'photo',
+                            attributes: ['id', 'alt', 'caption'],
+                            include: {
+                                model: File,
+                                as: 'file',
+                                attributes: ['imagekit_url', 'mimetype']
+                            }
                         }
+                    },
+                    {
+                        model: Position,
+                        as: 'position',
+                        attributes: ['id', 'name']
+                    },
+                    {
+                        model: Division,
+                        as: 'division',
+                        attributes: ['id', 'name']
                     }
-                },
+                ],
                 order: [
                     ['position_id', 'ASC']
                 ]

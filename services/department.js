@@ -1,4 +1,4 @@
-const { sequelize, Department, File, Photo, Division, Program } = require('../models');
+const { sequelize, Department, File, Photo, Division, Program, Management } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -30,8 +30,13 @@ module.exports = {
     getDepartmentById: async (id) => {
         const department = await Department.findOne({
             where: { id },
-            attributes: ['id', 'name', 'description', 'cover_id'],
+            attributes: ['id', 'name', 'description', 'cover_id', 'management_id'],
             include: [
+                {
+                    model: Management,
+                    as: 'management',
+                    attributes: ['id', 'name', 'period_year']
+                },
                 {
                     model: Photo,
                     as: 'cover',
@@ -95,6 +100,11 @@ module.exports = {
     getDepartmentsUnique: async () => {
         const departments = await Department.findAll({
             attributes: [[sequelize.fn('DISTINCT', sequelize.col('name')), 'name']],
+            where: {
+                management_id: {
+                    [Op.notIn]: [ 1 ]
+                }
+            },
             order: [['name', 'ASC']]
         });        
 
