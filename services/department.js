@@ -53,8 +53,8 @@ module.exports = {
         return department;
     },
 
-    getDepartmentIdByName: async (name) => {
-        const department = await Department.findOne({
+    getDepartmentIdsByName: async (name) => {
+        const departments = await Department.findAll({
             where: {
                 name: {
                     [Op.iLike]: `%${name}%`
@@ -63,7 +63,7 @@ module.exports = {
             attributes: ['id'],
         });
 
-        return department;
+        return departments;
     },
 
     getDepartmentsByManagementId: async (managementId) => {

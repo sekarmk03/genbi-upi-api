@@ -51,8 +51,10 @@ module.exports = {
                             [Op.iLike]: `%${filter}%`
                         }
                     } : {},
-                    typeof filter === 'number' && Number.isInteger(filter) ? {
-                        department_id: filter
+                    typeof filter === 'object' ? {
+                        department_id: {
+                            [Op.in]: filter
+                        }
                     } : {}
                 ]
             },

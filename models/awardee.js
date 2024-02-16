@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       // Awardee.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
       Awardee.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
       Awardee.belongsTo(models.Document, {foreignKey: 'transcript_id', as: 'transcript'});
-      // Awardee.belongsToMany(models.Management, {through: models.ManagementAwardee, foreignKey: 'awardee_id', as: 'managements'});
       Awardee.hasMany(models.AwardeeManagement, {foreignKey: 'awardee_id', as: 'awardee_managements'});
     }
   }
