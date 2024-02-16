@@ -1,11 +1,14 @@
 const { Awardee, AwardeeManagement, Photo, File, Department, Position } = require('../models');
+const { Op, or } = require('sequelize');
 
 module.exports = {
     getExecutiveByManagementId: async (managementId) => {
         const awardees = await AwardeeManagement.findAll({
             where: {
                 management_id: managementId,
-                department_id: 1,
+                position_id: {
+                    [Op.in]: [1, 2, 3]
+                },
             },
             include: [
                 {
@@ -35,6 +38,9 @@ module.exports = {
                     as: 'department',
                     attributes: ['id', 'name'],
                 }
+            ],
+            order: [
+                ['position_id', 'ASC']
             ]
         });
 

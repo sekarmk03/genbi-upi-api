@@ -260,5 +260,35 @@ module.exports = {
         });
 
         return management;
+    },
+
+    getManagementById: async (id) => {
+        const management = await Management.findOne({
+            where: { id },
+            include: [
+                {
+                    model: Photo,
+                    as: 'photo',
+                    attributes: ['id', 'alt', 'caption'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: Photo,
+                    as: 'video',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                }
+            ]
+        });
+
+        return management;
     }
 };

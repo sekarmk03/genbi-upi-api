@@ -64,6 +64,45 @@ module.exports = {
             console.log(error);
             next(error);
         }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            let management = await managementSvc.getManagementById(id);
+
+            if (!management) return err.not_found(res, "Management not found!");
+
+            const executives = await awardeeSvc.getExecutiveByManagementId(management.id);
+
+            const depts = await departmentSvc.getDepartmentsByManagementId(management.id);
+            const departments = depts.map(department => {
+                const departmentResource = halson(department.toJSON())
+                    .addLink('self', `/departments/${department.id}`)
+
+                return departmentResource;
+            });
+
+            const data = {
+                management: managementTransformer.managementDetail(management),
+                structure: {
+                    executives: awardeeTransformer.awardeeListPreview(executives),
+                    departments: departmentTransformer.departmentListPreview(departments.slice(1))
+                }
+            }
+
+            const response = {
+                status: 'OK',
+                message: 'Get management success',
+                data: data
+            };
+
+            return res.status(200).json(response);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     }
 
     /*active: async (req, res, next) => {
