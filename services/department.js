@@ -1,4 +1,4 @@
-const { Department, File, Photo, Division } = require('../models');
+const { sequelize, Department, File, Photo, Division } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -83,6 +83,15 @@ module.exports = {
                 },
             ]
         });
+
+        return departments;
+    },
+
+    getDepartmentsUnique: async () => {
+        const departments = await Department.findAll({
+            attributes: [[sequelize.fn('DISTINCT', sequelize.col('name')), 'name']],
+            order: [['name', 'ASC']]
+        });        
 
         return departments;
     }

@@ -22,5 +22,19 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    uniquetag: async (req, res, next) => {
+        try {
+            const tags = await departmentSvc.getDepartmentsUnique();
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Department tags successfully retrieved',
+                data: tags.map(tag => tag.name)
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 };
