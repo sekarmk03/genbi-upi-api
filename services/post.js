@@ -72,6 +72,7 @@ module.exports = {
                     model: Photo,
                     as: 'images',
                     attributes: ['id', 'category', 'alt'],
+                    order: [['id', 'ASC']],
                     include: {
                         model: File,
                         as: 'file',
@@ -132,7 +133,8 @@ module.exports = {
                         as: 'file',
                         attributes: ['id', 'imagekit_url']
                     },
-                    attributes: ['id', 'category', 'alt', 'caption']
+                    attributes: ['id', 'category', 'alt', 'caption'],
+                    order: [['id', 'ASC']],
                 },
                 {
                     model: Document,
