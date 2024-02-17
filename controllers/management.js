@@ -49,7 +49,7 @@ module.exports = {
                 management: managementTransformer.managementDetail(management),
                 structure: {
                     executives: awardeeTransformer.awardeeListPreview(executives),
-                    departments: departmentTransformer.departmentListPreview(departments.slice(1))
+                    departments: departmentTransformer.departmentListPreview(departments),
                 }
             }
 
@@ -61,7 +61,6 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
-            console.log(error);
             next(error);
         }
     },

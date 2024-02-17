@@ -78,13 +78,18 @@ module.exports = {
 
     getDepartmentsByManagementId: async (managementId) => {
         const departments = await Department.findAll({
-            where: { management_id: managementId },
+            where: {
+                management_id: managementId,
+                cover_id: {
+                    [Op.not]: null
+                }
+            },
             attributes: ['id', 'name', 'description', 'cover_id'],
             include: [
                 {
                     model: Photo,
                     as: 'cover',
-                    attributes: ['id', 'alt'],
+                    attributes: ['id', 'alt', 'category'],
                     include: {
                         model: File,
                         as: 'file',
