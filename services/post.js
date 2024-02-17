@@ -73,6 +73,9 @@ module.exports = {
                     as: 'images',
                     attributes: ['id', 'category', 'alt'],
                     order: [['id', 'ASC']],
+                    where: {
+                        category: 'post_cover_image'
+                    },
                     include: {
                         model: File,
                         as: 'file',
