@@ -41,11 +41,9 @@ module.exports = {
 
     show: async (req, res, next) => {
         try {
-            // const { id } = req.params;
-            const { slug } = req.params;
+            const { id } = req.params;
 
-            // const event = await eventSvc.getEventById(id);
-            const event = await eventSvc.getEventBySlug(slug);
+            const event = await eventSvc.getEventById(id);
             if (!event) return err.not_found(res, "Event not found!");
 
             const posts = await postSvc.getPostsByEventId(event.id);

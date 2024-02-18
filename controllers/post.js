@@ -56,10 +56,8 @@ module.exports = {
     
     show: async (req, res, next) => {
         try {
-            // const { id } = req.params;
-            const { slug } = req.params;
-            // const post = await postSvc.getPostById(id);
-            const post = await postSvc.getPostBySlug(slug);
+            const { id } = req.params;
+            const post = await postSvc.getPostById(id);
             
             if (!post) return err.not_found(res, "Post not found!");
             
