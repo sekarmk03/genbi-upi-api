@@ -162,5 +162,64 @@ module.exports = {
         });
 
         return events;
-    }
+    },
+
+    getEventBySlug: async (slug) => {
+        const event = await Event.findOne({
+            where: {
+                slug: slug
+            },
+            include: [
+                {
+                    model: Photo,
+                    as: 'thumbnail',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: Photo,
+                    as: 'poster',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: Photo,
+                    as: 'banner',
+                    attributes: ['id', 'alt'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: Program,
+                    as: 'program',
+                    attributes: ['id', 'name'],
+                    include: [
+                        {
+                            model: Department,
+                            as: 'department',
+                            attributes: ['id', 'name'],
+                        },
+                        {
+                            model: Management,
+                            as: 'management',
+                            attributes: ['id', 'period_year'],
+                        }
+                    ]
+                }
+            ]
+        });
+
+        return event;
+    },
 };

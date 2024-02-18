@@ -4,6 +4,7 @@ const { event } = require('../controllers');
 
 router.get('/', event.index);
 router.get('/search', event.search);
-router.get('/:id', event.show);
+// router.get('/:id', event.show);
+router.get('/:slug', event.show);
 
 module.exports = router;

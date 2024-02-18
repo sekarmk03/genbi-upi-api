@@ -41,12 +41,14 @@ module.exports = {
 
     show: async (req, res, next) => {
         try {
-            const { id } = req.params;
+            // const { id } = req.params;
+            const { slug } = req.params;
 
-            const event = await eventSvc.getEventById(id);
+            // const event = await eventSvc.getEventById(id);
+            const event = await eventSvc.getEventBySlug(slug);
             if (!event) return err.not_found(res, "Event not found!");
 
-            const posts = await postSvc.getPostsByEventId(id);
+            const posts = await postSvc.getPostsByEventId(event.id);
             event.posts = postTransformer.postList(posts);
 
             const similarData = await eventSvc.getSimilarEvents(event);
