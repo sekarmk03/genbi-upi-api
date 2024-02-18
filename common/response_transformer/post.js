@@ -6,6 +6,7 @@ module.exports = {
         return posts.map((post) => {
             let newpost = {
                 id: post.id,
+                slug: post.slug,
                 title: post.title,
                 type: post.type,
                 content: post.content,
@@ -29,6 +30,7 @@ module.exports = {
     postDetail: (post) => {
         let newpost = {
             id: post.id,
+            slug: post.slug,
             title: post.title,
             type: post.type,
             content: post.content,

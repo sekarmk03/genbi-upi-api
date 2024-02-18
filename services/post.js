@@ -308,5 +308,69 @@ module.exports = {
         });
 
         return posts;
-    }
+    },
+
+    getPostBySlug: async (slug) => {
+        const post = await Post.findOne({
+            // attributes: repository.postAttrDetail,
+            where: { slug: slug },
+            include: [
+                {
+                    model: Department,
+                    as: 'department',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['uuid'],
+                    include: [
+                        {
+                            model: Awardee,
+                            as: 'awardee',
+                            attributes: ['name'],
+                            include: {
+                                model: Photo,
+                                as: 'photo',
+                                attributes: ['id', 'alt', 'caption'],
+                                include: {
+                                    model: File,
+                                    as: 'file',
+                                    attributes: ['imagekit_url']
+                                }
+                            }
+                        },
+                    ]
+                },
+                {
+                    model: Event,
+                    as: 'event',
+                    attributes: ['id', 'title']
+                },
+                {
+                    model: Photo,
+                    as: 'images',
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['id', 'imagekit_url']
+                    },
+                    attributes: ['id', 'category', 'alt', 'caption'],
+                    order: [['id', 'ASC']],
+                },
+                {
+                    model: Document,
+                    as: 'attachments',
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['id', 'file_name', 'imagekit_url']
+                    },
+                    attributes: ['id', 'category']
+                }
+            ]
+        });
+
+        return post;
+    },
 }
