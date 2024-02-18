@@ -82,6 +82,13 @@ module.exports = {
                 management_id: managementId,
                 cover_id: {
                     [Op.not]: null
+                },
+                name: {
+                    [Op.and]: [
+                        { [Op.notILike]: '%executive%' },
+                        { [Op.notILike]: '%umum%' },
+                        { [Op.notILike]: '%bankindonesia%' },
+                    ]
                 }
             },
             attributes: ['id', 'name', 'description', 'cover_id'],
@@ -96,7 +103,8 @@ module.exports = {
                         attributes: ['imagekit_url', 'mimetype']
                     }
                 },
-            ]
+            ],
+            order: [['id', 'ASC']]
         });
 
         return departments;
