@@ -35,6 +35,7 @@ module.exports = {
             description: event.description,
             start_date: event.start_date,
             end_date: event.end_date,
+            participants: event.participants,
             location: event.location,
             location_url: event.location_url,
             registration_link: event.registration_link,
