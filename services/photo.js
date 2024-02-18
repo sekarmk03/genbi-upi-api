@@ -60,6 +60,7 @@ module.exports = {
                             }
                         ]
                     },
+                    { featured: true }
                 ]
             },
             order: [
