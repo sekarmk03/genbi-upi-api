@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Awardee.belongsTo(models.User, {foreignKey: 'user_id', as: 'user_account'});
       Awardee.belongsTo(models.Photo, {foreignKey: 'photo_id', as: 'photo'});
-      // Awardee.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'});
-      // Awardee.belongsTo(models.Division, {foreignKey: 'division_id', as: 'division'});
-      // Awardee.belongsTo(models.Position, {foreignKey: 'position_id', as: 'position'});
       Awardee.belongsTo(models.StudyProgram, {foreignKey: 'study_program_id', as: 'study_program'});
       Awardee.belongsTo(models.Document, {foreignKey: 'transcript_id', as: 'transcript'});
       Awardee.hasMany(models.AwardeeManagement, {foreignKey: 'awardee_id', as: 'awardee_managements'});

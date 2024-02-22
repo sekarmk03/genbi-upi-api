@@ -1,5 +1,5 @@
-const { Awardee, AwardeeManagement, Photo, File, Department, Position, Division } = require('../models');
-const { Op, or } = require('sequelize');
+const { Awardee, AwardeeManagement, Photo, File, Department, Position, Division, StudyProgram } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
     getExecutiveByManagementId: async (managementId) => {
@@ -133,6 +133,78 @@ module.exports = {
                     ['position_id', 'ASC']
                 ]
             }
+        });
+
+        return awardees;
+    },
+
+    getAwardees: async (sort, type, startPage, limit, management, department, search) => {
+        let whereCond = [];
+
+        if (management && management != '') {
+            whereCond.push({ management_id: management });
+        }
+
+        if (department && department != '') {
+            whereCond.push({ department_id: department });
+        }
+
+        const awardees = await Awardee.findAndCountAll({
+            where: {
+                [Op.or]: [
+                    { name: { [Op.iLike]: `%${search}%` } },
+                ]
+            },
+            include: [
+                {
+                    model: Photo,
+                    as: 'photo',
+                    attributes: ['id', 'alt', 'caption'],
+                    include: {
+                        model: File,
+                        as: 'file',
+                        attributes: ['imagekit_url', 'mimetype']
+                    }
+                },
+                {
+                    model: StudyProgram,
+                    as: 'study_program',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: AwardeeManagement,
+                    as: 'awardee_managements',
+                    attributes: ['id'],
+                    where: whereCond,
+                    include: [
+                        {
+                            model: Position,
+                            as: 'position',
+                            attributes: ['id', 'name']
+                        },
+                        {
+                            model: Division,
+                            as: 'division',
+                            attributes: ['id', 'name']
+                        },
+                        {
+                            model: Department,
+                            as: 'department',
+                            attributes: ['id', 'name'],
+                        }
+                    ],
+                    order: [
+                        ['id', 'DESC']
+                    ]
+                }
+            ],
+            order: [
+                ['id', 'ASC'],
+                [sort, type]
+            ],
+            offset: startPage,
+            limit: limit,
+            distinct: true
         });
 
         return awardees;
