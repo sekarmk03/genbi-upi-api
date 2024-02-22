@@ -12,5 +12,19 @@ module.exports = {
             message: msg,
             data: null
         })
-    }
+    },
+    unauthorized: (res, msg) => {
+        return res.status(401).json({
+            status: 'UNAUTHORIZED',
+            message: msg,
+            data: null
+        });
+    },
+    forbidden: (res, msg) => {
+        return res.status(403).json({
+            status: 'FORBIDDEN',
+            message: msg,
+            data: null
+        });
+    },
 }

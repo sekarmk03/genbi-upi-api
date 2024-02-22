@@ -7,5 +7,6 @@ const management = require('./management');
 const department = require('./department');
 const appreciation = require('./appreciation');
 const event = require('./event');
+const auth = require('./auth');
 
-module.exports = { summary, post, contact, comment, photo, management, department, appreciation, event };
+module.exports = { summary, post, contact, comment, photo, management, department, appreciation, event, auth };
