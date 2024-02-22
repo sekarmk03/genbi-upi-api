@@ -25,12 +25,7 @@ module.exports = {
                 }
             }
 
-            let posts;
-            if (!req.user) {
-                posts = await postSvc.getPostsPublic(filter, sort, type, start, limit);
-            }
-            // else if admin
-            // else if creator
+            const posts = await postSvc.getPostsPublic(filter, sort, type, start, limit);
 
             const pagination = paginate(posts.count, posts.rows.length, limit, page, start, end);
 

@@ -46,11 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    featured: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
     visitors: {
       type: DataTypes.INTEGER,
       allowNull: false,

@@ -33,11 +33,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      featured: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
       visitors: {
         type: Sequelize.INTEGER,
         allowNull: false,
