@@ -7,9 +7,9 @@ module.exports = (roles = []) => {
     if (typeof roles === 'number') roles = [roles];
 
     return (req, res, next) => {
-        // const token = req.headers['authorization'];
-        const token = req.header('Authorization').split(' ')[1];
+        let token = req.header('Authorization');
         if (!token) return err.unauthorized(res, "Access denied. No token provided");
+        token = token.split(' ')[1];
 
         try {
             const payload = jwt.verify(token, JWT_SECRET_KEY);

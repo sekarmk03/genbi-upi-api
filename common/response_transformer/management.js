@@ -19,5 +19,19 @@ module.exports = {
         };
 
         return newmanagement;
+    },
+
+    awardeeManagementList: (awardeeManagements) => {
+        return awardeeManagements.map((am) => {
+            let newawardeeManagement = {
+                id: am.id,
+                management: am.management.name,
+                department: am.department.name,
+                division: am.division.name,
+                position: am.position.name
+            };
+
+            return newawardeeManagement;
+        });
     }
 }

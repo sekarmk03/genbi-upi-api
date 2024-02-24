@@ -1,4 +1,6 @@
 const imageTransformer = require('./image');
+const documentTransformer = require('./document');
+const managementTransformer = require('./management');
 
 module.exports = {
     awardeeListPreview: (awardees) => {
@@ -65,4 +67,44 @@ module.exports = {
             return newawardee;
         });
     },
+
+    awardeeDetail: (a) => {
+        let newawardee = {
+            id: a.id,
+            name: a.name,
+            birth_date: a.birth_date,
+            linkedin_username: a.linkedin_username,
+            instagram_username: a.instagram_username,
+            telp: a.telp,
+            member_since: a.member_since,
+            scholarship: a.scholarship,
+            nim: a.nim,
+            year: a.year,
+            ip1: a.smt1_ip,
+            ip2: a.smt2_ip,
+            ip3: a.smt3_ip,
+            ip4: a.smt4_ip,
+            ip5: a.smt5_ip,
+            ip6: a.smt6_ip,
+            ip7: a.smt7_ip,
+            ip8: a.smt8_ip,
+            ipk1: a.smt1_ipk,
+            ipk2: a.smt2_ipk,
+            ipk3: a.smt3_ipk,
+            ipk4: a.smt4_ipk,
+            ipk5: a.smt5_ipk,
+            ipk6: a.smt6_ipk,
+            ipk7: a.smt7_ipk,
+            ipk8: a.smt8_ipk,
+            study_program: a.study_program.name,
+            faculty: a.study_program.faculty.abbr,
+            created_at: (a.createdAt ?? a.created_at),
+            updated_at: (a.updatedAt ?? a.updated_at),
+            photo: imageTransformer.imageDetail(a.photo),
+            transcript: documentTransformer.documentDetail(a.transcript),
+            managements: managementTransformer.awardeeManagementList(a.awardee_managements)
+        }
+
+        return newawardee;
+    }
 }

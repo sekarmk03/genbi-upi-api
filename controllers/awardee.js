@@ -38,5 +38,24 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const awardee = await awardeeSvc.getAwardeeById(id);
+            if (!awardee) return err.not_found(res, 'Awardee not found!');
+
+            const response = {
+                status: 'OK',
+                message: 'Get awardee success',
+                data: awardeeTransformer.awardeeDetail(awardee)
+            };
+
+            return res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
     }
 }
