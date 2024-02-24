@@ -1,6 +1,6 @@
 const convert = (html) => {
-    let plainText = html.replace(/<[^>]*>|&nbsp;|\n|&rsquo;|&ldquo;/g, function(match) {
-        return match === '&nbsp;' ? ' ' : match === '&rsquo;' ? "'" : match === '&ldquo;' ? '"' : '';
+    let plainText = html.replace(/<[^>]*>|&nbsp;|\n|&rsquo;|&ldquo;|&rdquo;/g, function(match) {
+        return match === '&nbsp;' ? ' ' : match === '&rsquo;' ? "'" : match === '&ldquo;' ? '"' : match === '&rdquo;' ? '"' : '';
     });
 
     plainText = plainText.trim().substring(0, 150);
