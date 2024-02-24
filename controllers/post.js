@@ -17,11 +17,11 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            let dept_ids;
+            let deptIds;
             if (filter != '') {
-                dept_ids = await departmentSvc.getDepartmentIdsByName(filter);
-                if (dept_ids.length > 0) {
-                    filter = dept_ids.map(dept => dept.id);
+                deptIds = await departmentSvc.getDepartmentIdsByName(filter);
+                if (deptIds.length > 0) {
+                    filter = deptIds.map(dept => dept.id);
                 }
             }
 

@@ -146,7 +146,7 @@ module.exports = {
         }
 
         if (department && department != '') {
-            whereCond.push({ department_id: department });
+            whereCond.push({ department_id: { [Op.in]: department } });
         }
 
         const awardees = await Awardee.findAndCountAll({
@@ -175,7 +175,9 @@ module.exports = {
                     model: AwardeeManagement,
                     as: 'awardee_managements',
                     attributes: ['id', 'management_id'],
-                    where: whereCond,
+                    where: {
+                        [Op.and]: whereCond
+                    },
                     include: [
                         {
                             model: Position,
