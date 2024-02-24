@@ -6,6 +6,18 @@ const { department: departmentTransformer, awardee: awardeeTransformer, division
 module.exports = {
     index: async (req, res, next) => {
         try {
+            let { options = '' } = req.query;
+
+            if (options === 'true') {
+                const depts = await departmentSvc.getDepartmentsUnique();
+
+                return res.status(200).json({
+                    status: 'OK',
+                    message: 'Department refs successfully retrieved',
+                    data: depts
+                });
+            }
+
             const departments = await departmentSvc.getDepartments();
 
             const departmentResources = departments.map(department => {

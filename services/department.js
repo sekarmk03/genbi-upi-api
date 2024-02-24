@@ -1,5 +1,5 @@
 const { sequelize, Department, File, Photo, Division, Program, Management } = require('../models');
-const { Op } = require('sequelize');
+const { Op, QueryTypes } = require('sequelize');
 
 module.exports = {
     getDepartments: async () => {
@@ -111,15 +111,25 @@ module.exports = {
     },
 
     getDepartmentsUnique: async () => {
-        const departments = await Department.findAll({
-            attributes: [[sequelize.fn('DISTINCT', sequelize.col('name')), 'name']],
-            where: {
-                management_id: {
-                    [Op.notIn]: [ 1 ]
-                }
-            },
-            order: [['name', 'ASC']]
-        });        
+        // const departments = await Department.findAll({
+        //     attributes: [
+        //         [sequelize.fn('DISTINCT', sequelize.col('name')), 'name'],
+        //         'id'
+        //     ],
+        //     where: {
+        //         management_id: {
+        //             [Op.notIn]: [ 1 ]
+        //         }
+        //     },
+        //     order: [['name', 'ASC']],
+        //     distinct: true
+        // });
+        const departments = await sequelize.query(
+            'SELECT DISTINCT ON (name) name, id FROM "department" WHERE "management_id" NOT IN (1) ORDER BY name ASC',
+            {
+                type: QueryTypes.SELECT
+            }
+        );
 
         return departments;
     }
