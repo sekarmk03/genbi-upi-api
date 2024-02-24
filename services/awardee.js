@@ -145,7 +145,7 @@ module.exports = {
             whereCond.push({ management_id: management });
         }
 
-        if (department && department != '') {
+        if (department && department.length > 0) {
             whereCond.push({ department_id: { [Op.in]: department } });
         }
 

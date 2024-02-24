@@ -1,5 +1,6 @@
 const imageTransformer = require('./image');
 const documentTransformer = require('./document');
+const htmlToText = require('../../utils/html-to-text');
 
 module.exports = {
     postList: (posts) => {
@@ -9,6 +10,7 @@ module.exports = {
                 slug: post.slug,
                 title: post.title,
                 type: post.type,
+                content_preview: htmlToText(post.content),
                 content: post.content,
                 visitors: post.visitors,
                 department_id: post.department_id,
@@ -33,6 +35,7 @@ module.exports = {
             slug: post.slug,
             title: post.title,
             type: post.type,
+            content_preview: htmlToText(post.content),
             content: post.content,
             visitors: post.visitors,
             tags: [

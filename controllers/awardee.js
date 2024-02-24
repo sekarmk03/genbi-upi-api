@@ -19,12 +19,18 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const dept = await departmentSvc.getDepartmentById(department);
-            if (!dept) return err.not_found(res, 'Department not found!');
-            const deptName = dept.name;
-            const deptIds = await departmentSvc.getDepartmentIdsByName(deptName);
+            let deptIds;
+            if (department && department != '') {
+                const dept = await departmentSvc.getDepartmentById(department);
+                if (!dept) return err.not_found(res, 'Department not found!');
+                const deptName = dept.name;
+                const deptIdsByName = await departmentSvc.getDepartmentIdsByName(deptName);
+                deptIds = deptIdsByName.map(dept => dept.id);
+            } else {
+                deptIds = []
+            }
 
-            let awardees = await awardeeSvc.getAwardees(sort, type, start, end, management, deptIds.map(dept => dept.id), search);
+            let awardees = await awardeeSvc.getAwardees(sort, type, start, end, management, deptIds, search);
 
             const pagination = paginate(awardees.count, awardees.rows.length, limit, page, start, end);
 
@@ -44,6 +50,7 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
+            console.log(error);
             next(error);
         }
     },
