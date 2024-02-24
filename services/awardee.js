@@ -269,11 +269,11 @@ module.exports = {
                             as: 'department',
                             attributes: ['id', 'name'],
                         }
-                    ],
-                    order: [
-                        ['management_id', 'DESC']
                     ]
                 }
+            ],
+            order: [
+                [{ model: AwardeeManagement, as: 'awardee_managements' }, 'management_id', 'DESC']
             ]
         });
 
