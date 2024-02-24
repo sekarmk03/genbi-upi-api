@@ -174,9 +174,14 @@ module.exports = {
                 {
                     model: AwardeeManagement,
                     as: 'awardee_managements',
-                    attributes: ['id'],
+                    attributes: ['id', 'management_id'],
                     where: whereCond,
                     include: [
+                        {
+                            model: Management,
+                            as: 'management',
+                            attributes: ['id', 'name'],
+                        },
                         {
                             model: Position,
                             as: 'position',
@@ -192,13 +197,11 @@ module.exports = {
                             as: 'department',
                             attributes: ['id', 'name'],
                         }
-                    ],
-                    order: [
-                        ['management_id', 'DESC']
                     ]
                 }
             ],
             order: [
+                [{ model: AwardeeManagement, as: 'awardee_managements' }, 'management_id', 'DESC'],
                 ['id', 'ASC'],
                 [sort, type]
             ],

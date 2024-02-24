@@ -3,6 +3,9 @@ const { awardeeSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 const { awardee: awardeeTransformer } = require('../common/response_transformer');
+const { awardeeSchema } = require('../common/validation_schema');
+const Validator = require('fastest-validator');
+const v = new Validator;
 
 module.exports = {
     index: async (req, res, next) => {
@@ -31,7 +34,8 @@ module.exports = {
                 status: 'OK',
                 message: 'Get all awardees success',
                 pagination,
-                data: awardeeTransformer.awardeeDetailList(awardeeResources)
+                // data: awardeeTransformer.awardeeDetailList(awardeeResources)
+                data: awardeeResources
             };
 
             return res.status(200).json(response);
@@ -54,6 +58,55 @@ module.exports = {
             };
 
             return res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    create: async (req, res, next) => {
+        try {
+            const body = req.body;
+
+            const val = v.validate(body, awardeeSchema.createAwardee);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            const newAwardee = await awardeeSvc.addAwardee(
+                0,
+                body.name,
+                body.photo_id,
+                body.birth_date,
+                body.linkedin_username,
+                body.instagram_username,
+                body.telp,
+                body.member_since,
+                body.scholarship,
+                body.nim,
+                body.study_program_id,
+                body.year,
+                body.smt1_ip,
+                body.smt2_ip,
+                body.smt3_ip,
+                body.smt4_ip,
+                body.smt5_ip,
+                body.smt6_ip,
+                body.smt7_ip,
+                body.smt8_ip,
+                body.smt1_ipk,
+                body.smt2_ipk,
+                body.smt3_ipk,
+                body.smt4_ipk,
+                body.smt5_ipk,
+                body.smt6_ipk,
+                body.smt7_ipk,
+                body.smt8_ipk,
+                body.transcript_id
+            );
+
+            return res.status(201).json({
+                status: 'CREATED',
+                message: 'New awardee successfully created',
+                data: newAwardee
+            });
         } catch (error) {
             next(error);
         }
