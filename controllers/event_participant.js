@@ -53,6 +53,8 @@ module.exports = {
                 body.city
             );
 
+            await eventSvc.addNewParticipant(event);
+
             return res.status(201).json({
                 status: 'CREATED',
                 message: 'New participant successfully registered',
