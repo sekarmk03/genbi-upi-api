@@ -153,6 +153,7 @@ module.exports = {
             where: {
                 [Op.or]: [
                     { name: { [Op.iLike]: `%${search}%` } },
+                    // { [Op.and]: whereCond }
                 ]
             },
             include: [
@@ -175,6 +176,7 @@ module.exports = {
                     model: AwardeeManagement,
                     as: 'awardee_managements',
                     attributes: ['id', 'management_id'],
+                    // required: true,
                     where: {
                         [Op.and]: whereCond
                     },
@@ -202,8 +204,8 @@ module.exports = {
                 ['id', 'ASC'],
                 [sort, type]
             ],
-            offset: startPage,
             limit: limit,
+            offset: startPage,
             distinct: true
         });
 

@@ -30,7 +30,7 @@ module.exports = {
                 deptIds = []
             }
 
-            let awardees = await awardeeSvc.getAwardees(sort, type, start, end, management, deptIds, search);
+            let awardees = await awardeeSvc.getAwardees(sort, type, start, limit, management, deptIds, search);
 
             const pagination = paginate(awardees.count, awardees.rows.length, limit, page, start, end);
 
@@ -45,7 +45,8 @@ module.exports = {
                 status: 'OK',
                 message: 'Get all awardees success',
                 pagination,
-                data: awardeeTransformer.awardeeDetailList(awardeeResources)
+                // data: awardeeTransformer.awardeeDetailList(awardeeResources)
+                data: awardeeResources
             };
 
             return res.status(200).json(response);
