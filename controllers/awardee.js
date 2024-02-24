@@ -34,8 +34,7 @@ module.exports = {
                 status: 'OK',
                 message: 'Get all awardees success',
                 pagination,
-                // data: awardeeTransformer.awardeeDetailList(awardeeResources)
-                data: awardeeResources
+                data: awardeeTransformer.awardeeDetailList(awardeeResources)
             };
 
             return res.status(200).json(response);

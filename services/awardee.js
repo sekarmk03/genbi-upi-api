@@ -178,11 +178,6 @@ module.exports = {
                     where: whereCond,
                     include: [
                         {
-                            model: Management,
-                            as: 'management',
-                            attributes: ['id', 'name'],
-                        },
-                        {
                             model: Position,
                             as: 'position',
                             attributes: ['id', 'name']
