@@ -222,4 +222,10 @@ module.exports = {
 
         return event;
     },
+
+    addNewParticipant: async (event) => {
+        const update = await event.increment('participants');
+
+        return update;
+    }
 };

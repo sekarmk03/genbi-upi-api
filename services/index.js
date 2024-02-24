@@ -9,6 +9,7 @@ const eventSvc = require('./event');
 const awardeeSvc = require('./awardee');
 const userSvc = require('./user');
 const authSvc = require('./auth');
+const eventParticipantSvc = require('./event_participant');
 
 module.exports = {
     postSvc,
@@ -21,5 +22,6 @@ module.exports = {
     eventSvc,
     awardeeSvc,
     userSvc,
-    authSvc
+    authSvc,
+    eventParticipantSvc
 };
