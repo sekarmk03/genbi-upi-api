@@ -1,5 +1,5 @@
 const mail = require('../utils/mailer');
-const { contact_us } = require('../common/validation_schema');
+const { contactUsSchema } = require('../common/validation_schema');
 const err = require('../common/custom_error');
 const Validator = require('fastest-validator');
 const v = new Validator;
@@ -12,7 +12,7 @@ module.exports = {
         try {
             const body = req.body;
 
-            const val = v.validate(body, contact_us.send_message);
+            const val = v.validate(body, contactUsSchema.send_message);
             if (val.length) return err.bad_request(res, val[0].message);
 
             const subject = `Contact Us | ${body.name}`;

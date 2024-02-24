@@ -9,5 +9,6 @@ const appreciation = require('./appreciation');
 const event = require('./event');
 const auth = require('./auth');
 const awardee = require('./awardee');
+const eventParticipant = require('./event_participant');
 
-module.exports = { summary, post, contact, comment, photo, management, department, appreciation, event, auth, awardee };
+module.exports = { summary, post, contact, comment, photo, management, department, appreciation, event, auth, awardee, eventParticipant };

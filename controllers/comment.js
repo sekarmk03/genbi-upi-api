@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { commentSvc } = require('../services');
-const { commentVal } = require('../common/validation_schema');
+const { commentSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const halson = require('halson');
@@ -11,7 +11,7 @@ module.exports = {
         try {
             const body = req.body;
 
-            const val = v.validate(body, commentVal.createComment);
+            const val = v.validate(body, commentSchema.createComment);
             if (val.length) return err.bad_request(res, val[0].message);
 
             const newComment = await commentSvc.addNewComment(
@@ -40,7 +40,7 @@ module.exports = {
             const body = req.body;
             const { id } = req.params;
 
-            const val = v.validate(body, commentVal.createReply);
+            const val = v.validate(body, commentSchema.createReply);
             if (val.length) return err.bad_request(res, val[0].message);
 
             const rootComment = await commentSvc.getCommentById(id);

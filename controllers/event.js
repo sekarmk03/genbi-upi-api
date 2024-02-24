@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { eventSvc, postSvc } = require('../services');
+const { eventSvc, postSvc, eventParticipantSvc } = require('../services');
 const halson = require('halson');
 const paginate = require('../utils/generate-pagination');
 const { event: eventTransformer, post: postTransformer } = require('../common/response_transformer');
@@ -106,5 +106,35 @@ module.exports = {
         } catch (error) {
             next(error);
         }
-    }
+    },
+
+    participants: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const event = await eventSvc.getEventById(id);
+            if (!event) return err.not_found(res, "Event not found!");
+
+            let {
+                sort = "created_at", type = "desc", page = "1", limit = "10"
+            } = req.query;
+
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
+
+            const participants = await eventParticipantSvc.getParticipantsByEventId(event.id, sort, type, start, limit);
+
+            const pagination = paginate(participants.count, participants.rows.length, limit, page, start, end);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Participants successfully retrieved',
+                pagination,
+                data: participants.rows
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
 };

@@ -12,6 +12,7 @@ const event = require('./event');
 const department = require('./department');
 const auth = require('./auth');
 const awardee = require('./awardee');
+const eventParticipant = require('./event_participant');
 
 router.get('/', (req, res) => {
     const ip_addr = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -28,5 +29,6 @@ router.use('/events', event);
 router.use('/departments', department);
 router.use('/auth', auth);
 router.use('/awardees', awardee);
+router.use('/event_participants', eventParticipant);
 
 module.exports = router;
