@@ -174,5 +174,27 @@ module.exports = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getPhotos: async (sort, sortType, startPage, limit) => {
+        try {
+            const photos = await Photo.findAndCountAll({
+                include: [
+                    {
+                        model: File,
+                        as: 'file',
+                    }
+                ],
+                order: [
+                    [sort, sortType]
+                ],
+                limit,
+                offset: startPage
+            });
+
+            return photos;
+        } catch (error) {
+            throw error;
+        }
     }
 };
