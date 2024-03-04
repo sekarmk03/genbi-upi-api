@@ -13,6 +13,7 @@ const eventParticipantSvc = require('./event_participant');
 const fileSvc = require('./file');
 const imagekitSvc = require('./imagekit');
 const documentSvc = require('./document');
+const studyProgramSvc = require('./study_program');
 
 module.exports = {
     postSvc,
@@ -29,5 +30,6 @@ module.exports = {
     eventParticipantSvc,
     fileSvc,
     imagekitSvc,
-    documentSvc
+    documentSvc,
+    studyProgramSvc,
 };

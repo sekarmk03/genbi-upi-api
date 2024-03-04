@@ -8,5 +8,6 @@ const division = require('./division');
 const appreciation = require('./appreciation');
 const event = require('./event');
 const document = require('./document');
+const studyProgram = require('./study_program');
 
-module.exports = { post, image, comment, management, awardee, department, division, appreciation, event, document };
+module.exports = { post, image, comment, management, awardee, department, division, appreciation, event, document, studyProgram };
