@@ -89,5 +89,90 @@ module.exports = {
         });
 
         return photos;
+    },
+
+    getPhotoById: async (id, options = {}) => {
+        try {
+            const { transaction } = options;
+            const findOptions = transaction ? { transaction } : {};
+
+            const photo = await Photo.findByPk(id, {
+                include: [
+                    {
+                        model: File,
+                        as: 'file',
+                        attributes: ['id', 'imagekit_url', 'mimetype']
+                    }
+                ],
+                ...findOptions
+            });
+
+            return photo;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    addPhoto: async (file_id, alt, caption, category, featured, post_id, options = {}) => {
+        try {
+            const { transaction } = options;
+            const createOptions = transaction ? { transaction } : {};
+
+            const photo = await Photo.create({
+                file_id,
+                alt,
+                caption,
+                category,
+                featured,
+                post_id,
+            }, createOptions);
+    
+            return photo;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    updatePhoto: async (id, file_id, alt, caption, category, featured, post_id, options = {}) => {
+        try {
+            const { transaction } = options;
+            const updateOptions = transaction ? { transaction } : {};
+            
+            const photo = await Photo.update({
+                file_id,
+                alt,
+                caption,
+                category,
+                featured,
+                post_id,
+            }, {
+                where: {
+                    id
+                },
+                ...updateOptions
+            });
+    
+            return photo;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    deletePhoto: async (id, options = {}) => {
+        try {
+            const { transaction } = options;
+            const deleteOptions = transaction ? { transaction } : {};
+
+            const deleted = await Photo.destroy({
+                where: {
+                    id
+                },
+                ...deleteOptions
+            });
+    
+            return deleted;
+        } catch (error) {
+            throw error;
+        }
     }
 };
