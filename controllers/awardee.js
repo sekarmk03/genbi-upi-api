@@ -80,8 +80,8 @@ module.exports = {
         let imagekitIds = [];
         try {
             let body = req.body;
-            const photoFile = req.files['photo'][0];
-            const transcriptFile = req.files['transcript'][0];
+            const photoFile = req.files['photo'] ? req.files['photo'][0] : null;
+            const transcriptFile = req.files['transcript'] ? req.files['transcript'][0] : null;
 
             body.scholarship = parseInt(body.scholarship);
             body.study_program_id = parseInt(body.study_program_id);
@@ -105,11 +105,11 @@ module.exports = {
             const val = v.validate(body, awardeeSchema.createAwardee);
             if (val.length) return err.bad_request(res, val[0].message);
 
+            if (!photoFile) return err.bad_request(res, 'Photo file is required');
             const photoVal = fileSchema.photo(photoFile);
             if (photoVal.length) return err.bad_request(res, photoVal[0].message);
 
             if (!transcriptFile) return err.bad_request(res, 'Transcript file is required');
-
             const transcriptVal = fileSchema.document(transcriptFile);
             if (transcriptVal.length) return err.bad_request(res, transcriptVal[0].message);
             
