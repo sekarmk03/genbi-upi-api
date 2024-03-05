@@ -101,8 +101,13 @@ module.exports = {
             created_at: (a.createdAt ?? a.created_at),
             updated_at: (a.updatedAt ?? a.updated_at),
             photo: imageTransformer.imageDetail(a.photo),
-            transcript: documentTransformer.documentDetail(a.transcript),
-            managements: managementTransformer.awardeeManagementList(a.awardee_managements)
+            // transcript: documentTransformer.documentDetail(a.transcript),
+        }
+
+        if (a.transcript) newawardee.transcript = documentTransformer.documentDetail(a.transcript);
+
+        if (a.awardee_managements && a.awardee_managements.length > 0) {
+            newawardee.managements = managementTransformer.awardeeManagementList(a.awardee_managements)
         }
 
         return newawardee;

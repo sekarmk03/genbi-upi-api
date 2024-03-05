@@ -7,7 +7,9 @@ const categories = [
     'event_banner',
     'post_cover_image',
     'post_other_image',
-    'gallery_photo'
+    'gallery_photo',
+    'management_video',
+    'management_photo'
 ];
 
 module.exports = {

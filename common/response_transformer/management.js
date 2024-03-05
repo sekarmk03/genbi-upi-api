@@ -25,10 +25,10 @@ module.exports = {
         return awardeeManagements.map((am) => {
             let newawardeeManagement = {
                 id: am.id,
-                management: am.management.name,
-                department: am.department.name,
-                division: am.division.name,
-                position: am.position.name
+                management: am.management ? am.management.name : null,
+                department: am.department ? am.department.name : null,
+                division: am.division ? am.division.name : null,
+                position: am.position ? am.position.name : null
             };
 
             return newawardeeManagement;

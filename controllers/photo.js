@@ -74,12 +74,30 @@ module.exports = {
         }
     },
 
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const photo = await photoSvc.getPhotoById(id);
+
+            if (!photo) return err.not_found(res, 'Photo not found');
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Get photo success',
+                data: photo
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
     create: async (req, res, next) => {
         let transaction;
         let imagekitId;
         try {
-            const photoFile = req.file;
-            let body = req.body;
+            const photoFile = req.file ? req.file : null;
+            const body = req.body;
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
             body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
@@ -88,7 +106,14 @@ module.exports = {
             if (val.length) return err.bad_request(res, val[0].message);
             
             if (!photoFile) return err.bad_request(res, 'Photo file is required');
-            const photoVal = fileSchema.photo(photoFile);
+            let photoVal;
+            if (photoFile.mimetype.startsWith('image')) {
+                photoVal = fileSchema.photo(photoFile);
+            } else if (photoFile.mimetype.startsWith('video')) {
+                photoVal = fileSchema.video(photoFile);
+            } else {
+                return err.bad_request(res, 'File type not allowed');
+            }
             if (photoVal.length) return err.bad_request(res, photoVal[0]);
 
             transaction = await sequelize.transaction();
@@ -125,7 +150,85 @@ module.exports = {
         } catch (error) {
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+            console.log(error);
             next(error);
         }
     },
+
+    update: async (req, res, next) => {
+        let transaction;
+        let imagekitId;
+        try {
+            const photoFile = req.file ? req.file : null;
+            const body = req.body;
+            const { id } = req.params;
+
+            const photo = await photoSvc.getPhotoById(id);
+            if (!photo) return err.not_found(res, 'Photo not found');
+
+            body.post_id = body.post_id ? parseInt(body.post_id) : null;
+            body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
+
+            const val = v.validate(body, photoSchema.updatePhoto);
+            if (val.length) return err.bad_request(res, val[0].message);
+            
+            if (photoFile) {
+                if (!photoFile) return err.bad_request(res, 'File is required');
+                let photoVal;
+                if (photoFile.mimetype.startsWith('image')) {
+                    photoVal = fileSchema.photo(photoFile);
+                } else if (photoFile.mimetype.startsWith('video')) {
+                    photoVal = fileSchema.video(photoFile);
+                } else {
+                    return err.bad_request(res, 'File type not allowed');
+                }
+                if (photoVal.length) return err.bad_request(res, photoVal[0]);
+            }
+
+            transaction = await sequelize.transaction();
+
+            let oldImagekitPhotoId = null;
+            let imagekitPhoto = null;
+            if (photoFile) {
+                imagekitPhoto = await imagekitSvc.uploadImgkt(photoFile);
+                imagekitId = imagekitPhoto.fileId;
+    
+                oldImagekitPhotoId = photo.file.imagekit_id;
+    
+                await fileSvc.updateFile(
+                    photo.file_id,
+                    imagekitPhoto.name,
+                    imagekitPhoto.fileId,
+                    imagekitPhoto.url,
+                    imagekitPhoto.filePath,
+                    photoFile.mimetype,
+                    { transaction }
+                );
+            }
+
+            await photoSvc.updatePhoto(
+                photo.id,
+                photo.file.id,
+                (imagekitPhoto ? imagekitPhoto.name : photo.file.file_name),
+                body.caption || photo.caption,
+                body.category || photo.category,
+                body.featured ?? photo.featured,
+                body.post_id || photo.post_id,
+                { transaction }
+            );
+
+            await transaction.commit();
+            if (oldImagekitPhotoId) await imagekitSvc.deleteImgkt(oldImagekitPhotoId);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Update photo success',
+                data: { id: photo.id }
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+            next(error);
+        }
+    }
 };

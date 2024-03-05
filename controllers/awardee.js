@@ -71,6 +71,7 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
+            console.log('ERROR:', error);
             next(error);
         }
     },
@@ -218,6 +219,9 @@ module.exports = {
             const photoFile = req.files['photo'] ? req.files['photo'][0] : null;
             const transcriptFile = req.files['transcript'] ? req.files['transcript'][0] : null;
 
+            const awardee = await awardeeSvc.getAwardeeById(id);
+            if (!awardee) return err.not_found(res, 'Awardee not found!');
+
             if (body.scholarship) body.scholarship = parseInt(body.scholarship);
             if (body.study_program_id) body.study_program_id = parseInt(body.study_program_id);
             if (body.smt1_ip) body.smt1_ip = parseFloat(body.smt1_ip);
@@ -251,9 +255,6 @@ module.exports = {
 
             transaction = await sequelize.transaction();
 
-            const awardee = await awardeeSvc.getAwardeeById(id);
-            if (!awardee) return err.not_found(res, 'Awardee not found!');
-
             let photo_id = awardee.photo_id;
             let oldImagekitPhotoId = null;
             if (photoFile) {
@@ -262,7 +263,7 @@ module.exports = {
                 if (photo_id != 1 && photo_id != 2) {
                     // if photo is not default photo, delete the old photo, update the rest
                     oldImagekitPhotoId = awardee.photo.file.imagekit_id;
-                    const pfile = await fileSvc.updateFile(
+                    await fileSvc.updateFile(
                         awardee.photo.file_id,
                         imagekitPhoto.name,
                         imagekitPhoto.fileId,
@@ -271,11 +272,11 @@ module.exports = {
                         photoFile.mimetype,
                         { transaction }
                     );
-                    const photo = await photoSvc.updatePhoto(
+                    await photoSvc.updatePhoto(
                         photo_id,
-                        pfile.id,
-                        pfile.file_name,
-                        body.name,
+                        awardee.photo.file_id,
+                        imagekitPhoto.name,
+                        body.name || awardee.name,
                         'awardee_photo',
                         false,
                         null,
@@ -294,7 +295,7 @@ module.exports = {
                     const photo = await photoSvc.addPhoto(
                         pfile.id,
                         pfile.file_name,
-                        body.name,
+                        body.name || awardee.name,
                         'awardee_photo',
                         false,
                         null,
@@ -311,7 +312,7 @@ module.exports = {
                 imagekitIds.push(imagekitTranscript.fileId);
                 if (transcript_id != 1 && transcript_id != 2) {
                     oldImagekitTranscriptId = awardee.transcript.file.imagekit_id;
-                    const tfile = await fileSvc.updateFile(
+                    await fileSvc.updateFile(
                         awardee.transcript.file_id,
                         imagekitTranscript.name,
                         imagekitTranscript.fileId,
@@ -320,11 +321,11 @@ module.exports = {
                         transcriptFile.mimetype,
                         { transaction }
                     );
-                    const transcript = await documentSvc.updateDocument(
+                    await documentSvc.updateDocument(
                         transcript_id,
-                        tfile.id,
+                        awardee.transcript.file_id,
                         'awardee_transcript',
-                        0,
+                        null,
                         { transaction }
                     );
                 } else {
@@ -339,7 +340,7 @@ module.exports = {
                     const transcript = await documentSvc.addDocument(
                         tfile.id,
                         'awardee_transcript',
-                        0,
+                        null,
                         { transaction }
                     );
                     transcript_id = transcript.id;

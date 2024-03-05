@@ -96,12 +96,14 @@ module.exports = {
             const { transaction } = options;
             const findOptions = transaction ? { transaction } : {};
 
-            const photo = await Photo.findByPk(id, {
+            const photo = await Photo.findOne({
+                where: {
+                    id: id
+                },
                 include: [
                     {
                         model: File,
                         as: 'file',
-                        attributes: ['id', 'imagekit_url', 'mimetype']
                     }
                 ],
                 ...findOptions

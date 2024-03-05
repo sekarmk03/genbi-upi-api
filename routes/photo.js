@@ -9,6 +9,8 @@ const upload = multer();
 router.get('/', photo.index);
 router.get('/featured', photo.featured);
 router.get('/gallery', photo.gallery);
+router.get('/:id', photo.show);
 router.post('/', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), photo.create);
+router.put('/:id', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), photo.update);
 
 module.exports = router;
