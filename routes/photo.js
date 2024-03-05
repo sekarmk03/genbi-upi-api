@@ -12,5 +12,6 @@ router.get('/gallery', photo.gallery);
 router.get('/:id', photo.show);
 router.post('/', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), photo.create);
 router.put('/:id', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), photo.update);
+router.delete('/:id', authorize([role.ADMIN, role.SUPER_ADMIN]), photo.delete);
 
 module.exports = router;
