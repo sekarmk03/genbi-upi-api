@@ -8,5 +8,6 @@ router.get('/:id', comment.show);
 router.post('/', comment.create);
 router.post('/:id/reply', comment.reply);
 router.put('/:id', authorize([role.SUPER_ADMIN]), comment.update);
+router.delete('/:id', authorize([role.SUPER_ADMIN]), comment.delete);
 
 module.exports = router;
