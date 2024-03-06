@@ -1,8 +1,8 @@
-const types = ['Article', 'Press Release', 'Announcement'];
+const { postTypes } = require('../ref_option');
 
 module.exports = {
     createPost: {
-        type: { type: 'enum', values: types },
+        type: { type: 'enum', values: postTypes },
         title: { type: 'string', min: 10, max: 200 },
         content: { type: 'string', min: 150, max: 10000 },
         department_id: { type: 'number', integer: true, optional: true },
@@ -18,7 +18,7 @@ module.exports = {
         caption_other4: { type: 'string', min: 15, max: 255, optional: true },
     },
     updatePost: {
-        type: { type: 'enum', values: types, optional: true },
+        type: { type: 'enum', values: postTypes, optional: true },
         title: { type: 'string', min: 10, max: 200, optional: true },
         content: { type: 'string', min: 150, max: 10000, optional: true },
         department_id: { type: 'number', integer: true, optional: true },

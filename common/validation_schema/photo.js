@@ -1,28 +1,16 @@
-const categories = [
-    'department_cover',
-    'awardee_photo',
-    'appreciation_cover',
-    'event_thumbnail',
-    'event_poster',
-    'event_banner',
-    'post_cover_image',
-    'post_other_image',
-    'gallery_photo',
-    'management_video',
-    'management_photo'
-];
+const { imageCategories } = require('../ref_option');
 
 module.exports = {
     createPhoto: {
         caption: { type: 'string', min: 15, max: 255 },
-        category: { type: 'enum', values: categories },
+        category: { type: 'enum', values: imageCategories },
         featured: { type: 'boolean' },
         post_id: { type: 'number', optional: true, nullable: true }
     },
     updatePhoto: {
         alt: { type: 'string', min: 5, max: 255, optional: true },
         caption: { type: 'string', min: 15, max: 255, optional: true },
-        category: { type: 'enum', values: categories, optional: true },
+        category: { type: 'enum', values: imageCategories, optional: true },
         featured: { type: 'boolean', optional: true },
         post_id: { type: 'number', optional: true, nullable: true }
     }
