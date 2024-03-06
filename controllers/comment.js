@@ -62,5 +62,75 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const comment = await commentSvc.getCommentById(id);
+            if (!comment) return err.not_found(res, "Comment not found!");
+
+            const commentResource = halson(comment.toJSON())
+            .addLink('reply', `/comments/${comment.id}/reply`);
+
+            return res.status(200).json({
+                status: 'OK',
+                data: commentTransformer.commentDetail(commentResource)
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    update: async (req, res, next) => {
+        try {
+            const body = req.body;
+            const { id } = req.params;
+
+            const comment = await commentSvc.getCommentById(id);
+            if (!comment) return err.not_found(res, "Comment not found!");
+
+            const val = v.validate(body, commentSchema.updateComment);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            await commentSvc.updateComment(
+                comment,
+                comment.post_id,
+                comment.comment_id,
+                comment.level,
+                body.name || comment.name,
+                body.content || comment.content
+            );
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Comment successfully updated',
+                data: {
+                    id: comment.id
+                }
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const comment = await commentSvc.getCommentById(id);
+            if (!comment) return err.not_found(res, "Comment not found!");
+
+            await comment.destroy();
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Comment successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }

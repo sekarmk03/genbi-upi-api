@@ -8,6 +8,7 @@ let commentDetail = (comment) => {
         content: comment.content
     };
 
+    if (comment.replies) newcomment.replies = comment.replies;
     if (comment.created_at || comment.createdAt) newcomment.created_at = (comment.created_at ?? comment.createdAt);
     if (comment.updated_at || comment.updatedAt) newcomment.updated_at = (comment.updated_at ?? comment.updatedAt);
     if (comment._links) newcomment._links = comment._links;

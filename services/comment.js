@@ -48,5 +48,23 @@ module.exports = {
         });
 
         return comment;
+    },
+
+    updateComment: async (comment, post_id, comment_id, level, name, content) => {
+        const commentUpdate = await comment.update({
+            post_id,
+            comment_id,
+            level,
+            name,
+            content
+        });
+
+        return commentUpdate;
+    },
+
+    deleteComment: async (comment) => {
+        const deleted = await comment.destroy();
+
+        return deleted;
     }
 }
