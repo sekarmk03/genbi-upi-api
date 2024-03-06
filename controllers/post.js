@@ -240,7 +240,9 @@ module.exports = {
 
             body.department_id = parseInt(body.department_id);
             body.author_id = parseInt(body.author_id);
-            body.event_id = parseInt(body.event_id);
+            body.event_id = body.event_id ? parseInt(body.event_id) : null;
+            body.tag1 = 'GenBIUPI';
+            body.tags = JSON.parse(body.tags);
 
             const val = v.validate(body, postSchema.createPost);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -265,6 +267,22 @@ module.exports = {
 
             transaction = await sequelize.transaction();
 
+            const post = await postSvc.addPost(
+                body.type,
+                body.title,
+                generateSlug(body.title),
+                body.content,
+                body.department_id,
+                body.author_id,
+                body.event_id,
+                body.tag1,
+                body.tags[0],
+                body.tags[1],
+                body.tags[2],
+                body.tags[3],
+                { transaction }
+            );
+
             const imagekitCover = await imagekitSvc.uploadImgkt(coverImgFile);
             imagekitIds.push(imagekitCover.fileId);
             const cfile = await fileSvc.addFile(
@@ -278,25 +296,79 @@ module.exports = {
             const cover = await photoSvc.addPhoto(
                 cfile.id,
                 cfile.file_name,
-                
-            );
-
-            const post = await postSvc.addPost(
-                body.type,
-                body.title,
-                generateSlug(body.title),
-                body.content,
-                body.department_id,
-                body.author_id,
-                body.event_id,
-                body.tag1,
-                body.tag2,
-                body.tag3,
-                body.tag4,
-                body.tag5,
+                body.caption_cover,
+                'post_cover_image',
+                false,
+                post.id,
                 { transaction }
             );
+
+            let others = [];
+            if (otherImgFile.length > 0) {
+                for (const imgFile of otherImgFile) {
+                    const imagekitOther = await imagekitSvc.uploadImgkt(imgFile);
+                    imagekitIds.push(imagekitOther.fileId);
+                    const ofile = await fileSvc.addFile(
+                        imagekitOther.name,
+                        imagekitOther.fileId,
+                        imagekitOther.url,
+                        imagekitOther.filePath,
+                        imgFile.mimetype,
+                        { transaction }
+                    );
+                    const other = await photoSvc.addPhoto(
+                        ofile.id,
+                        ofile.file_name,
+                        body[`caption_other${otherImgFile.indexOf(imgFile) + 1}`],
+                        'post_other_image',
+                        false,
+                        post.id,
+                        { transaction }
+                    );
+                    others.push(other);
+                }
+            }
+
+            let attachments = [];
+            if (attachmentFile.length > 0) {
+                for (const docFile of attachmentFile) {
+                    const imagekitDoc = await imagekitSvc.uploadImgkt(docFile);
+                    imagekitIds.push(imagekitDoc.fileId);
+                    const dfile = await fileSvc.addFile(
+                        imagekitDoc.name,
+                        imagekitDoc.fileId,
+                        imagekitDoc.url,
+                        imagekitDoc.filePath,
+                        docFile.mimetype,
+                        { transaction }
+                    );
+                    const attachment = await documentSvc.addDocument(
+                        dfile.id,
+                        'post_attachment',
+                        post.id,
+                        { transaction }
+                    );
+                    attachments.push(attachment);
+                }
+            }
+
+            await transaction.commit();
+
+            return res.status(201).json({
+                status: 'OK',
+                message: 'Create post success',
+                data: {
+                    post: post,
+                    cover: cover,
+                    others: others,
+                    attachments: attachments
+                }
+            });
         } catch (error) {
+            if (transaction) await transaction.rollback();
+            if (imagekitIds.length > 0) {
+                await imagekitSvc.deleteImgkt(imagekitIds);
+            }
             next(error);
         }
     }

@@ -1,6 +1,6 @@
 module.exports = {
     createAwardee: {
-        name: { type: 'string', min: '3', max: '100' },
+        name: { type: 'string', min: 3, max: 100 },
         photo_id: { type: 'number', integer: true, optional: true },
         birth_date: { type: "string", format: "date" },
         linkedin_username: { type: 'string', min: 3, max: 100 },
@@ -30,7 +30,7 @@ module.exports = {
         transcript_id: { type: 'number', optional: true, nullable: true },
     },
     updateAwardee: {
-        name: { type: 'string', min: '3', max: '100', optional: true },
+        name: { type: 'string', min: 3, max: 100, optional: true },
         photo_id: { type: 'number', integer: true, optional: true },
         birth_date: { type: "string", format: "date", optional: true },
         linkedin_username: { type: 'string', min: 3, max: 100, optional: true },
