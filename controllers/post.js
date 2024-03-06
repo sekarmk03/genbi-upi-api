@@ -1,9 +1,14 @@
 const err = require('../common/custom_error');
-const { postSvc, commentSvc, departmentSvc, photoSvc } = require('../services');
+const { postSvc, commentSvc, departmentSvc, photoSvc, imagekitSvc, documentSvc, fileSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 const { post: postTransformer, comment: commentTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');
+const { postSchema, fileSchema } = require('../common/validation_schema');
+const Validator = require('fastest-validator');
+const v = new Validator;
+const { sequelize } = require('../models');
+const generateSlug = require('../utils/generate-slug');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -219,6 +224,78 @@ module.exports = {
                     visitors: updatedPost.visitors
                 }
             });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    create: async (req, res, next) => {
+        let transaction;
+        let imagekitIds = [];
+        try {
+            const body = req.body;
+            const coverImgFile = req.files['cover'] ? req.files['cover'][0] : null;
+            const otherImgFile = req.files['other'] ? req.files['other'] : [];
+            const attachmentFile = req.files['attachment'] ? req.files['attachment'] : [];
+
+            body.department_id = parseInt(body.department_id);
+            body.author_id = parseInt(body.author_id);
+            body.event_id = parseInt(body.event_id);
+
+            const val = v.validate(body, postSchema.createPost);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            if (!coverImgFile) return err.bad_request(res, "Cover image is required!");
+            const coverImgVal = fileSchema.photo(coverImgFile);
+            if (coverImgVal.length) return err.bad_request(res, coverImgVal[0]);
+
+            if (otherImgFile.length > 0) {
+                for (const img of otherImgFile) {
+                    const val = fileSchema.photo(img);
+                    if (val.length) return err.bad_request(res, val[0]);
+                }
+            }
+
+            if (attachmentFile.length > 0) {
+                for (const file of attachmentFile) {
+                    const val = fileSchema.document(file);
+                    if (val.length) return err.bad_request(res, val[0]);
+                }
+            }
+
+            transaction = await sequelize.transaction();
+
+            const imagekitCover = await imagekitSvc.uploadImgkt(coverImgFile);
+            imagekitIds.push(imagekitCover.fileId);
+            const cfile = await fileSvc.addFile(
+                imagekitCover.name,
+                imagekitCover.fileId,
+                imagekitCover.url,
+                imagekitCover.filePath,
+                coverImgFile.mimetype,
+                { transaction }
+            );
+            const cover = await photoSvc.addPhoto(
+                cfile.id,
+                cfile.file_name,
+                
+            );
+
+            const post = await postSvc.addPost(
+                body.type,
+                body.title,
+                generateSlug(body.title),
+                body.content,
+                body.department_id,
+                body.author_id,
+                body.event_id,
+                body.tag1,
+                body.tag2,
+                body.tag3,
+                body.tag4,
+                body.tag5,
+                { transaction }
+            );
         } catch (error) {
             next(error);
         }

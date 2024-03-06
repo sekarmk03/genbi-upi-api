@@ -108,11 +108,11 @@ module.exports = {
 
             if (!photoFile) return err.bad_request(res, 'Photo file is required');
             const photoVal = fileSchema.photo(photoFile);
-            if (photoVal.length) return err.bad_request(res, photoVal[0].message);
+            if (photoVal.length) return err.bad_request(res, photoVal[0]);
 
             if (!transcriptFile) return err.bad_request(res, 'Transcript file is required');
             const transcriptVal = fileSchema.document(transcriptFile);
-            if (transcriptVal.length) return err.bad_request(res, transcriptVal[0].message);
+            if (transcriptVal.length) return err.bad_request(res, transcriptVal[0]);
             
             transaction = await sequelize.transaction();
 
@@ -246,11 +246,11 @@ module.exports = {
 
             if (photoFile) {
                 const photoVal = fileSchema.photo(photoFile);
-                if (photoVal.length) return err.bad_request(res, photoVal[0].message);
+                if (photoVal.length) return err.bad_request(res, photoVal[0]);
             }
             if (transcriptFile) {
                 const transcriptVal = fileSchema.document(transcriptFile);
-                if (transcriptVal.length) return err.bad_request(res, transcriptVal[0].message);
+                if (transcriptVal.length) return err.bad_request(res, transcriptVal[0]);
             }
 
             transaction = await sequelize.transaction();

@@ -4,6 +4,7 @@ const eventParticipantSchema = require('./event_participant');
 const awardeeSchema = require('./awardee');
 const fileSchema = require('./file');
 const photoSchema = require('./photo');
+const postSchema = require('./post');
 
 module.exports = {
     contactUsSchema,
@@ -12,4 +13,5 @@ module.exports = {
     awardeeSchema,
     fileSchema,
     photoSchema,
+    postSchema,
 };

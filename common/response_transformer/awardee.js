@@ -96,6 +96,7 @@ module.exports = {
             ipk6: a.smt6_ipk,
             ipk7: a.smt7_ipk,
             ipk8: a.smt8_ipk,
+            study_program_id: a.study_program.id,
             study_program: a.study_program.name,
             faculty: a.study_program.faculty.abbr,
             created_at: (a.createdAt ?? a.created_at),

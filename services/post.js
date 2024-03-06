@@ -373,4 +373,33 @@ module.exports = {
 
         return post;
     },
+
+    addPost: async (type, title, slug, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+        try {
+            const { transaction } = options;
+            const createOptions = transaction ? { transaction } : {};
+
+            const post = await Post.create({
+                type,
+                title,
+                slug,
+                content,
+                department_id,
+                author_id,
+                event_id,
+                tag1,
+                tag2,
+                tag3,
+                tag4,
+                tag5,
+                search: null,
+                created_at: new Date(),
+                updated_at: new Date()
+            }, createOptions);
+
+            return post;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

@@ -393,35 +393,3 @@ module.exports = {
         }
     }
 }
-/*
-{
-    "name": "Test Create Awardee",
-    "photo_id": 1,
-    "birth_date": "2002-01-01",
-    "linkedin_username": "sekarmk03",
-    "instagram_username": "sekarmk03",
-    "telp": "089123456789",
-    "member_since": "2022-01-12",
-    "scholarship": 3,
-    "nim": "2009903",
-    "study_program_id": 12,
-    "year": "2022",
-    "smt1_ip": 3.93,
-    "smt2_ip": 3.88,
-    "smt3_ip": 3.97,
-    "smt4_ip": 3.75,
-    "smt5_ip": 3.92,
-    "smt6_ip": null,
-    "smt7_ip": null,
-    "smt8_ip": null,
-    "smt1_ipk": 3.93,
-    "smt2_ipk": 3.90,
-    "smt3_ipk": 3.94,
-    "smt4_ipk": 3.85,
-    "smt5_ipk": 3.84,
-    "smt6_ipk": null,
-    "smt7_ipk": null,
-    "smt8_ipk": null,
-    "transcript_id": 1
-}
-*/
