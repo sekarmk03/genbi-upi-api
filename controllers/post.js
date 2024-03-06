@@ -379,7 +379,7 @@ module.exports = {
             const { id } = req.params;
 
             const post = await postSvc.getPostById(id);
-            if (!post) return err.not_found(res, "Post resource not found");
+            if (!post) return err.not_found(res, "Post not found");
 
             const body = req.body;
 
@@ -425,4 +425,45 @@ module.exports = {
             next(error);
         }
     },
+
+    delete: async (req, res, next) => {
+        let transaction;
+        let imagekitIds = [];
+        try {
+            const { id } = req.params;
+
+            const post = await postSvc.getPostById(id);
+            if (!post) return err.not_found(res, "Post not found");
+
+            transaction = await sequelize.transaction();
+
+            for (const img of post.images) {
+                imagekitIds.push(img.file.imagekit_id);
+                await photoSvc.deletePhoto(img.id, { transaction });
+                await fileSvc.deleteFile(img.file_id, { transaction });
+            }
+
+            for (const doc of post.attachments) {
+                imagekitIds.push(doc.file.imagekit_id);
+                await documentSvc.deleteDocument(doc.id, { transaction });
+                await fileSvc.deleteFile(doc.file_id, { transaction });
+            }
+
+            await postSvc.deletePost(post, { transaction });
+
+            await transaction.commit();
+            for (let id of imagekitIds) {
+                await imagekitSvc.deleteImgkt(id);
+            }
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Delete post success',
+                data: null
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
+    }
 }

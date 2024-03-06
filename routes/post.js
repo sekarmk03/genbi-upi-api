@@ -14,5 +14,6 @@ router.get('/:id/comments', post.comments);
 router.get('/:id/visitors/add', post.visitors);
 router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), upload.fields([{ name: 'cover' }, { name: 'other' }, { name: 'attachment' }]), post.create);
 router.put('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), post.update);
+router.delete('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), post.delete);
 
 module.exports = router;

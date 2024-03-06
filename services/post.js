@@ -58,9 +58,6 @@ module.exports = {
                     } : {}
                 ]
             },
-            order: [
-                [sort, sortType]
-            ],
             include: [
                 {
                     model: Department,
@@ -82,6 +79,10 @@ module.exports = {
                         attributes: ['id', 'imagekit_url']
                     },
                 }
+            ],
+            order: [
+                [sort, sortType],
+                [{ model: Photo, as: 'images' }, 'id', 'ASC'],
             ],
             limit: limit,
             offset: startPage,
@@ -131,24 +132,27 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'images',
+                    attributes: ['id', 'file_id', 'category', 'alt', 'caption'],
                     include: {
                         model: File,
                         as: 'file',
                         attributes: ['id', 'imagekit_id', 'imagekit_url']
                     },
-                    attributes: ['id', 'file_id', 'category', 'alt', 'caption'],
                     order: [['id', 'ASC']],
                 },
                 {
                     model: Document,
                     as: 'attachments',
+                    attributes: ['id', 'file_id', 'category'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['id', 'file_name', 'imagekit_url']
+                        attributes: ['id', 'file_name', 'imagekit_id', 'imagekit_url']
                     },
-                    attributes: ['id', 'category']
                 }
+            ],
+            order: [
+                [{ model: Photo, as: 'images' }, 'id', 'ASC'],
             ]
         });
 
@@ -368,6 +372,9 @@ module.exports = {
                     },
                     attributes: ['id', 'category']
                 }
+            ],
+            order: [
+                [{ model: Photo, as: 'images' }, 'id', 'ASC'],
             ]
         });
 
@@ -429,4 +436,17 @@ module.exports = {
             throw error;
         }
     },
+
+    deletePost: async (post, options = {}) => {
+        try {
+            const { transaction } = options;
+            const deleteOptions = transaction ? { transaction } : {};
+
+            const deleted = await post.destroy(deleteOptions);
+
+            return deleted;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
