@@ -5,6 +5,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const halson = require('halson');
 const { comment: commentTransformer } = require('../common/response_transformer');
+const paginate = require('../utils/generate-pagination');
 
 module.exports = {
     create: async (req, res, next) => {
@@ -129,6 +130,42 @@ module.exports = {
                 message: 'Comment successfully deleted',
                 data: null
             });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    index: async (req, res, next) => {
+        try {
+            let {
+                sort = "created_at", type = "desc", page = "1", limit = "10"
+            } = req.query;
+
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
+
+            const comments = await commentSvc.getAllComments(sort, type, start, limit);
+
+            const pagination = paginate(comments.count, comments.rows.length, limit, page, start, end);
+
+            const commentResources = comments.rows.map((comment) => {
+                let res = halson(comment.toJSON())
+                .addLink('self', `/comments/${comment.id}`)
+                .addLink('reply', `/comments/${comment.id}/reply`);
+
+                return res;
+            });
+
+            const response = {
+                status: 'OK',
+                message: 'Get all comments success',
+                pagination,
+                data: commentTransformer.commentList(commentResources)
+            };
+
+            return res.status(200).json(response);
         } catch (error) {
             next(error);
         }

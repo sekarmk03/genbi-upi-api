@@ -4,6 +4,7 @@ const { comment } = require('../controllers');
 const role = require('../common/role');
 const authorize = require('../middlewares/authorize');
 
+router.get('/', authorize([role.SUPER_ADMIN]), comment.index);
 router.get('/:id', comment.show);
 router.post('/', comment.create);
 router.post('/:id/reply', comment.reply);

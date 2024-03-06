@@ -66,5 +66,24 @@ module.exports = {
         const deleted = await comment.destroy();
 
         return deleted;
+    },
+
+    getAllComments: async (sort, sortType, startPage, limit) => {
+        const comments = await Comment.findAndCountAll({
+            include: [
+                {
+                    model: Comment,
+                    as: 'replies',
+                }
+            ],
+            order: [
+                [sort, sortType]
+            ],
+            limit: limit,
+            offset: startPage,
+            distinct: true
+        });
+
+        return comments;
     }
 }
