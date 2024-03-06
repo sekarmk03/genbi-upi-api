@@ -9,6 +9,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const generateSlug = require('../utils/generate-slug');
+const { postTypes } = require('../common/ref_option');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -463,6 +464,18 @@ module.exports = {
             });
         } catch (error) {
             if (transaction) await transaction.rollback();
+            next(error);
+        }
+    },
+
+    postTypes: (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Get all post types success',
+                data: postTypes
+            });
+        } catch (error) {
             next(error);
         }
     }
