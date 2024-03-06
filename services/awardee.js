@@ -149,11 +149,19 @@ module.exports = {
             whereCond.push({ department_id: { [Op.in]: department } });
         }
 
+        let whereOptions = {};
+        if (whereCond.length > 0) {
+            whereOptions = {
+                where: {
+                    [Op.and]: whereCond
+                }
+            }
+        }
+
         const awardees = await Awardee.findAndCountAll({
             where: {
                 [Op.or]: [
                     { name: { [Op.iLike]: `%${search}%` } },
-                    // { [Op.and]: whereCond }
                 ]
             },
             include: [
@@ -176,10 +184,10 @@ module.exports = {
                     model: AwardeeManagement,
                     as: 'awardee_managements',
                     attributes: ['id', 'management_id'],
-                    // required: true,
-                    where: {
-                        [Op.and]: whereCond
-                    },
+                    // where: {
+                    //     [Op.and]: whereIncCond
+                    // },
+                    ...whereOptions,
                     include: [
                         {
                             model: Position,
@@ -200,9 +208,8 @@ module.exports = {
                 }
             ],
             order: [
+                [sort, type],
                 [{ model: AwardeeManagement, as: 'awardee_managements' }, 'management_id', 'DESC'],
-                ['id', 'ASC'],
-                [sort, type]
             ],
             limit: limit,
             offset: startPage,

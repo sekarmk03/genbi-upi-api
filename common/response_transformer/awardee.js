@@ -60,6 +60,10 @@ module.exports = {
                 if (a.awardee_managements[0].department) newawardee.department = a.awardee_managements[0].department.name;
                 if (a.awardee_managements[0].division) newawardee.division = a.awardee_managements[0].division.name;
                 if (a.awardee_managements[0].position) newawardee.position = a.awardee_managements[0].position.name;
+            } else {
+                newawardee.department = null;
+                newawardee.division = null;
+                newawardee.position = null;
             }
             if (a.createdAt) newawardee.created_at = a.createdAt;
             if (a.updatedAt) newawardee.updated_at = a.updatedAt;

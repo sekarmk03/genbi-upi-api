@@ -6,7 +6,7 @@ const { awardee: awardeeTransformer } = require('../common/response_transformer'
 const { awardeeSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
-const { sequelize } = require('../models');
+const { sequelize, Awardee } = require('../models');
 
 module.exports = {
     index: async (req, res, next) => {
