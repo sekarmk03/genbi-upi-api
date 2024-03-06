@@ -371,5 +371,58 @@ module.exports = {
             }
             next(error);
         }
-    }
+    },
+
+    update: async (req, res, next) => {
+        let transaction;
+        try {
+            const { id } = req.params;
+
+            const post = await postSvc.getPostById(id);
+            if (!post) return err.not_found(res, "Post resource not found");
+
+            const body = req.body;
+
+            if (body.department_id) body.department_id = parseInt(body.department_id);
+            if (body.author_id) body.author_id = parseInt(body.author_id);
+            if (body.event_id) body.event_id = parseInt(body.event_id) ?? null;
+            body.tag1 = 'GenBIUPI';
+            if (body.tags) body.tags = typeof body.tags === 'string' ? JSON.parse(body.tags) : body.tags;
+
+            const val = v.validate(body, postSchema.updatePost);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            transaction = await sequelize.transaction();
+
+            const updatedPost = await postSvc.updatePost(
+                post,
+                body.type || post.type,
+                body.title || post.title,
+                generateSlug(body.title) || post.slug,
+                body.content || post.content,
+                body.department_id || post.department_id,
+                body.author_id || post.author_id,
+                body.event_id || post.event_id,
+                body.tag1 || post.tag1,
+                body.tags[0] || post.tag2,
+                body.tags[1] || post.tag3,
+                body.tags[2] || post.tag4,
+                body.tags[3] || post.tag5,
+                { transaction }
+            );
+            
+            await transaction.commit();
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Update post success',
+                data: {
+                    id: updatedPost.id
+                }
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
+    },
 }

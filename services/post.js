@@ -113,11 +113,11 @@ module.exports = {
                             include: {
                                 model: Photo,
                                 as: 'photo',
-                                attributes: ['id', 'alt', 'caption'],
+                                attributes: ['id', 'file_id', 'alt', 'caption'],
                                 include: {
                                     model: File,
                                     as: 'file',
-                                    attributes: ['imagekit_url']
+                                    attributes: ['imagekit_url', 'imagekit_id']
                                 }
                             }
                         },
@@ -134,9 +134,9 @@ module.exports = {
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['id', 'imagekit_url']
+                        attributes: ['id', 'imagekit_id', 'imagekit_url']
                     },
-                    attributes: ['id', 'category', 'alt', 'caption'],
+                    attributes: ['id', 'file_id', 'category', 'alt', 'caption'],
                     order: [['id', 'ASC']],
                 },
                 {
@@ -401,5 +401,32 @@ module.exports = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    updatePost: async (post, type, title, slug, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+        try {
+            const { transaction } = options;
+            const updateOptions = transaction ? { transaction } : {};
+
+            const update = await post.update({
+                type,
+                title,
+                slug,
+                content,
+                department_id,
+                author_id,
+                event_id,
+                tag1,
+                tag2,
+                tag3,
+                tag4,
+                tag5,
+                updated_at: new Date()
+            }, updateOptions);
+
+            return update;
+        } catch (error) {
+            throw error;
+        }
+    },
 }

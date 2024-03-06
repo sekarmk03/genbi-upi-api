@@ -27,10 +27,5 @@ module.exports = {
         event_id: { type: 'number', integer: true, optional: true, nullable: true },
         tag1: { type: 'string', min: 3, max: 30, optional: true, nullable: true },
         tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true },
-        caption_cover: { type: 'string', min: 15, max: 255, optional: true },
-        caption_other1: { type: 'string', min: 15, max: 255, optional: true },
-        caption_other2: { type: 'string', min: 15, max: 255, optional: true },
-        caption_other3: { type: 'string', min: 15, max: 255, optional: true },
-        caption_other4: { type: 'string', min: 15, max: 255, optional: true },
     },
 };
