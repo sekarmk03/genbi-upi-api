@@ -420,10 +420,12 @@ module.exports = {
                 await fileSvc.deleteFile(awardee.photo.file_id, { transaction });
             }
 
-            if (awardee.transcript_id != 1 && awardee.transcript_id != 2) {
-                imagekitIds.push(awardee.transcript.file.imagekit_id);
-                await documentSvc.deleteDocument(awardee.transcript_id, { transaction });
-                await fileSvc.deleteFile(awardee.transcript.file_id, { transaction });
+            if (awardee.transcript && awardee.transcript.file) {
+                if (awardee.transcript_id != 1 && awardee.transcript_id != 2) {
+                    imagekitIds.push(awardee.transcript.file.imagekit_id);
+                    await documentSvc.deleteDocument(awardee.transcript_id, { transaction });
+                    await fileSvc.deleteFile(awardee.transcript.file_id, { transaction });
+                }
             }
 
             await awardeeSvc.deleteAwardee(awardee, { transaction });
