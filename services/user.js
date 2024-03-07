@@ -1,4 +1,4 @@
-const { User, Role, UserRole } = require('../models');
+const { User, Role, UserRole, Awardee } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
@@ -89,6 +89,13 @@ module.exports = {
     },
 
     getAllUsers: async (sort, type, startPage, limit, search) => {
+        let options = {};
+        if (limit != 0) {
+            options = {
+                offset: startPage,
+                limit: limit
+            }
+        }
         const users = await User.findAndCountAll({
             where: {
                 [Op.or]: [
@@ -112,8 +119,24 @@ module.exports = {
             order: [
                 [sort, type]
             ],
-            offset: startPage,
-            limit: limit
+            ...options
+        });
+
+        return users;
+    },
+
+    getUsersWithAwardees: async () => {
+        const users = await User.findAndCountAll({
+            include: {
+                model: Awardee,
+                as: 'awardee',
+                attributes: ['id', 'name']
+            },
+            order: [
+                ['created_at', 'DESC'],
+                [{ model: Awardee, as: 'awardee' }, 'name', 'ASC'],
+            ],
+            distinct: true
         });
 
         return users;

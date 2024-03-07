@@ -5,12 +5,13 @@ const { userSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
+const { user: userTransformer } = require('../common/response_transformer');
 
 module.exports = {
     index: async (req, res, next) => {
         try {
             let {
-                sort = "created_at", type = "desc", page = "1", limit = "10", management = '', department = '', search = ''
+                sort = "created_at", type = "desc", page = "1", limit = "10", search = '', options = 'false'
             } = req.query;
 
             page = parseInt(page);
@@ -18,15 +19,23 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const users = await userSvc.getAllUsers(sort, type, start, limit, search);
-
-            const pagination = paginate(users.count, users.rows.length, limit, page, start, end);
+            let users;
+            let usersTransform;
+            let pagination = null;
+            if (options === 'true') {
+                users = await userSvc.getUsersWithAwardees();
+                usersTransform = userTransformer.userListPreview(users.rows);
+            } else {
+                users = await userSvc.getAllUsers(sort, type, start, limit, search);
+                usersTransform = users.rows;
+                pagination = paginate(users.count, users.rows.length, limit, page, start, end);
+            }
 
             return res.status(200).json({
                 status: "OK",
                 message: "Successfully fetched users",
                 pagination,
-                data: users.rows,
+                data: usersTransform,
             });
         } catch (error) {
             next(error);

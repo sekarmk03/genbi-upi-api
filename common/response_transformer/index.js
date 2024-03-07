@@ -9,5 +9,19 @@ const appreciation = require('./appreciation');
 const event = require('./event');
 const document = require('./document');
 const studyProgram = require('./study_program');
+const user = require('./user');
 
-module.exports = { post, image, comment, management, awardee, department, division, appreciation, event, document, studyProgram };
+module.exports = {
+    post,
+    image,
+    comment,
+    management,
+    awardee,
+    department,
+    division,
+    appreciation,
+    event,
+    document,
+    studyProgram,
+    user,
+};
