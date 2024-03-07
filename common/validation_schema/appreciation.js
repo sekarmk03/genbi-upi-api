@@ -3,6 +3,6 @@ module.exports = {
         title: { type: 'string', min: 15, max: 150 },
         given_date: { type: 'string', format: 'date' },
         instagram_url: { type: 'string', format: 'url' },
-        caption: { type: 'string', min: 15, max: 500 },
+        caption: { type: 'string', min: 15, max: 5000 },
     }
 }

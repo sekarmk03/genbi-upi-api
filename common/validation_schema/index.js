@@ -7,6 +7,7 @@ const photoSchema = require('./photo');
 const postSchema = require('./post');
 const userSchema = require('./user');
 const authSchema = require('./auth');
+const appreciationSchema = require('./appreciation');
 
 module.exports = {
     contactUsSchema,
@@ -17,5 +18,6 @@ module.exports = {
     photoSchema,
     postSchema,
     userSchema,
-    authSchema
+    authSchema,
+    appreciationSchema
 };
