@@ -26,5 +26,43 @@ module.exports = {
         });
 
         return appreciations;
+    },
+
+    getAppreciationById: async (id) => {
+        const appreciation = await Appreciation.findByPk(id, {
+            include: [
+                {
+                    model: Photo,
+                    as: 'cover',
+                    attributes: ['id', 'alt', 'caption'],
+                    include: [
+                        {
+                            model: File,
+                            as: 'file',
+                            attributes: ['imagekit_url', 'mimetype'],
+                        }
+                    ]
+                }
+            ]
+        });
+
+        return appreciation;
+    },
+
+    addAppreciation: async (title, cover_id, given_date, instagram_url, post_id, caption, options = {}) => {
+        try {
+            const appreciation = await Appreciation.create({
+                title,
+                cover_id,
+                given_date,
+                instagram_url,
+                post_id,
+                caption
+            }, options);
+
+            return appreciation;
+        } catch (error) {
+            throw error;
+        }
     }
 };

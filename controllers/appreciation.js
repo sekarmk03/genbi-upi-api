@@ -1,6 +1,7 @@
 const { appreciationSvc } = require('../services');
 const { appreciation: appreciationTransformer } = require('../common/response_transformer');
 const paginate = require('../utils/generate-pagination');
+const err = require('../common/custom_error');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -24,6 +25,23 @@ module.exports = {
                 pagination,
                 data: appreciationTransformer.appreciationList(appreciations.rows)
             })
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const appreciation = await appreciationSvc.getAppreciationById(id);
+            if (!appreciation) return err.not_found(res, "Appreciation not found!");
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Successfully retrieved appreciation',
+                data: appreciationTransformer.appreciationDetail(appreciation)
+            });
         } catch (error) {
             next(error);
         }
