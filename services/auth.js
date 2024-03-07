@@ -9,7 +9,7 @@ module.exports = {
     generateToken: (req, user) => {
         const issuedAt = Math.floor(Date.now() / 1000);
         const expirationTime = issuedAt + parseInt(JWT_TOKEN_EXPIRATION);
-        const roles = user.roles.map(role => role.role_id);
+        const roles = user.user_roles.map(role => role.role_id);
         const payload = {
             sub: user.uuid,
             exp: expirationTime,

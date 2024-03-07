@@ -1,4 +1,4 @@
-const { User, UserRole } = require('../models');
+const { User, Role, UserRole } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
@@ -11,7 +11,7 @@ module.exports = {
             },
             include: {
                 model: UserRole,
-                as: 'roles',
+                as: 'user_roles',
                 attributes: ['role_id']
             },
             distinct: true
@@ -26,9 +26,8 @@ module.exports = {
                 id: id
             },
             include: {
-                model: UserRole,
+                model: Role,
                 as: 'roles',
-                attributes: ['role_id']
             },
             distinct: true
         });
@@ -105,6 +104,11 @@ module.exports = {
                     }
                 ]
             },
+            include: {
+                model: Role,
+                as: 'roles',
+            },
+            distinct: true,
             order: [
                 [sort, type]
             ],

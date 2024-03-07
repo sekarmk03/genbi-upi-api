@@ -27,5 +27,22 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const user = await userSvc.getUserById(id);
+            if (!user) return err.not_found(res, "User not found!");
+
+            return res.status(200).json({
+                status: "OK",
+                message: "Successfully fetched user",
+                data: user,
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
