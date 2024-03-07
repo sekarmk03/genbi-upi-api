@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { awardeeSvc, departmentSvc, photoSvc, fileSvc, imagekitSvc, documentSvc } = require('../services');
+const { awardeeSvc, departmentSvc, photoSvc, fileSvc, imagekitSvc, documentSvc, userSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const halson = require('halson');
 const { awardee: awardeeTransformer } = require('../common/response_transformer');
@@ -427,6 +427,8 @@ module.exports = {
                     await fileSvc.deleteFile(awardee.transcript.file_id, { transaction });
                 }
             }
+
+            if (awardee.user_id) await userSvc.deleteUser(awardee.user_id, { transaction });
 
             await awardeeSvc.deleteAwardee(awardee, { transaction });
 

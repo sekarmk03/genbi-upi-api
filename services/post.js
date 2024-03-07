@@ -1,5 +1,6 @@
-const { sequelize, Post, Department, User, Awardee, Event, Photo, Document, File, Sequelize } = require('../models');
+const { Post, Department, User, Awardee, Event, Photo, Document, File, Sequelize } = require('../models');
 const { Op } = require('sequelize');
+const generateSlug = require('../utils/generate-slug');
 
 const repository = {
     postAttrDetail: ['id', 'title', 'type', 'slug', 'content', 'visitors', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'department_id', 'author_id', 'created_at', 'updated_at'],
@@ -381,7 +382,7 @@ module.exports = {
         return post;
     },
 
-    addPost: async (type, title, slug, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+    addPost: async (type, title, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
         try {
             const { transaction } = options;
             const createOptions = transaction ? { transaction } : {};
@@ -389,7 +390,7 @@ module.exports = {
             const post = await Post.create({
                 type,
                 title,
-                slug,
+                slug: generateSlug(title),
                 content,
                 department_id,
                 author_id,
@@ -410,7 +411,7 @@ module.exports = {
         }
     },
 
-    updatePost: async (post, type, title, slug, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+    updatePost: async (post, type, title, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
         try {
             const { transaction } = options;
             const updateOptions = transaction ? { transaction } : {};
@@ -418,7 +419,7 @@ module.exports = {
             const update = await post.update({
                 type,
                 title,
-                slug,
+                slug: generateSlug(title),
                 content,
                 department_id,
                 author_id,

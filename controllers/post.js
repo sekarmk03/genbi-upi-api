@@ -8,7 +8,6 @@ const { postSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
-const generateSlug = require('../utils/generate-slug');
 const { postTypes } = require('../common/ref_option');
 
 module.exports = {
@@ -271,7 +270,6 @@ module.exports = {
             const post = await postSvc.addPost(
                 body.type,
                 body.title,
-                generateSlug(body.title),
                 body.content,
                 body.department_id,
                 body.author_id,
@@ -399,7 +397,6 @@ module.exports = {
                 post,
                 body.type || post.type,
                 body.title || post.title,
-                generateSlug(body.title) || post.slug,
                 body.content || post.content,
                 body.department_id || post.department_id,
                 body.author_id || post.author_id,
