@@ -111,5 +111,79 @@ module.exports = {
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
         }
-    }
+    },
+
+    update: async (req, res, next) => {
+        let transaction;
+        let imagekitId;
+        try {
+            const { id } = req.params;
+            const body = req.body;
+            const coverFile = req.file ?? null;
+
+            const appreciation = await appreciationSvc.getAppreciationById(id);
+            if (!appreciation) return err.not_found(res, "Appreciation not found!");
+
+            const val = v.validate(body, appreciationSchema.updateAppreciation);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            transaction = await sequelize.transaction();
+
+            let oldImagekitId = appreciation.cover.file.imagekit_id;
+            if (coverFile) {
+                const coverVal = fileSchema.photo(coverFile);
+                if (coverFile.length) return err.bad_request(res, coverVal[0]);
+
+                const imagekitCover = await imagekitSvc.uploadImgkt(coverFile);
+                imagekitId = imagekitCover.fileId;
+
+                await fileSvc.updateFile(
+                    appreciation.cover.file_id,
+                    imagekitCover.name,
+                    imagekitCover.fileId,
+                    imagekitCover.url,
+                    imagekitCover.filePath,
+                    coverFile.mimetype,
+                    { transaction }
+                );
+
+                await photoSvc.updatePhoto(
+                    appreciation.cover_id,
+                    appreciation.cover.file_id,
+                    imagekitCover.name,
+                    body.title,
+                    'appreciation_cover',
+                    false,
+                    null,
+                    { transaction }
+                );
+            }
+
+            await appreciationSvc.updateAppreciation(
+                appreciation,
+                body.title || appreciation.title,
+                appreciation.cover_id,
+                body.given_date || appreciation.given_date,
+                body.instagram_url || appreciation.instagram_url,
+                null,
+                body.caption || appreciation.caption,
+                { transaction }
+            );
+
+            await imagekitSvc.deleteImgkt(oldImagekitId);
+            await transaction.commit();
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Appreciation has been updated',
+                data: {
+                    id: appreciation.id,
+                }
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+            next(error);
+        }
+    },
 };

@@ -34,12 +34,12 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'cover',
-                    attributes: ['id', 'alt', 'caption'],
+                    attributes: ['id', 'file_id', 'alt', 'caption'],
                     include: [
                         {
                             model: File,
                             as: 'file',
-                            attributes: ['imagekit_url', 'mimetype'],
+                            attributes: ['imagekit_id', 'imagekit_url', 'mimetype'],
                         }
                     ]
                 }
@@ -64,5 +64,22 @@ module.exports = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    updateAppreciation: async (appreciation, title, cover_id, given_date, instagram_url, post_id, caption, options = {}) => {
+        try {
+            const updatedAppreciation = await appreciation.update({
+                title,
+                cover_id,
+                given_date,
+                instagram_url,
+                post_id,
+                caption
+            }, options);
+
+            return updatedAppreciation;
+        } catch (error) {
+            throw error;
+        }
+    },
 };

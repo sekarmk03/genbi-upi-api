@@ -218,8 +218,8 @@ module.exports = {
                 { transaction }
             );
 
-            await transaction.commit();
             if (oldImagekitPhotoId) await imagekitSvc.deleteImgkt(oldImagekitPhotoId);
+            await transaction.commit();
 
             return res.status(200).json({
                 status: 'OK',
@@ -248,8 +248,8 @@ module.exports = {
             await photoSvc.deletePhoto(photo.id, { transaction });
             await fileSvc.deleteFile(photo.file_id, { transaction });
 
-            await transaction.commit();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+            await transaction.commit();
 
             return res.status(200).json({
                 status: 'OK',

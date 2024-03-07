@@ -9,5 +9,6 @@ const upload = multer();
 router.get('/', appreciation.index);
 router.get('/:id', appreciation.show);
 router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), upload.single('cover'), appreciation.create);
+router.put('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), upload.single('cover'), appreciation.update);
 
 module.exports = router;
