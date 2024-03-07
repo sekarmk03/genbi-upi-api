@@ -45,7 +45,7 @@ module.exports = {
                 email,
                 username,
                 password: await bcrypt.hash(password, 10),
-                token
+                token: null
             }, createOptions);
 
             return user;

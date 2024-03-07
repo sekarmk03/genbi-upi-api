@@ -5,6 +5,8 @@ const awardeeSchema = require('./awardee');
 const fileSchema = require('./file');
 const photoSchema = require('./photo');
 const postSchema = require('./post');
+const userSchema = require('./user');
+const authSchema = require('./auth');
 
 module.exports = {
     contactUsSchema,
@@ -14,4 +16,6 @@ module.exports = {
     fileSchema,
     photoSchema,
     postSchema,
+    userSchema,
+    authSchema
 };

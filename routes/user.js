@@ -6,5 +6,6 @@ const authorize = require('../middlewares/authorize');
 
 router.get('/', authorize([role.SUPER_ADMIN]), user.index);
 router.get('/:id', authorize([role.SUPER_ADMIN]), user.show);
+router.post('/', authorize([role.SUPER_ADMIN]), user.create);
 
 module.exports = router;
