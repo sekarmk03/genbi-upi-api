@@ -134,5 +134,33 @@ module.exports = {
             if (transaction) await transaction.rollback();
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        let transaction;
+        try {
+            const { id } = req.params;
+            const user = await userSvc.getUserById(id);
+            if (!user) return err.not_found(res, "User not found!");
+
+            transaction = await sequelize.transaction();
+            
+            for (let role of user.roles) {
+                await userRoleSvc.deleteUserRole(user.id, role.id, { transaction });
+            }
+
+            await userSvc.deleteUser(user.id, { transaction });
+
+            await transaction.commit();
+
+            return res.status(200).json({
+                status: "OK",
+                message: "Successfully deleted user",
+                data: null,
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
     }
 }

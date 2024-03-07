@@ -12,5 +12,20 @@ module.exports = {
         } catch (error) {
             throw error;
         }
+    },
+
+    deleteUserRole: async (userId, roleId, options = {}) => {
+        try {
+            const deleted = await UserRole.destroy({
+                where: {
+                    user_id: userId,
+                    role_id: roleId
+                }
+            }, options);
+
+            return deleted;
+        } catch (error) {
+            throw error;
+        }
     }
 }
