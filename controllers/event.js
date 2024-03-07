@@ -9,7 +9,7 @@ module.exports = {
     index: async (req, res, next) => {
         try {
             let {
-                sort = "created_at", type = "desc", page = "1", limit = "10", filter = ''
+                sort = "created_at", type = "desc", page = "1", limit = "10", filter = '', options = 'false'
             } = req.query;
 
             page = parseInt(page);
@@ -17,9 +17,15 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const events = await eventSvc.getEventsPublic(sort, type, start, limit, filter);
-
-            const pagination = paginate(events.count, events.rows.length, limit, page, start, end);
+            let events;
+            let pagination = null;
+            if (options == 'true') {
+                limit = 0;
+                events = await eventSvc.getEventsPublic(sort, type, start, limit, filter);
+            } else {
+                events = await eventSvc.getEventsPublic(sort, type, start, limit, filter);
+                pagination = paginate(events.count, events.rows.length, limit, page, start, end);
+            }
 
             const eventResources = events.rows.map(event => {
                 const eventResource = halson(event.toJSON())

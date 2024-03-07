@@ -3,6 +3,14 @@ const { Op } = require('sequelize');
 
 module.exports = {
     getEventsPublic: async (sort, sortType, startPage, limit, filter) => {
+        let options = {};
+        if (limit != 0) {
+            options = {
+                offset: startPage,
+                limit: limit
+            }
+        }
+
         const events = await Event.findAndCountAll({
             where: {
                 [Op.or]: [
@@ -28,8 +36,7 @@ module.exports = {
             order: [
                 [sort, sortType]
             ],
-            limit: limit,
-            offset: startPage,
+            ...options,
             distinct: true
         });
 
