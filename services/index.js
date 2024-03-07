@@ -14,6 +14,7 @@ const fileSvc = require('./file');
 const imagekitSvc = require('./imagekit');
 const documentSvc = require('./document');
 const studyProgramSvc = require('./study_program');
+const userRoleSvc = require('./user_role');
 
 module.exports = {
     postSvc,
@@ -32,4 +33,5 @@ module.exports = {
     imagekitSvc,
     documentSvc,
     studyProgramSvc,
+    userRoleSvc
 };

@@ -35,6 +35,21 @@ module.exports = {
         return user;
     },
 
+    getUserByUuid: async (uuid) => {
+        const user = await User.findOne({
+            where: {
+                uuid: uuid
+            },
+            include: {
+                model: Role,
+                as: 'roles',
+            },
+            distinct: true
+        });
+
+        return user;
+    },
+
     addUser: async (email, username, password, options = {}) => {
         try {
             const { transaction } = options;

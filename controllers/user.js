@@ -1,4 +1,4 @@
-const { userSvc } = require('../services');
+const { userSvc, userRoleSvc } = require('../services');
 const paginate = require('../utils/generate-pagination');
 const err = require('../common/custom_error');
 const { userSchema } = require('../common/validation_schema');
@@ -6,6 +6,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const { user: userTransformer } = require('../common/response_transformer');
+const role = require('../common/role');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -74,11 +75,59 @@ module.exports = {
 
             const user = await userSvc.addUser(body.email, body.username, body.password, { transaction });
 
+            const userrole = await userRoleSvc.addUserRole(user.id, role.USER, { transaction });
+
             await transaction.commit();
 
             return res.status(201).json({
                 status: "CREATED",
                 message: "Successfully create user",
+                data: {
+                    user,
+                    userrole
+                }
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
+    },
+
+    update: async (req, res, next) => {
+        let transaction;
+        try {
+            const { id } = req.params;
+            const roles = [ role.SUPER_ADMIN ];
+
+            let user;
+            const userRoles = req.user.role;
+            const hasEditorAccess = roles.some(role => userRoles.includes(role));
+            if (hasEditorAccess) {
+                user = await userSvc.getUserById(id);
+            } else {
+                user = await userSvc.getUserByUuid(req.user.sub);
+            }
+            if (!user) return err.not_found(res, "User not found!");
+
+            let body = req.body;
+            const val = v.validate(body, userSchema.updateUser);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            transaction = await sequelize.transaction();
+
+            await userSvc.updateUser(
+                user,
+                body.email,
+                body.username,
+                user.password,
+                { transaction }
+            );
+
+            await transaction.commit();
+
+            return res.status(200).json({
+                status: "OK",
+                message: "Successfully updated user",
                 data: user,
             });
         } catch (error) {
