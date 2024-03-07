@@ -11,6 +11,7 @@ const auth = require('./auth');
 const awardee = require('./awardee');
 const eventParticipant = require('./event_participant');
 const studyProgram = require('./study_program');
+const user = require('./user');
 
 module.exports = {
     summary,
@@ -26,4 +27,5 @@ module.exports = {
     awardee,
     eventParticipant,
     studyProgram,
+    user
 };

@@ -1,4 +1,5 @@
 const { User, UserRole } = require('../models');
+const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
@@ -18,6 +19,7 @@ module.exports = {
 
         return user;
     },
+
     getUserById: async (id) => {
         const user = await User.findOne({
             where: {
@@ -85,5 +87,31 @@ module.exports = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getAllUsers: async (sort, type, startPage, limit, search) => {
+        const users = await User.findAndCountAll({
+            where: {
+                [Op.or]: [
+                    {
+                        username: {
+                            [Op.like]: `%${search}%`
+                        }
+                    },
+                    {
+                        email: {
+                            [Op.like]: `%${search}%`
+                        }
+                    }
+                ]
+            },
+            order: [
+                [sort, type]
+            ],
+            offset: startPage,
+            limit: limit
+        });
+
+        return users;
     }
 };
