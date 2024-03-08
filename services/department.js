@@ -111,25 +111,25 @@ module.exports = {
     },
 
     getDepartmentsUnique: async () => {
-        // const departments = await Department.findAll({
-        //     attributes: [
-        //         [sequelize.fn('DISTINCT', sequelize.col('name')), 'name'],
-        //         'id'
-        //     ],
-        //     where: {
-        //         management_id: {
-        //             [Op.notIn]: [ 1 ]
-        //         }
-        //     },
-        //     order: [['name', 'ASC']],
-        //     distinct: true
-        // });
         const departments = await sequelize.query(
             'SELECT DISTINCT ON (name) name, id FROM "department" WHERE "management_id" NOT IN (1) ORDER BY name ASC',
             {
                 type: QueryTypes.SELECT
             }
         );
+
+        return departments;
+    },
+
+    getDepartmentsManagements: async () => {
+        const departments = await Department.findAll({
+            attributes: ['id', 'name', 'management_id'],
+            include: {
+                model: Management,
+                as: 'management',
+                attributes: ['id', 'name', 'period_year']
+            }
+        });
 
         return departments;
     }

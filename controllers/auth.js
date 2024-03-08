@@ -1,4 +1,4 @@
-const { userSvc, authSvc } = require('../services');
+const { userSvc, authSvc, awardeeSvc } = require('../services');
 const bcrypt = require('bcrypt');
 const err = require('../common/custom_error');
 const { authSchema } = require('../common/validation_schema');
@@ -31,6 +31,21 @@ module.exports = {
                     username: user.username,
                     token
                 }
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    whoami: async (req, res, next) => {
+        try {
+            const user = await userSvc.getUserByUuid(req.user.uuid);
+            if (!user) return err.not_found(res, "User not found");
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'User data',
+                data: user
             });
         } catch (error) {
             next(error);

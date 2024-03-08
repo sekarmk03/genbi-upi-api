@@ -6,10 +6,12 @@ const { department: departmentTransformer, awardee: awardeeTransformer, division
 module.exports = {
     index: async (req, res, next) => {
         try {
-            let { options = '' } = req.query;
+            let { options = 'false', unique = 'true' } = req.query;
 
             if (options === 'true') {
-                const depts = await departmentSvc.getDepartmentsUnique();
+                let depts;
+                if (unique == 'true') depts = await departmentSvc.getDepartmentsUnique();
+                else depts = await departmentSvc.getDepartmentsManagements();
 
                 return res.status(200).json({
                     status: 'OK',

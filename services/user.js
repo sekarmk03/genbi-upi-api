@@ -40,10 +40,17 @@ module.exports = {
             where: {
                 uuid: uuid
             },
-            include: {
-                model: Role,
-                as: 'roles',
-            },
+            include: [
+                {
+                    model: Role,
+                    as: 'roles',
+                },
+                {
+                    model: Awardee,
+                    as: 'awardee',
+                    attributes: ['id', 'name']
+                }
+            ],
             distinct: true
         });
 
