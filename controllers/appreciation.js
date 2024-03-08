@@ -186,4 +186,8 @@ module.exports = {
             next(error);
         }
     },
+
+    delete: async (req, res, next) => {
+        
+    }
 };

@@ -106,7 +106,7 @@ module.exports = {
                 {
                     model: User,
                     as: 'author',
-                    attributes: ['uuid'],
+                    attributes: ['id', 'uuid'],
                     include: [
                         {
                             model: Awardee,

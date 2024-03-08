@@ -82,4 +82,14 @@ module.exports = {
             throw error;
         }
     },
+
+    deleteAppreciation: async (appreciation, options = {}) => {
+        try {
+            const deleted = await appreciation.destroy(options);
+
+            return deleted;
+        } catch (error) {
+            throw error;
+        }
+    }
 };

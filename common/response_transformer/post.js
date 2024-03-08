@@ -54,6 +54,7 @@ module.exports = {
         
         if (post.author) {
             newpost.author = {
+                id: post.author.id,
                 name: post.author.awardee.name,
                 photo: imageTransformer.imageDetail(post.author.awardee.photo),
             }
