@@ -167,10 +167,11 @@ module.exports = {
             const startRegDate = new Date(body.start_reg_date);
             const endRegDate = new Date(body.end_reg_date);
             if (currentDate < startRegDate) body.status = 'Upcoming';
-            if (startRegDate <= currentDate && currentDate < endRegDate) body.status = 'Open Registration';
-            if (endRegDate < currentDate && currentDate < startDate) body.status = 'Closed Registration';
-            if (startDate <= currentDate && currentDate < endDate) body.status = 'Ongoing';
-            if (endDate < currentDate) body.status = 'Finished';
+            else if (startRegDate <= currentDate && currentDate < endRegDate) body.status = 'Open Registration';
+            else if (endRegDate < currentDate && currentDate < startDate) body.status = 'Closed Registration';
+            else if (startDate <= currentDate && currentDate < endDate) body.status = 'Ongoing';
+            else if (endDate < currentDate) body.status = 'Finished';
+            else body.status = 'Finished';
 
             const val = v.validate(body, eventSchema.createEvent);
             if (val.length) return err.bad_request(res, val[0].message);

@@ -271,5 +271,44 @@ module.exports = {
         } catch (error) {
             throw error;
         }
+    },
+
+    updateEvent: async (id, title, program_id, type, status, thumbnail_id, poster_id, banner_id, description, start_date, end_date, location, location_url, registration_link, start_reg_date, end_reg_date, contact, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+        try {
+            const event = await Event.update({
+                title,
+                slug: generateSlug(title),
+                program_id,
+                type,
+                status,
+                thumbnail_id,
+                poster_id,
+                banner_id,
+                description,
+                start_date,
+                end_date,
+                location,
+                location_url,
+                registration_link,
+                start_reg_date,
+                end_reg_date,
+                contact,
+                tag1,
+                tag2,
+                tag3,
+                tag4,
+                tag5,
+                updated_at: new Date()
+            }, {
+                where: {
+                    id
+                },
+                ...options
+            });
+
+            return event;
+        } catch (error) {
+            throw error;
+        }
     }
 };
