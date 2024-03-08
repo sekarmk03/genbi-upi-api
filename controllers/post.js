@@ -449,10 +449,10 @@ module.exports = {
 
             await postSvc.deletePost(post, { transaction });
 
+            await transaction.commit();
             for (let id of imagekitIds) {
                 await imagekitSvc.deleteImgkt(id);
             }
-            await transaction.commit();
 
             return res.status(200).json({
                 status: 'OK',

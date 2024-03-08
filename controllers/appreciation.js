@@ -170,8 +170,8 @@ module.exports = {
                 { transaction }
             );
 
-            await imagekitSvc.deleteImgkt(oldImagekitId);
             await transaction.commit();
+            await imagekitSvc.deleteImgkt(oldImagekitId);
 
             return res.status(200).json({
                 status: 'OK',
@@ -188,6 +188,33 @@ module.exports = {
     },
 
     delete: async (req, res, next) => {
-        
+        let transaction;
+        let imagekitId;
+        try {
+            const { id } = req.params;
+
+            const appreciation = await appreciationSvc.getAppreciationById(id);
+            if (!appreciation) return err.not_found(res, "Appreciation not found!");
+
+            transaction = await sequelize.transaction();
+
+            imagekitId = appreciation.cover.file.imagekit_id;
+            await photoSvc.deletePhoto(appreciation.cover_id, { transaction });
+            await fileSvc.deleteFile(appreciation.cover.file_id, { transaction });
+
+            await appreciationSvc.deleteAppreciation(appreciation, { transaction });
+
+            await transaction.commit();
+            await imagekitSvc.deleteImgkt(imagekitId);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Appreciation has been deleted',
+                data: null
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
     }
 };

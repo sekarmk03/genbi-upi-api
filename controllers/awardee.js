@@ -380,9 +380,9 @@ module.exports = {
                 { transaction }
             );
 
+            await transaction.commit();
             if (oldImagekitPhotoId != null) await imagekitSvc.deleteImgkt(oldImagekitPhotoId);
             if (oldImagekitTranscriptId != null) await imagekitSvc.deleteImgkt(oldImagekitTranscriptId);
-            await transaction.commit();
 
             return res.status(200).json({
                 status: 'OK',
@@ -432,10 +432,10 @@ module.exports = {
 
             await awardeeSvc.deleteAwardee(awardee, { transaction });
 
+            await transaction.commit();
             for (let id of imagekitIds) {
                 await imagekitSvc.deleteImgkt(id);
             }
-            await transaction.commit();
 
             return res.status(200).json({
                 status: 'OK',
