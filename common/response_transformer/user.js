@@ -17,5 +17,20 @@ module.exports = {
 
             return newuser;
         });
+    },
+
+    userAwardeeDetail: (user) => {
+        let newuser = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+        }
+
+        if (user.roles) newuser.roles = user.roles.map((role) => role.role_name);
+
+        if (user.createdAt) newuser.created_at = user.createdAt;
+        if (user.updatedAt) newuser.updated_at = user.updatedAt;
+
+        return newuser;
     }
 }

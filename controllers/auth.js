@@ -4,6 +4,7 @@ const err = require('../common/custom_error');
 const { authSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
+const { awardee: awardeeTransformer, user: userTransformer } = require('../common/response_transformer');
 
 module.exports = {
     login: async (req, res, next) => {
@@ -39,13 +40,19 @@ module.exports = {
 
     whoami: async (req, res, next) => {
         try {
-            const user = await userSvc.getUserByUuid(req.user.uuid);
+            let user = await userSvc.getUserByUuid(req.user.sub);
             if (!user) return err.not_found(res, "User not found");
+
+            let awardee = await awardeeSvc.getAwardeeById(user.awardee.id);
+            if (!awardee) awardee = null;
 
             return res.status(200).json({
                 status: 'OK',
-                message: 'User data',
-                data: user
+                message: 'Successfully get user logged data',
+                data: { 
+                    user: userTransformer.userAwardeeDetail(user),
+                    awardee: awardeeTransformer.awardeeDetailManagementPreview(awardee)
+                }
             });
         } catch (error) {
             next(error);

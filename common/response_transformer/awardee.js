@@ -116,5 +116,25 @@ module.exports = {
         }
 
         return newawardee;
+    },
+
+    awardeeDetailManagementPreview: (awardee) => {
+        let newawardee = {
+            id: awardee.id,
+            name: awardee.name,
+            photo: imageTransformer.imageDetail(awardee.photo)
+        };
+
+        if (awardee.awardee_managements && awardee.awardee_managements.length > 0) {
+            if (awardee.awardee_managements[0].department) newawardee.department = awardee.awardee_managements[0].department.name;
+            if (awardee.awardee_managements[0].division) newawardee.division = awardee.awardee_managements[0].division.name;
+            if (awardee.awardee_managements[0].position) newawardee.position = awardee.awardee_managements[0].position.name;
+        } else {
+            newawardee.department = null;
+            newawardee.division = null;
+            newawardee.position = null;
+        }
+
+        return newawardee;
     }
 }
