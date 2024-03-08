@@ -50,7 +50,7 @@ module.exports = {
                 status: 'OK',
                 message: 'Successfully get user logged data',
                 data: { 
-                    user: userTransformer.userAwardeeDetail(user),
+                    ...userTransformer.userAwardeeDetail(user),
                     awardee: awardeeTransformer.awardeeDetailManagementPreview(awardee)
                 }
             });
