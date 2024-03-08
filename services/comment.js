@@ -30,7 +30,9 @@ module.exports = {
             comment_id,
             level,
             name,
-            content
+            content,
+            created_at: new Date(),
+            updated_at: new Date(),
         });
 
         return newComment;
@@ -56,7 +58,8 @@ module.exports = {
             comment_id,
             level,
             name,
-            content
+            content,
+            updated_at: new Date(),
         });
 
         return commentUpdate;

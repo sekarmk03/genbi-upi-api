@@ -10,6 +10,8 @@ module.exports = {
                 file_id,
                 category,
                 post_id,
+                created_at: new Date(),
+                updated_at: new Date(),
             }, createOptions);
     
             return document;
@@ -27,6 +29,7 @@ module.exports = {
                 file_id,
                 category,
                 post_id,
+                updated_at: new Date(),
             }, {
                 where: {
                     id

@@ -1,9 +1,13 @@
 const err = require('../common/custom_error');
-const { eventSvc, postSvc, eventParticipantSvc } = require('../services');
+const { eventSvc, postSvc, eventParticipantSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const halson = require('halson');
 const paginate = require('../utils/generate-pagination');
 const { event: eventTransformer, post: postTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');
+const { eventSchema, fileSchema, photoSchema } = require('../common/validation_schema');
+const Validator = require('fastest-validator');
+const v = new Validator;
+const { sequelize } = require('../models');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -143,4 +147,147 @@ module.exports = {
             next(error);
         }
     },
+
+    create: async (req, res, next) => {
+        let transaction;
+        let imagekitIds = [];
+        try {
+            const body = req.body;
+            const thumbnailImgFile = req.files['thumbnail'] ? req.files['thumbnail'][0] : null;
+            const posterImgFile = req.files['poster'] ? req.files['poster'][0] : null;
+            const bannerImgFile = req.files['banner'] ? req.files['banner'][0] : null;
+
+            body.program_id = body.program_id ? parseInt(body.program_id) : null;
+            body.tag1 = 'GenBIUPI';
+            body.tags = JSON.parse(body.tags);
+            // calculate status event
+            const currentDate = new Date();
+            const startDate = new Date(body.start_date);
+            const endDate = new Date(body.end_date);
+            const startRegDate = new Date(body.start_reg_date);
+            const endRegDate = new Date(body.end_reg_date);
+            if (currentDate < startRegDate) body.status = 'Upcoming';
+            if (startRegDate <= currentDate && currentDate < endRegDate) body.status = 'Open Registration';
+            if (endRegDate < currentDate && currentDate < startDate) body.status = 'Closed Registration';
+            if (startDate <= currentDate && currentDate < endDate) body.status = 'Ongoing';
+            if (endDate < currentDate) body.status = 'Finished';
+
+            const val = v.validate(body, eventSchema.createEvent);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            if (!thumbnailImgFile) return err.bad_request(res, 'Thumbnail image is required');
+            const thumbnailImgVal = fileSchema.photo(thumbnailImgFile);
+            if (thumbnailImgVal.length) return err.bad_request(res, thumbnailImgVal[0]);
+
+            if (!posterImgFile) return err.bad_request(res, 'Poster image is required');
+            const posterImgVal = fileSchema.photo(posterImgFile);
+            if (posterImgVal.length) return err.bad_request(res, posterImgVal[0]);
+
+            if (!bannerImgFile) return err.bad_request(res, 'Banner image is required');
+            const bannerImgVal = fileSchema.photo(bannerImgFile);
+            if (bannerImgVal.length) return err.bad_request(res, bannerImgVal[0]);
+
+            transaction = await sequelize.transaction();
+
+            const imagekitThumbnail = await imagekitSvc.uploadImgkt(thumbnailImgFile);
+            imagekitIds.push(imagekitThumbnail.fileId);
+            const tfile = await fileSvc.addFile(
+                imagekitThumbnail.name,
+                imagekitThumbnail.fileId,
+                imagekitThumbnail.url,
+                imagekitThumbnail.filePath,
+                thumbnailImgFile.mimetype,
+                { transaction }
+            );
+            const thumbnail = await photoSvc.addPhoto(
+                tfile.id,
+                tfile.file_name,
+                'Thumbnail ' + body.title,
+                'event_thumbnail',
+                false,
+                null,
+                { transaction }
+            );
+
+            const imagekitPoster = await imagekitSvc.uploadImgkt(posterImgFile);
+            imagekitIds.push(imagekitPoster.fileId);
+            const pfile = await fileSvc.addFile(
+                imagekitPoster.name,
+                imagekitPoster.fileId,
+                imagekitPoster.url,
+                imagekitPoster.filePath,
+                posterImgFile.mimetype,
+                { transaction }
+            );
+            const poster = await photoSvc.addPhoto(
+                pfile.id,
+                pfile.file_name,
+                'Poster ' + body.title,
+                'event_poster',
+                false,
+                null,
+                { transaction }
+            );
+
+            const imagekitBanner = await imagekitSvc.uploadImgkt(bannerImgFile);
+            imagekitIds.push(imagekitBanner.fileId);
+            const bfile = await fileSvc.addFile(
+                imagekitBanner.name,
+                imagekitBanner.fileId,
+                imagekitBanner.url,
+                imagekitBanner.filePath,
+                bannerImgFile.mimetype,
+                { transaction }
+            );
+            const banner = await photoSvc.addPhoto(
+                bfile.id,
+                bfile.file_name,
+                'Banner ' + body.title,
+                'event_banner',
+                false,
+                null,
+                { transaction }
+            );
+
+            const event = await eventSvc.addEvent(
+                body.title,
+                body.program_id,
+                body.type,
+                body.status,
+                thumbnail.id,
+                poster.id,
+                banner.id,
+                body.description,
+                body.start_date,
+                body.end_date,
+                body.location,
+                body.location_url,
+                body.registration_link,
+                body.start_reg_date,
+                body.end_reg_date,
+                body.contact,
+                body.tag1,
+                body.tags[0],
+                body.tags[1],
+                body.tags[2],
+                body.tags[3],
+                { transaction }
+            );
+
+            await transaction.commit();
+
+            return res.status(201).json({
+                status: 'OK',
+                message: 'Event successfully created',
+                data: event
+            });
+        } catch (error) {
+            console.log('ERROR: ', error);
+            if (transaction) await transaction.rollback();
+            for (let id of imagekitIds) {
+                await imagekitSvc.deleteImgkt(id);
+            }
+            next(error);
+        }
+    }
 };

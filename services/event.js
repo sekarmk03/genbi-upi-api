@@ -1,5 +1,6 @@
 const { Event, File, Photo, Program, Department, Management } = require('../models');
 const { Op } = require('sequelize');
+const generateSlug = require('../utils/generate-slug');
 
 module.exports = {
     getEventsPublic: async (sort, sortType, startPage, limit, filter) => {
@@ -234,5 +235,41 @@ module.exports = {
         const update = await event.increment('participants');
 
         return update;
+    },
+
+    addEvent: async (title, program_id, type, status, thumbnail_id, poster_id, banner_id, description, start_date, end_date, location, location_url, registration_link, start_reg_date, end_reg_date, contact, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+        try {
+            const event = await Event.create({
+                title,
+                slug: generateSlug(title),
+                program_id,
+                type,
+                status,
+                thumbnail_id,
+                poster_id,
+                banner_id,
+                description,
+                start_date,
+                end_date,
+                participants: 0,
+                location,
+                location_url,
+                registration_link,
+                start_reg_date,
+                end_reg_date,
+                contact,
+                tag1,
+                tag2,
+                tag3,
+                tag4,
+                tag5,
+                created_at: new Date(),
+                updated_at: new Date()
+            }, options);
+
+            return event;
+        } catch (error) {
+            throw error;
+        }
     }
 };

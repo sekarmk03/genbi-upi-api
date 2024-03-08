@@ -8,7 +8,7 @@ const { postSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
-const { postTypes } = require('../common/ref_option');
+const { postType } = require('../common/ref_option');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -365,8 +365,8 @@ module.exports = {
             });
         } catch (error) {
             if (transaction) await transaction.rollback();
-            if (imagekitIds.length > 0) {
-                await imagekitSvc.deleteImgkt(imagekitIds);
+            for (let id of imagekitIds) {
+                await imagekitSvc.deleteImgkt(id);
             }
             next(error);
         }
@@ -465,12 +465,12 @@ module.exports = {
         }
     },
 
-    postTypes: (req, res, next) => {
+    postType: (req, res, next) => {
         try {
             return res.status(200).json({
                 status: 'OK',
                 message: 'Get all post types success',
-                data: postTypes
+                data: postType
             });
         } catch (error) {
             next(error);

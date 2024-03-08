@@ -74,7 +74,8 @@ module.exports = {
                 given_date,
                 instagram_url,
                 post_id,
-                caption
+                caption,
+                
             }, options);
 
             return updatedAppreciation;

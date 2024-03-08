@@ -1,10 +1,10 @@
-const postTypes = [
+const postType = [
     'Article',
     'Press Release',
     'Announcement'
 ];
 
-const imageCategories = [
+const imageCategory = [
     'department_cover',
     'awardee_photo',
     'appreciation_cover',
@@ -18,4 +18,18 @@ const imageCategories = [
     'management_photo'
 ];
 
-module.exports = { postTypes, imageCategories };
+const eventType = [
+    'Online',
+    'Offline',
+    'Hybrid'
+];
+
+const eventStatus = [
+    'Upcoming',
+    'Open Registration',
+    'Closed Registration',
+    'Ongoing',
+    'Finished'
+];
+
+module.exports = { postType, imageCategory, eventType, eventStatus };

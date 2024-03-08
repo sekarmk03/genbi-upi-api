@@ -11,7 +11,9 @@ module.exports = {
                 imagekit_id,
                 imagekit_url,
                 imagekit_path,
-                mimetype
+                mimetype,
+                created_at: new Date(),
+                updated_at: new Date(),
             }, createOptions);
 
             return file;
@@ -30,7 +32,8 @@ module.exports = {
                 imagekit_id,
                 imagekit_url,
                 imagekit_path,
-                mimetype
+                mimetype,
+                updated_at: new Date(),
             }, {
                 where: {
                     id

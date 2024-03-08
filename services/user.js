@@ -67,7 +67,9 @@ module.exports = {
                 email,
                 username,
                 password: await bcrypt.hash(password, 10),
-                token: null
+                token: null,
+                created_at: new Date(),
+                updated_at: new Date(),
             }, createOptions);
 
             return user;
@@ -84,7 +86,8 @@ module.exports = {
             const updated = await user.update({
                 email,
                 username,
-                password: await bcrypt.hash(password, 10)
+                password: await bcrypt.hash(password, 10),
+                updated_at: new Date(),
             }, updateOptions);
 
             return updated;

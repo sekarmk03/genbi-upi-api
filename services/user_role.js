@@ -5,7 +5,9 @@ module.exports = {
         try {
             const userrole = await UserRole.create({
                 user_id: userId,
-                role_id: roleId
+                role_id: roleId,
+                created_at: new Date(),
+                updated_at: new Date(),
             }, options);
 
             return userrole;

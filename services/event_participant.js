@@ -10,7 +10,9 @@ module.exports = {
             role,
             field,
             telp,
-            city
+            city,
+            created_at: new Date(),
+            updated_at: new Date(),
         });
 
         return newParticipant;

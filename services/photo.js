@@ -127,6 +127,8 @@ module.exports = {
                 category,
                 featured,
                 post_id,
+                created_at: new Date(),
+                updated_at: new Date(),
             }, createOptions);
     
             return photo;
@@ -147,6 +149,7 @@ module.exports = {
                 category,
                 featured,
                 post_id,
+                updated_at: new Date(),
             }, {
                 where: {
                     id
