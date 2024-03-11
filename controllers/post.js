@@ -402,10 +402,10 @@ module.exports = {
                 body.author_id || post.author_id,
                 body.event_id || post.event_id,
                 body.tag1 || post.tag1,
-                body.tags[0] || post.tag2,
-                body.tags[1] || post.tag3,
-                body.tags[2] || post.tag4,
-                body.tags[3] || post.tag5,
+                (body.tags.length > 0 ? body.tags[0] : null),
+                (body.tags.length > 1 ? body.tags[1] : null),
+                (body.tags.length > 2 ? body.tags[2] : null),
+                (body.tags.length > 3 ? body.tags[3] : null),
                 { transaction }
             );
             

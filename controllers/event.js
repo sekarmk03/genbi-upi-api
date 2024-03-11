@@ -8,6 +8,7 @@ const { eventSchema, fileSchema, photoSchema } = require('../common/validation_s
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
+const detStatus = require('../utils/detEventStatus');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -161,17 +162,7 @@ module.exports = {
             body.tag1 = 'GenBIUPI';
             body.tags = JSON.parse(body.tags);
             // calculate status event
-            const currentDate = new Date();
-            const startDate = new Date(body.start_date);
-            const endDate = new Date(body.end_date);
-            const startRegDate = new Date(body.start_reg_date);
-            const endRegDate = new Date(body.end_reg_date);
-            if (currentDate < startRegDate) body.status = 'Upcoming';
-            else if (startRegDate <= currentDate && currentDate < endRegDate) body.status = 'Open Registration';
-            else if (endRegDate < currentDate && currentDate < startDate) body.status = 'Closed Registration';
-            else if (startDate <= currentDate && currentDate < endDate) body.status = 'Ongoing';
-            else if (endDate < currentDate) body.status = 'Finished';
-            else body.status = 'Finished';
+            body.status = detStatus(body.start_date, body.end_date, body.start_reg_date, body.end_reg_date);
 
             const val = v.validate(body, eventSchema.createEvent);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -293,6 +284,62 @@ module.exports = {
     },
 
     update: async (req, res, next) => {
-        
+        let transaction;
+        try {
+            const { id } = req.params;
+
+            const event = await eventSvc.getEventById(id);
+            if (!event) return err.not_found(res, "Event not found!");
+
+            const body = req.body;
+
+            if (body.program_id) body.program_id = parseInt(body.program_id);
+            if (body.tags) body.tags = typeof body.tags === 'string' ? JSON.parse(body.tags) : body.tags;
+            body.status = detStatus(event.start_date, event.end_date, event.start_reg_date, event.end_reg_date);
+
+            const val = v.validate(body, eventSchema.updateEvent);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            transaction = await sequelize.transaction();
+
+            const updatedEvent = await eventSvc.updateEvent(
+                event.id,
+                body.title || event.title,
+                body.program_id || event.program_id,
+                body.type || event.type,
+                body.status,
+                event.thumbnail_id,
+                event.poster_id,
+                event.banner_id,
+                body.description || event.description,
+                body.start_date || event.start_date,
+                body.end_date || event.end_date,
+                body.location || event.location,
+                body.location_url || event.location_url,
+                body.registration_link || event.registration_link,
+                body.start_reg_date || event.start_reg_date,
+                body.end_reg_date || event.end_reg_date,
+                body.contact || event.contact,
+                event.tag1,
+                (body.tags.length > 0 ? body.tags[0] : null),
+                (body.tags.length > 1 ? body.tags[1] : null),
+                (body.tags.length > 2 ? body.tags[2] : null),
+                (body.tags.length > 3 ? body.tags[3] : null),
+                { transaction }
+            );
+
+            await transaction.commit();
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Event successfully updated',
+                data: {
+                    id: id,
+                }
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
     }
 };
