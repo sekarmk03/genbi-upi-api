@@ -175,21 +175,21 @@ module.exports = {
         try {
             const { id } = req.params;
 
-            const photo = await photoSvc.getPhotoById(id);
-            if (!photo) return err.not_found(res, 'Photo not found');
+            const document = await documentSvc.getDocumentById(id);
+            if (!document) return err.not_found(res, 'Document not found');
 
             transaction = await sequelize.transaction();
 
-            imagekitId = photo.file.imagekit_id;
-            await photoSvc.deletePhoto(photo.id, { transaction });
-            await fileSvc.deleteFile(photo.file_id, { transaction });
+            imagekitId = document.file.imagekit_id;
+            await documentSvc.deleteDocument(document.id, { transaction });
+            await fileSvc.deleteFile(document.file_id, { transaction });
 
             await transaction.commit();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
 
             return res.status(200).json({
                 status: 'OK',
-                message: 'Delete photo success',
+                message: 'Delete document success',
                 data: null
             });
         } catch (error) {
