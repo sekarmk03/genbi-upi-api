@@ -81,7 +81,7 @@ module.exports = {
 
             const photo = await photoSvc.getPhotoById(id);
 
-            if (!photo) return err.not_found(res, 'Photo not found');
+            if (!photo) return err.not_found(res, 'Photo not found!');
 
             return res.status(200).json({
                 status: 'OK',
@@ -165,7 +165,7 @@ module.exports = {
             const { id } = req.params;
 
             const photo = await photoSvc.getPhotoById(id);
-            if (!photo) return err.not_found(res, 'Photo not found');
+            if (!photo) return err.not_found(res, 'Photo not found!');
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
             body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
@@ -239,7 +239,7 @@ module.exports = {
             const { id } = req.params;
 
             const photo = await photoSvc.getPhotoById(id);
-            if (!photo) return err.not_found(res, 'Photo not found');
+            if (!photo) return err.not_found(res, 'Photo not found!');
 
             transaction = await sequelize.transaction();
 

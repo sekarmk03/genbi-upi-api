@@ -41,7 +41,7 @@ module.exports = {
 
             const document = await documentSvc.getDocumentById(id);
 
-            if (!document) return err.not_found(res, 'Document not found');
+            if (!document) return err.not_found(res, 'Document not found!');
 
             return res.status(200).json({
                 status: 'OK',
@@ -113,7 +113,7 @@ module.exports = {
             const { id } = req.params;
 
             const document = await documentSvc.getDocumentById(id);
-            if (!document) return err.not_found(res, 'Document not found');
+            if (!document) return err.not_found(res, 'Document not found!');
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
 
@@ -176,7 +176,7 @@ module.exports = {
             const { id } = req.params;
 
             const document = await documentSvc.getDocumentById(id);
-            if (!document) return err.not_found(res, 'Document not found');
+            if (!document) return err.not_found(res, 'Document not found!');
 
             transaction = await sequelize.transaction();
 

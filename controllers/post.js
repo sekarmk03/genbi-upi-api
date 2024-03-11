@@ -378,7 +378,7 @@ module.exports = {
             const { id } = req.params;
 
             const post = await postSvc.getPostById(id);
-            if (!post) return err.not_found(res, "Post not found");
+            if (!post) return err.not_found(res, "Post not found!");
 
             const body = req.body;
 
@@ -431,7 +431,7 @@ module.exports = {
             const { id } = req.params;
 
             const post = await postSvc.getPostById(id);
-            if (!post) return err.not_found(res, "Post not found");
+            if (!post) return err.not_found(res, "Post not found!");
 
             transaction = await sequelize.transaction();
 

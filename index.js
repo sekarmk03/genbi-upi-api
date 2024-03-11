@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 app.use((req, res, next) => {
     return res.status(404).json({
         status: 'NOT FOUND',
-        message: 'Resource Not Found',
+        message: 'Resource Not Found!',
         data: null
     });
 });

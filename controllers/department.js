@@ -58,7 +58,7 @@ module.exports = {
             const { id } = req.params;
 
             const department = await departmentSvc.getDepartmentById(id);
-            if (!department) return err.not_found(res, 'Department not found');
+            if (!department) return err.not_found(res, 'Department not found!');
 
             const manager = await awardeeSvc.getManagerByDepartmentId(id);
             const awardees = await awardeeSvc.getAwardeesByDepartmentId(id);

@@ -1,5 +1,4 @@
-const { Management, Awardee, Photo, File, Department, Position } = require('../models');
-const { Op } = require('sequelize');
+const { Management, Photo, File } = require('../models');
 
 module.exports = {
     getManagementsFull: async () => {

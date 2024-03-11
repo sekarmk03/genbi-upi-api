@@ -17,7 +17,7 @@ module.exports = {
             const { username, password } = body;
 
             const user = await userSvc.getUserByUsername(username);
-            if (!user) return err.not_found(res, "User not found");
+            if (!user) return err.not_found(res, "User not found!");
 
             const isPasswordValid = await bcrypt.compare(password, user.password);
             if (!isPasswordValid) return err.bad_request(res, "Invalid password");
@@ -41,7 +41,7 @@ module.exports = {
     whoami: async (req, res, next) => {
         try {
             let user = await userSvc.getUserByUuid(req.user.sub);
-            if (!user) return err.not_found(res, "User not found");
+            if (!user) return err.not_found(res, "User not found!");
 
             let awardee = await awardeeSvc.getAwardeeById(user.awardee.id);
             if (!awardee) awardee = null;
