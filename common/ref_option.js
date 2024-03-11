@@ -32,4 +32,9 @@ const eventStatus = [
     'Finished'
 ];
 
-module.exports = { postType, imageCategory, eventType, eventStatus };
+const documentCategory = [
+    'awardee_transcript',
+    'post_attachment',
+];
+
+module.exports = { postType, imageCategory, eventType, eventStatus, documentCategory };

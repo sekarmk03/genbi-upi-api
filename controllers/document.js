@@ -57,61 +57,49 @@ module.exports = {
         let transaction;
         let imagekitId;
         try {
-            const photoFile = req.file ? req.file : null;
+            const docFile = req.file ? req.file : null;
             const body = req.body;
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
-            body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
 
-            const val = v.validate(body, photoSchema.createPhoto);
+            const val = v.validate(body, documentSchema.createDocument);
             if (val.length) return err.bad_request(res, val[0].message);
             
-            if (!photoFile) return err.bad_request(res, 'Photo file is required');
-            let photoVal;
-            if (photoFile.mimetype.startsWith('image')) {
-                photoVal = fileSchema.photo(photoFile);
-            } else if (photoFile.mimetype.startsWith('video')) {
-                photoVal = fileSchema.video(photoFile);
-            } else {
-                return err.bad_request(res, 'File type not allowed');
-            }
-            if (photoVal.length) return err.bad_request(res, photoVal[0]);
+            if (!docFile) return err.bad_request(res, 'Document file is required');
+            const docVal = fileSchema.document(docFile);
+            if (docVal.length) return err.bad_request(res, docVal[0]);
 
             transaction = await sequelize.transaction();
 
-            let imagekitPhoto = await imagekitSvc.uploadImgkt(photoFile);
-            imagekitId = imagekitPhoto.fileId;
+            let imagekitDoc = await imagekitSvc.uploadImgkt(docFile);
+            imagekitId = imagekitDoc.fileId;
 
             const pfile = await fileSvc.addFile(
-                imagekitPhoto.name,
-                imagekitPhoto.fileId,
-                imagekitPhoto.url,
-                imagekitPhoto.filePath,
-                photoFile.mimetype,
+                imagekitDoc.name,
+                imagekitDoc.fileId,
+                imagekitDoc.url,
+                imagekitDoc.filePath,
+                docFile.mimetype,
                 { transaction }
             );
 
-            const photo = await photoSvc.addPhoto(
+            const document = await documentSvc.addDocument(
                 pfile.id,
-                pfile.file_name,
-                body.caption,
                 body.category,
-                body.featured,
                 body.post_id,
                 { transaction }
-            );
+            )
 
             await transaction.commit();
 
             return res.status(201).json({
                 status: 'CREATED',
-                message: 'Create photo success',
-                data: photo
+                message: 'Create document success',
+                data: document
             });
         } catch (error) {
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
-            console.log(error);
             next(error);
         }
     },
