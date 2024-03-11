@@ -174,7 +174,6 @@ module.exports = {
             if (val.length) return err.bad_request(res, val[0].message);
             
             if (photoFile) {
-                if (!photoFile) return err.bad_request(res, 'File is required');
                 let photoVal;
                 if (photoFile.mimetype.startsWith('image')) {
                     photoVal = fileSchema.photo(photoFile);

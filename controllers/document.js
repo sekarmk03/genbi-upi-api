@@ -108,71 +108,59 @@ module.exports = {
         let transaction;
         let imagekitId;
         try {
-            const photoFile = req.file ? req.file : null;
+            const docFile = req.file ? req.file : null;
             const body = req.body;
             const { id } = req.params;
 
-            const photo = await photoSvc.getPhotoById(id);
-            if (!photo) return err.not_found(res, 'Photo not found');
+            const document = await documentSvc.getDocumentById(id);
+            if (!document) return err.not_found(res, 'Document not found');
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
-            body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
 
-            const val = v.validate(body, photoSchema.updatePhoto);
+            const val = v.validate(body, documentSchema.updateDocument);
             if (val.length) return err.bad_request(res, val[0].message);
             
-            if (photoFile) {
-                if (!photoFile) return err.bad_request(res, 'File is required');
-                let photoVal;
-                if (photoFile.mimetype.startsWith('image')) {
-                    photoVal = fileSchema.photo(photoFile);
-                } else if (photoFile.mimetype.startsWith('video')) {
-                    photoVal = fileSchema.video(photoFile);
-                } else {
-                    return err.bad_request(res, 'File type not allowed');
-                }
-                if (photoVal.length) return err.bad_request(res, photoVal[0]);
+            if (docFile) {
+                const docVal = fileSchema.document(docFile);
+                if (docVal.length) return err.bad_request(res, docVal[0]);
             }
 
             transaction = await sequelize.transaction();
 
-            let oldImagekitPhotoId = null;
-            let imagekitPhoto = null;
-            if (photoFile) {
-                imagekitPhoto = await imagekitSvc.uploadImgkt(photoFile);
-                imagekitId = imagekitPhoto.fileId;
+            let oldImagekitDocId = null;
+            let imagekitDocument = null;
+            if (docFile) {
+                imagekitDocument = await imagekitSvc.uploadImgkt(docFile);
+                imagekitId = imagekitDocument.fileId;
     
-                oldImagekitPhotoId = photo.file.imagekit_id;
+                oldImagekitDocId = document.file.imagekit_id;
     
                 await fileSvc.updateFile(
-                    photo.file_id,
-                    imagekitPhoto.name,
-                    imagekitPhoto.fileId,
-                    imagekitPhoto.url,
-                    imagekitPhoto.filePath,
-                    photoFile.mimetype,
+                    document.file_id,
+                    imagekitDocument.name,
+                    imagekitDocument.fileId,
+                    imagekitDocument.url,
+                    imagekitDocument.filePath,
+                    docFile.mimetype,
                     { transaction }
                 );
             }
 
-            await photoSvc.updatePhoto(
-                photo.id,
-                photo.file.id,
-                (imagekitPhoto ? imagekitPhoto.name : photo.file.file_name),
-                body.caption || photo.caption,
-                body.category || photo.category,
-                body.featured ?? photo.featured,
-                body.post_id || photo.post_id,
+            await documentSvc.updateDocument(
+                document.id,
+                document.file.id,
+                body.category || document.category,
+                body.post_id || document.post_id,
                 { transaction }
             );
 
             await transaction.commit();
-            if (oldImagekitPhotoId) await imagekitSvc.deleteImgkt(oldImagekitPhotoId);
+            if (oldImagekitDocId) await imagekitSvc.deleteImgkt(oldImagekitDocId);
 
             return res.status(200).json({
                 status: 'OK',
-                message: 'Update photo success',
-                data: { id: photo.id }
+                message: 'Update document success',
+                data: { id: document.id }
             });
         } catch (error) {
             if (transaction) await transaction.rollback();

@@ -10,7 +10,7 @@ router.get('/', document.index);
 router.get('/categories', document.documentCategory);
 router.get('/:id', document.show);
 router.post('/', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), document.create);
-// router.put('/:id', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), document.update);
+router.put('/:id', authorize([role.ADMIN, role.SUPER_ADMIN]), upload.single('file'), document.update);
 // router.delete('/:id', authorize([role.ADMIN, role.SUPER_ADMIN]), document.delete);
 
 module.exports = router;
