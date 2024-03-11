@@ -9,6 +9,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const detStatus = require('../utils/detEventStatus');
+const { eventType } = require('../common/ref_option');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -381,6 +382,18 @@ module.exports = {
         } catch (error) {
             if (transaction) await transaction.rollback();
             console.log('ERROR: ', error);
+            next(error);
+        }
+    },
+
+    eventType: (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Event types successfully retrieved',
+                data: eventType
+            });
+        } catch (error) {
             next(error);
         }
     }
