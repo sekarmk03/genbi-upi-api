@@ -9,6 +9,7 @@ const userSchema = require('./user');
 const authSchema = require('./auth');
 const appreciationSchema = require('./appreciation');
 const eventSchema = require('./event');
+const documentSchema = require('./document');
 
 module.exports = {
     contactUsSchema,
@@ -22,4 +23,5 @@ module.exports = {
     authSchema,
     appreciationSchema,
     eventSchema,
+    documentSchema,
 };

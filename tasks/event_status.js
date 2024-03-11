@@ -2,7 +2,7 @@ const { eventSvc } = require('../services');
 
 module.exports = async () => {
     const events = await eventSvc.getEventsPublic('created_at', 'desc', 1, 10, '');
-    for (let event of events) {
+    for (let event of events.rows) {
         const currentDate = new Date();
         const startDate = new Date(event.start_date);
         const endDate = new Date(event.end_date);

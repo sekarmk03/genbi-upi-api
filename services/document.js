@@ -1,4 +1,4 @@
-const { Document } = require('../models');
+const { Document, File } = require('../models');
 
 module.exports = {
     addDocument: async (file_id, category, post_id, options = {}) => {
@@ -56,6 +56,48 @@ module.exports = {
             });
     
             return deleted;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getAllDocuments: async (sort, sortType, startPage, limit) => {
+        try {
+            const documents = await Document.findAndCountAll({
+                include: [
+                    {
+                        model: File,
+                        as: 'file',
+                    }
+                ],
+                order: [
+                    [sort, sortType]
+                ],
+                offset: startPage,
+                limit: limit
+            });
+
+            return documents;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getDocumentById: async (id) => {
+        try {
+            const document = await Document.findOne({
+                include: [
+                    {
+                        model: File,
+                        as: 'file',
+                    }
+                ],
+                where: {
+                    id
+                }
+            });
+
+            return document;
         } catch (error) {
             throw error;
         }
