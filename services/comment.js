@@ -1,4 +1,5 @@
 const { Comment } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
     getCommentsByPost: async (post_id, sort, sortType, startPage, limit) => {
@@ -65,8 +66,15 @@ module.exports = {
         return commentUpdate;
     },
 
-    deleteComment: async (comment) => {
-        const deleted = await comment.destroy();
+    deleteComment: async (id) => {
+        const deleted = await Comment.destroy({
+            where: {
+                [Op.or]: [
+                    {id: id},
+                    {comment_id: id}
+                ]
+            }
+        });
 
         return deleted;
     },

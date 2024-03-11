@@ -123,7 +123,7 @@ module.exports = {
             const comment = await commentSvc.getCommentById(id);
             if (!comment) return err.not_found(res, "Comment not found!");
 
-            await comment.destroy();
+            await commentSvc.deleteComment(comment.id);
 
             return res.status(200).json({
                 status: 'OK',
