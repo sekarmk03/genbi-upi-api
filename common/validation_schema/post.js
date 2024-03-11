@@ -9,7 +9,7 @@ module.exports = {
         author_id: { type: 'number', integer: true, optional: true },
         visitors: { type: 'number', integer: true, optional: true, default: 0 },
         event_id: { type: 'number', integer: true, optional: true, nullable: true },
-        tag1: { type: 'string', min: 3, max: 30 },
+        tag1: { type: 'string', min: 3, max: 50 },
         tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true },
         caption_cover: { type: 'string', min: 15, max: 255 },
         caption_other1: { type: 'string', min: 15, max: 255, optional: true },
@@ -25,7 +25,7 @@ module.exports = {
         author_id: { type: 'number', integer: true, optional: true},
         visitors: { type: 'number', integer: true, optional: true, default: 0 },
         event_id: { type: 'number', integer: true, optional: true, nullable: true },
-        tag1: { type: 'string', min: 3, max: 30, optional: true, nullable: true },
+        tag1: { type: 'string', min: 3, max: 50, optional: true },
         tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true },
     },
 };

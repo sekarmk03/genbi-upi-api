@@ -290,5 +290,9 @@ module.exports = {
             }
             next(error);
         }
+    },
+
+    update: async (req, res, next) => {
+        
     }
 };
