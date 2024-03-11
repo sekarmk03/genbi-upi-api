@@ -219,11 +219,9 @@ module.exports = {
         return awardees;
     },
 
-    getAwardeeById: async (id, options = {}) => {
+    getAwardeeById: async (id) => {
         try {
-            const { transaction } = options;
-
-            let queryOptions = {
+            const awardee = await Awardee.findOne({
                 where: { id },
                 include: [
                     {
@@ -287,11 +285,7 @@ module.exports = {
                 order: [
                     [{ model: AwardeeManagement, as: 'awardee_managements' }, 'management_id', 'DESC']
                 ]
-            }
-
-            if (transaction) queryOptions.transaction = transaction;
-
-            const awardee = await Awardee.findOne(queryOptions);
+            });
     
             return awardee;
         } catch (error) {
@@ -301,9 +295,6 @@ module.exports = {
 
     addAwardee: async (user_id, name, photo_id, birth_date, linkedin_username, instagram_username, telp, member_since, scholarship, nim, study_program_id, year, smt1_ip, smt2_ip, smt3_ip, smt4_ip, smt5_ip, smt6_ip, smt7_ip, smt8_ip, smt1_ipk, smt2_ipk, smt3_ipk, smt4_ipk, smt5_ipk, smt6_ipk, smt7_ipk, smt8_ipk, transcript_id, options = {}) => {
         try {
-            const { transaction } = options;
-            const createOptions = transaction ? { transaction } : {};
-
             const awardee = await Awardee.create({
                 user_id,
                 name,
@@ -336,7 +327,7 @@ module.exports = {
                 transcript_id,
                 created_at: new Date(),
                 updated_at: new Date()
-            }, createOptions);
+            }, options);
     
             return awardee;
         } catch (error) {
@@ -346,9 +337,6 @@ module.exports = {
 
     updateAwardee: async (awardeeData, name, photo_id, birth_date, linkedin_username, instagram_username, telp, member_since, scholarship, nim, study_program_id, year, smt1_ip, smt2_ip, smt3_ip, smt4_ip, smt5_ip, smt6_ip, smt7_ip, smt8_ip, smt1_ipk, smt2_ipk, smt3_ipk, smt4_ipk, smt5_ipk, smt6_ipk, smt7_ipk, smt8_ipk, transcript_id, options = {}) => {
         try {
-            const { transaction } = options;
-            const updateOptions = transaction ? { transaction } : {};
-
             const awardee = await awardeeData.update({
                 name,
                 photo_id,
@@ -379,7 +367,7 @@ module.exports = {
                 smt8_ipk,
                 transcript_id,
                 updated_at: new Date()
-            }, updateOptions);
+            }, options);
     
             return awardee;
         } catch (error) {

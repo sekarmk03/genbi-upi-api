@@ -406,13 +406,10 @@ module.exports = {
         try {
             const { id } = req.params;
 
+            const awardee = await awardeeSvc.getAwardeeById(id);
+            if (!awardee)  return err.not_found(res, 'Awardee not found!');
+            
             transaction = await sequelize.transaction();
-
-            const awardee = await awardeeSvc.getAwardeeById(id, { transaction });
-            if (!awardee) {
-                await transaction.rollback();
-                return err.not_found(res, 'Awardee not found!');
-            }
 
             if (awardee.photo_id != 1 && awardee.photo_id != 2) {
                 imagekitIds.push(awardee.photo.file.imagekit_id);

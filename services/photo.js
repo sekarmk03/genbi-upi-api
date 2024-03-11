@@ -91,11 +91,8 @@ module.exports = {
         return photos;
     },
 
-    getPhotoById: async (id, options = {}) => {
+    getPhotoById: async (id) => {
         try {
-            const { transaction } = options;
-            const findOptions = transaction ? { transaction } : {};
-
             const photo = await Photo.findOne({
                 where: {
                     id: id
@@ -106,7 +103,6 @@ module.exports = {
                         as: 'file',
                     }
                 ],
-                ...findOptions
             });
 
             return photo;
@@ -117,9 +113,6 @@ module.exports = {
 
     addPhoto: async (file_id, alt, caption, category, featured, post_id, options = {}) => {
         try {
-            const { transaction } = options;
-            const createOptions = transaction ? { transaction } : {};
-
             const photo = await Photo.create({
                 file_id,
                 alt,
@@ -129,7 +122,7 @@ module.exports = {
                 post_id,
                 created_at: new Date(),
                 updated_at: new Date(),
-            }, createOptions);
+            }, options);
     
             return photo;
         } catch (error) {
@@ -139,9 +132,6 @@ module.exports = {
 
     updatePhoto: async (id, file_id, alt, caption, category, featured, post_id, options = {}) => {
         try {
-            const { transaction } = options;
-            const updateOptions = transaction ? { transaction } : {};
-            
             const photo = await Photo.update({
                 file_id,
                 alt,
@@ -154,7 +144,7 @@ module.exports = {
                 where: {
                     id
                 },
-                ...updateOptions
+                ...options
             });
     
             return photo;

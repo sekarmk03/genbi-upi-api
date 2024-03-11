@@ -3,16 +3,13 @@ const { Document, File } = require('../models');
 module.exports = {
     addDocument: async (file_id, category, post_id, options = {}) => {
         try {
-            const { transaction } = options;
-            const createOptions = transaction ? { transaction } : {};
-
             const document = await Document.create({
                 file_id,
                 category,
                 post_id,
                 created_at: new Date(),
                 updated_at: new Date(),
-            }, createOptions);
+            }, options);
     
             return document;
         } catch (error) {
@@ -22,9 +19,6 @@ module.exports = {
 
     updateDocument: async (id, file_id, category, post_id, options = {}) => {
         try {
-            const { transaction } = options;
-            const updateOptions = transaction ? { transaction } : {};
-            
             const document = await Document.update({
                 file_id,
                 category,
@@ -34,7 +28,7 @@ module.exports = {
                 where: {
                     id
                 },
-                ...updateOptions
+                ...options
             });
     
             return document;

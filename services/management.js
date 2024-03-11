@@ -82,5 +82,22 @@ module.exports = {
         });
 
         return management;
+    },
+
+    createManagement: async (name, photo_id, video_id, description, vision, mission, period_year, period_start_date, period_end_date, is_active, options = {}) => {
+        const management = await Management.create({
+            name,
+            photo_id,
+            video_id,
+            description,
+            vision,
+            mission,
+            period_year,
+            period_start_date,
+            period_end_date,
+            is_active
+        }, options);
+
+        return management;
     }
 };

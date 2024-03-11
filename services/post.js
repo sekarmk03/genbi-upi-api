@@ -384,9 +384,6 @@ module.exports = {
 
     addPost: async (type, title, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
         try {
-            const { transaction } = options;
-            const createOptions = transaction ? { transaction } : {};
-
             const post = await Post.create({
                 type,
                 title,
@@ -403,7 +400,7 @@ module.exports = {
                 search: null,
                 created_at: new Date(),
                 updated_at: new Date()
-            }, createOptions);
+            }, options);
 
             return post;
         } catch (error) {
@@ -413,9 +410,6 @@ module.exports = {
 
     updatePost: async (post, type, title, content, department_id, author_id, event_id, tag1, tag2, tag3, tag4, tag5, options = {}) => {
         try {
-            const { transaction } = options;
-            const updateOptions = transaction ? { transaction } : {};
-
             const update = await post.update({
                 type,
                 title,
@@ -430,7 +424,7 @@ module.exports = {
                 tag4,
                 tag5,
                 updated_at: new Date()
-            }, updateOptions);
+            }, options);
 
             return update;
         } catch (error) {

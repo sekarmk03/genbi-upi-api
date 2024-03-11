@@ -3,9 +3,6 @@ const { File } = require('../models');
 module.exports = {
     addFile: async (file_name, imagekit_id, imagekit_url, imagekit_path, mimetype, options = {}) => {
         try {
-            const { transaction } = options;
-            const createOptions = transaction ? { transaction } : {};
-
             const file = await File.create({
                 file_name,
                 imagekit_id,
@@ -14,7 +11,7 @@ module.exports = {
                 mimetype,
                 created_at: new Date(),
                 updated_at: new Date(),
-            }, createOptions);
+            }, options);
 
             return file;
         } catch (error) {
@@ -24,9 +21,6 @@ module.exports = {
 
     updateFile: async (id, file_name, imagekit_id, imagekit_url, imagekit_path, mimetype, options = {}) => {
         try {
-            const { transaction } = options;
-            const updateOptions = transaction ? { transaction } : {};
-
             const file = await File.update({
                 file_name,
                 imagekit_id,
@@ -38,7 +32,7 @@ module.exports = {
                 where: {
                     id
                 },
-                ...updateOptions
+                ...options
             });
 
             return file;

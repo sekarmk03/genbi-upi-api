@@ -59,9 +59,6 @@ module.exports = {
 
     addUser: async (email, username, password, options = {}) => {
         try {
-            const { transaction } = options;
-            const createOptions = transaction ? { transaction } : {};
-
             const user = await User.create({
                 uuid: uuidv4(),
                 email,
@@ -70,7 +67,7 @@ module.exports = {
                 token: null,
                 created_at: new Date(),
                 updated_at: new Date(),
-            }, createOptions);
+            }, options);
 
             return user;
         } catch (error) {
@@ -80,15 +77,12 @@ module.exports = {
 
     updateUser: async (user, email, username, password, options = {}) => {
         try {
-            const { transaction } = options;
-            const updateOptions = transaction ? { transaction } : {};
-
             const updated = await user.update({
                 email,
                 username,
                 password: await bcrypt.hash(password, 10),
                 updated_at: new Date(),
-            }, updateOptions);
+            }, options);
 
             return updated;
         } catch (error) {
