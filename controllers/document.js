@@ -6,7 +6,7 @@ const { documentSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
-const { imageCategories } = require('../common/ref_option');
+const { documentCategory } = require('../common/ref_option');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -210,12 +210,12 @@ module.exports = {
         }
     },
 
-    photoCategory: (req, res, next) => {
+    documentCategory: (req, res, next) => {
         try {
             return res.status(200).json({
                 status: 'OK',
-                message: 'Get photo categories success',
-                data: imageCategories
+                message: 'Get document categories success',
+                data: documentCategory
             })
         } catch (error) {
             next(error);
