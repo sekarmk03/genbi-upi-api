@@ -4,7 +4,7 @@ const halson = require('halson');
 const paginate = require('../utils/generate-pagination');
 const { event: eventTransformer, post: postTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');
-const { eventSchema, fileSchema, photoSchema } = require('../common/validation_schema');
+const { eventSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
@@ -339,6 +339,48 @@ module.exports = {
             });
         } catch (error) {
             if (transaction) await transaction.rollback();
+            next(error);
+        }
+    },
+
+    delete: async (req, res, next) => {
+        let transaction;
+        let imagekitIds = [];
+        try {
+            const { id } = req.params;
+
+            const event = await eventSvc.getEventById(id);
+            if (!event) return err.not_found(res, "Event not found!");
+
+            transaction = await sequelize.transaction();
+
+            imagekitIds.push(event.thumbnail.file.imagekit_id);
+            await photoSvc.deletePhoto(event.thumbnail.id, { transaction });
+            await fileSvc.deleteFile(event.thumbnail.file_id, { transaction });
+
+            imagekitIds.push(event.poster.file.imagekit_id);
+            await photoSvc.deletePhoto(event.poster.id, { transaction });
+            await fileSvc.deleteFile(event.poster.file_id, { transaction });
+
+            imagekitIds.push(event.banner.file.imagekit_id);
+            await photoSvc.deletePhoto(event.banner.id, { transaction });
+            await fileSvc.deleteFile(event.banner.file_id, { transaction });
+
+            await eventSvc.deleteEvent(id, { transaction });
+
+            await transaction.commit();
+            for (let id of imagekitIds) {
+                await imagekitSvc.deleteImgkt(id);
+            }
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Event successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            console.log('ERROR: ', error);
             next(error);
         }
     }

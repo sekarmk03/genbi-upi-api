@@ -53,31 +53,31 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'thumbnail',
-                    attributes: ['id', 'alt'],
+                    attributes: ['id', 'file_id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
+                        attributes: ['imagekit_id', 'imagekit_url', 'mimetype']
                     }
                 },
                 {
                     model: Photo,
                     as: 'poster',
-                    attributes: ['id', 'alt'],
+                    attributes: ['id', 'file_id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
+                        attributes: ['imagekit_id', 'imagekit_url', 'mimetype']
                     }
                 },
                 {
                     model: Photo,
                     as: 'banner',
-                    attributes: ['id', 'alt'],
+                    attributes: ['id', 'file_id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
+                        attributes: ['imagekit_id', 'imagekit_url', 'mimetype']
                     }
                 },
                 {
@@ -300,6 +300,21 @@ module.exports = {
                 tag5,
                 updated_at: new Date()
             }, {
+                where: {
+                    id
+                },
+                ...options
+            });
+
+            return event;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    deleteEvent: async (id, options = {}) => {
+        try {
+            const event = await Event.destroy({
                 where: {
                     id
                 },
