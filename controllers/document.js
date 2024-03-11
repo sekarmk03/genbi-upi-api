@@ -39,14 +39,14 @@ module.exports = {
         try {
             const { id } = req.params;
 
-            const photo = await photoSvc.getPhotoById(id);
+            const document = await documentSvc.getDocumentById(id);
 
-            if (!photo) return err.not_found(res, 'Photo not found');
+            if (!document) return err.not_found(res, 'Document not found');
 
             return res.status(200).json({
                 status: 'OK',
-                message: 'Get photo success',
-                data: photo
+                message: 'Get document success',
+                data: document
             });
         } catch (error) {
             next(error);
