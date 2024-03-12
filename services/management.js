@@ -1,18 +1,26 @@
-const { Management, Photo, File } = require('../models');
+const { Management, Photo, File, Department, AwardeeManagement, Program, sequelize } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
-    getManagementsFull: async () => {
-        const managements = await Management.findAll({
-            order: [
-                ['created_at', 'desc']
-            ],
+    getAllManagements: async (sort, type, startPage, limit, search) => {
+        let query = `SELECT m.id, m.name, m.description, m.vision, m.mission, m.period_year, m.period_start_date, m.period_end_date, m.is_active, m.created_at, m.updated_at, COUNT(DISTINCT d.id) AS dept_count, COUNT(DISTINCT am.id) AS awardee_count, COUNT(DISTINCT p.id) AS program_count FROM management m LEFT JOIN department d ON m.id = d.management_id LEFT JOIN awardee_management am ON m.id = am.management_id LEFT JOIN program p ON m.id = p.management_id WHERE m.name ILIKE '%${search}%' OR m.period_year ILIKE '%${search}%' GROUP BY m.id ORDER BY ${sort} ${type} OFFSET ${startPage} LIMIT ${limit}`;
+
+        const rows = await sequelize.query(query, {
+            type: sequelize.QueryTypes.SELECT
         });
+
+        const count = await Management.count();
+
+        const managements = {
+            count,
+            rows
+        }
 
         return managements;
     },
 
     getManagementsOptions: async () => {
-        const managements = await Management.findAll({
+        const managements = await Management.findAndCountAll({
             attributes: ['id', 'name', 'period_year'],
             order: [
                 ['created_at', 'desc']
@@ -84,20 +92,24 @@ module.exports = {
         return management;
     },
 
-    createManagement: async (name, photo_id, video_id, description, vision, mission, period_year, period_start_date, period_end_date, is_active, options = {}) => {
-        const management = await Management.create({
-            name,
-            photo_id,
-            video_id,
-            description,
-            vision,
-            mission,
-            period_year,
-            period_start_date,
-            period_end_date,
-            is_active
-        }, options);
-
-        return management;
+    addManagement: async (name, photo_id, video_id, description, vision, mission, period_year, period_start_date, period_end_date, is_active, options = {}) => {
+        try {
+            const management = await Management.create({
+                name,
+                photo_id,
+                video_id,
+                description,
+                vision,
+                mission,
+                period_year,
+                period_start_date,
+                period_end_date,
+                is_active
+            }, options);
+    
+            return management;
+        } catch (error) {
+            throw error;
+        }
     }
 };

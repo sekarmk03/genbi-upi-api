@@ -7,19 +7,29 @@ const { management: managementTransformer, department: departmentTransformer, aw
 module.exports = {
     index: async (req, res, next) => {
         try {
-            const { options = 'true' } = req.query;
+            let {
+                sort = "created_at", type = "desc", page = "1", limit = "10", search = '', options = 'false'
+            } = req.query;
+
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
 
             let managements;
+            let pagination = null;
             if (options == 'true') {
                 managements = await managementSvc.getManagementsOptions();
             } else {
-                // managements = await managementSvc.getManagementsFull();
+                managements = await managementSvc.getAllManagements(sort, type, start, limit, search);
+                pagination = paginate(managements.count, managements.rows.length, limit, page, start, end);
             }
 
             const response = {
                 status: 'OK',
                 message: 'Get all managements success',
-                data: managements
+                pagination,
+                data: managements.rows
             };
 
             return res.status(200).json(response);
