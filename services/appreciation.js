@@ -57,7 +57,9 @@ module.exports = {
                 given_date,
                 instagram_url,
                 post_id,
-                caption
+                caption,
+                created_at: new Date(),
+                updated_at: new Date()
             }, options);
 
             return appreciation;
@@ -75,7 +77,7 @@ module.exports = {
                 instagram_url,
                 post_id,
                 caption,
-                
+                updated_at: new Date()
             }, options);
 
             return updatedAppreciation;

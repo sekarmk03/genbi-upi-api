@@ -177,7 +177,7 @@ module.exports = {
                 vfile.file_name,
                 'Management' + body.name,
                 'management_video',
-                true,
+                false,
                 null,
                 { transaction }
             );
@@ -202,6 +202,121 @@ module.exports = {
                 status: 'OK',
                 message: 'Create management success',
                 data: management
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            for (let id of imagekitIds) {
+                await imagekitSvc.deleteImgkt(id);
+            }
+            next(error);
+        }
+    },
+
+    update: async (req, res, next) => {
+        let transaction;
+        let imagekitIds = [];
+        try {
+            const body = req.body;
+            const { id } = req.params;
+            const photoFile = req.files['photo'] ? req.files['photo'][0] : null;
+            const videoFile = req.files['video'] ? req.files['video'][0] : null;
+
+            const management = await managementSvc.getManagementById(id);
+            if (!management) return err.not_found(res, "Management not found!");
+
+            body.is_active = body.is_active ? (body.is_active.toLowerCase() === 'true' ? true : false) : false;
+            if (body.mission) body.mission = typeof body.mission === 'string' ? JSON.parse(body.mission) : body.mission;
+
+            const val = v.validate(body, managementSchema.updateManagement);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            if (photoFile) {
+                const photoVal = fileSchema.photo(photoFile);
+                if (photoVal.length) return err.bad_request(res, photoVal[0]);
+            }
+
+            if (videoFile) {
+                const videoVal = fileSchema.video(videoFile);
+                if (videoVal.length) return err.bad_request(res, videoVal[0]);
+            }
+
+            transaction = await sequelize.transaction();
+
+            let oldImagekitPhotoId = null;
+            if (photoFile) {
+                const imagekitPhoto = await imagekitSvc.uploadImgkt(photoFile);
+                imagekitIds.push(imagekitPhoto.fileId);
+                oldImagekitPhotoId = management.photo.file.imagekit_id;
+                await fileSvc.updateFile(
+                    management.photo.file_id,
+                    imagekitPhoto.name,
+                    imagekitPhoto.fileId,
+                    imagekitPhoto.url,
+                    imagekitPhoto.filePath,
+                    photoFile.mimetype,
+                    { transaction }
+                );
+                await photoSvc.updatePhoto(
+                    management.photo.id,
+                    management.photo.file_id,
+                    imagekitPhoto.name,
+                    'Management' + (body.name || management.name),
+                    'management_photo',
+                    true,
+                    null,
+                    { transaction }
+                );
+            }
+
+            let oldImagekitVideoId = null;
+            if (videoFile) {
+                const imagekitVideo = await imagekitSvc.uploadImgkt(videoFile);
+                imagekitIds.push(imagekitVideo.fileId);
+                oldImagekitVideoId = management.video.file.imagekit_id;
+                await fileSvc.updateFile(
+                    management.video.file_id,
+                    imagekitVideo.name,
+                    imagekitVideo.fileId,
+                    imagekitVideo.url,
+                    imagekitVideo.filePath,
+                    videoFile.mimetype,
+                    { transaction }
+                );
+                await photoSvc.updatePhoto(
+                    management.video.id,
+                    management.video.file_id,
+                    imagekitVideo.name,
+                    'Management' + (body.name || management.name),
+                    'management_video',
+                    false,
+                    null,
+                    { transaction }
+                );
+            }
+
+            await managementSvc.updateManagement(
+                management,
+                body.name || management.name,
+                management.photo_id,
+                management.video_id,
+                body.description || management.description,
+                body.vision || management.vision,
+                (body.mission.length > 0 ? body.mission : management.mission),
+                body.period_year || management.period_year,
+                body.period_start_date || management.period_start_date,
+                body.period_end_date || management.period_end_date,
+                body.is_active ?? management.is_active,
+                { transaction }
+            );
+
+            await transaction.commit();
+            if (oldImagekitPhotoId) await imagekitSvc.deleteImgkt(oldImagekitPhotoId);
+            if (oldImagekitVideoId) await imagekitSvc.deleteImgkt(oldImagekitVideoId);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Update management success',
+                data: { id: management.id }
             });
         } catch (error) {
             if (transaction) await transaction.rollback();

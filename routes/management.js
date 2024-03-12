@@ -10,5 +10,6 @@ router.get('/', management.index);
 router.get('/active', management.active);
 router.get('/:id', management.show);
 router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), upload.fields([{ name: 'photo' }, { name: 'video' }]), management.create);
+router.put('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), upload.fields([{ name: 'photo' }, { name: 'video' }]), management.update);
 
 module.exports = router;

@@ -69,21 +69,21 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'photo',
-                    attributes: ['id', 'alt', 'caption'],
+                    attributes: ['id', 'file_id', 'alt', 'caption'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
+                        attributes: ['imagekit_id', 'imagekit_url', 'mimetype']
                     }
                 },
                 {
                     model: Photo,
                     as: 'video',
-                    attributes: ['id', 'alt'],
+                    attributes: ['id', 'file_id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
+                        attributes: ['imagekit_id', 'imagekit_url', 'mimetype']
                     }
                 }
             ]
@@ -104,12 +104,36 @@ module.exports = {
                 period_year,
                 period_start_date,
                 period_end_date,
-                is_active
+                is_active,
+                created_at: new Date(),
+                updated_at: new Date()
             }, options);
     
             return management;
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    updateManagement: async (management, name, photo_id, video_id, description, vision, mission, period_year, period_start_date, period_end_date, is_active, options = {}) => {
+        try {
+            const updated = await management.update({
+                name,
+                photo_id,
+                video_id,
+                description,
+                vision,
+                mission,
+                period_year,
+                period_start_date,
+                period_end_date,
+                is_active,
+                updated_at: new Date()
+            }, options);
+    
+            return updated;
+        } catch (error) {
+            throw error;
+        }
+    },
 };
