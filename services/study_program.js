@@ -53,5 +53,18 @@ module.exports = {
         });
 
         return studyProgram;
+    },
+
+    updateStudyProgram: async (id, name, facultyId, jenjang) => {
+        const studyProgram = await StudyProgram.update({
+            name,
+            faculty_id: facultyId,
+            jenjang,
+            updated_at: new Date()
+        }, {
+            where: { id }
+        });
+
+        return studyProgram;
     }
 };
