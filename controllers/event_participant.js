@@ -42,7 +42,7 @@ module.exports = {
             const event = await eventSvc.getEventById(body.event_id);
             if (!event) return err.not_found(res, "Event not found!");
 
-            const newParticipant = await eventParticipantSvc.registerParticipant(
+            const newParticipant = await eventParticipantSvc.addParticipant(
                 body.event_id,
                 body.name,
                 body.email,
@@ -59,6 +59,39 @@ module.exports = {
                 status: 'CREATED',
                 message: 'New participant successfully registered',
                 data: newParticipant
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    update: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const body = req.body;
+
+            const val = v.validate(body, eventParticipantSchema.updateParticipant);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            const participant = await eventParticipantSvc.getParticipantById(id);
+            if (!participant) return err.not_found(res, "Participant not found!");
+
+            await eventParticipantSvc.updateParticipant(
+                id,
+                body.event_id || participant.event_id,
+                body.name || participant.name,
+                body.email || participant.email,
+                body.institution || participant.institution,
+                body.role || participant.role,
+                body.field || participant.field,
+                body.telp || participant.telp,
+                body.city || participant.city
+            );
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Participant successfully updated',
+                data: { id }
             });
         } catch (error) {
             next(error);

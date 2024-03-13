@@ -1,7 +1,7 @@
 const { EventParticipant, Event } = require('../models');
 
 module.exports = {
-    registerParticipant: async (eventId, name, email, institution, role, field, telp, city) => {
+    addParticipant: async (eventId, name, email, institution, role, field, telp, city) => {
         const newParticipant = await EventParticipant.create({
             event_id: eventId,
             name,
@@ -50,5 +50,35 @@ module.exports = {
         });
 
         return participants;
+    },
+
+    updateParticipant: async (id, eventId, name, email, institution, role, field, telp, city) => {
+        const participant = await EventParticipant.update({
+            event_id: eventId,
+            name,
+            email,
+            institution,
+            role,
+            field,
+            telp,
+            city,
+            updated_at: new Date(),
+        }, {
+            where: {
+                id
+            }
+        });
+
+        return participant;
+    },
+
+    deleteParticipant: async (id) => {
+        const deleted = await EventParticipant.destroy({
+            where: {
+                id
+            }
+        });
+
+        return deleted;
     }
 };
