@@ -1,6 +1,6 @@
 const { appreciationSvc, fileSvc, imagekitSvc, photoSvc } = require('../services');
 const { appreciation: appreciationTransformer } = require('../common/response_transformer');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
 const { appreciationSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');

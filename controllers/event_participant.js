@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { eventSvc, eventParticipantSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const { eventParticipantSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;

@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { photoSvc, fileSvc, imagekitSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const { image: photoTransformer } = require('../common/response_transformer');
 const { photoSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');

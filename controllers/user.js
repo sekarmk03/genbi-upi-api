@@ -1,5 +1,5 @@
 const { userSvc, userRoleSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
 const { userSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');

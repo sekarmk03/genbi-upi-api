@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { managementSvc, awardeeSvc, departmentSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const halson = require('halson');
 const { management: managementTransformer, department: departmentTransformer, awardee: awardeeTransformer } = require('../common/response_transformer');
 const { managementSchema, fileSchema } = require('../common/validation_schema');

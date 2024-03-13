@@ -1,5 +1,5 @@
 const { eventSvc } = require('../services');
-const detStatus = require('../utils/detEventStatus');
+const detStatus = require('../utils/det_event_status');
 
 module.exports = async () => {
     const events = await eventSvc.getEventsPublic('created_at', 'desc', 1, 10, '');

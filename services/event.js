@@ -1,6 +1,6 @@
 const { Event, File, Photo, Program, Department, Management, EventParticipant } = require('../models');
 const { Op } = require('sequelize');
-const generateSlug = require('../utils/generate-slug');
+const generateSlug = require('../utils/generate_slug');
 
 module.exports = {
     getEventsPublic: async (sort, sortType, startPage, limit, filter) => {

@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { awardeeSvc, departmentSvc, photoSvc, fileSvc, imagekitSvc, documentSvc, userSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const halson = require('halson');
 const { awardee: awardeeTransformer } = require('../common/response_transformer');
 const { awardeeSchema, fileSchema } = require('../common/validation_schema');

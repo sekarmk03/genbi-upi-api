@@ -5,7 +5,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const halson = require('halson');
 const { comment: commentTransformer } = require('../common/response_transformer');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 
 module.exports = {
     create: async (req, res, next) => {

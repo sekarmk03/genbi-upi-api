@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { postSvc, commentSvc, departmentSvc, photoSvc, imagekitSvc, documentSvc, fileSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const halson = require('halson');
 const { post: postTransformer, comment: commentTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');

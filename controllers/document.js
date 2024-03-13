@@ -1,6 +1,6 @@
 const err = require('../common/custom_error');
 const { documentSvc, fileSvc, imagekitSvc } = require('../services');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const { document: documentTransformer } = require('../common/response_transformer');
 const { documentSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');

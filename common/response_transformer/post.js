@@ -1,6 +1,6 @@
 const imageTransformer = require('./image');
 const documentTransformer = require('./document');
-const htmlToText = require('../../utils/html-to-text');
+const htmlToText = require('../../utils/html_to_text');
 
 module.exports = {
     postList: (posts) => {

@@ -1,6 +1,6 @@
 const { Post, Department, User, Awardee, Event, Photo, Document, File, Sequelize, Comment } = require('../models');
 const { Op } = require('sequelize');
-const generateSlug = require('../utils/generate-slug');
+const generateSlug = require('../utils/generate_slug');
 
 const repository = {
     postAttrDetail: ['id', 'title', 'type', 'slug', 'content', 'visitors', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'department_id', 'author_id', 'created_at', 'updated_at'],

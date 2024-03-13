@@ -1,14 +1,14 @@
 const err = require('../common/custom_error');
 const { eventSvc, postSvc, eventParticipantSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const halson = require('halson');
-const paginate = require('../utils/generate-pagination');
+const paginate = require('../utils/generate_pagination');
 const { event: eventTransformer, post: postTransformer } = require('../common/response_transformer');
 const Fuse = require('fuse.js');
 const { eventSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
-const detStatus = require('../utils/detEventStatus');
+const detStatus = require('../utils/det_event_status');
 const { eventType } = require('../common/ref_option');
 
 module.exports = {

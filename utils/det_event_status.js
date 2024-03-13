@@ -1,9 +1,9 @@
-const status = (start_date, end_date, start_reg_date, end_reg_date) => {
+const status = (startDt, endDt, startRegDt, endRegDt) => {
     const currentDate = new Date();
-    const startDate = new Date(start_date);
-    const endDate = new Date(end_date);
-    const startRegDate = new Date(start_reg_date);
-    const endRegDate = new Date(end_reg_date);
+    const startDate = new Date(startDt);
+    const endDate = new Date(endDt);
+    const startRegDate = new Date(startRegDt);
+    const endRegDate = new Date(endRegDt);
 
     let status = 'Finished';
     if (currentDate < startRegDate) status = 'Upcoming';
