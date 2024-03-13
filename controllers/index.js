@@ -13,6 +13,7 @@ const eventParticipant = require('./event_participant');
 const studyProgram = require('./study_program');
 const user = require('./user');
 const document = require('./document');
+const faculty = require('./faculty');
 
 module.exports = {
     summary,
@@ -29,5 +30,6 @@ module.exports = {
     eventParticipant,
     studyProgram,
     user,
-    document
+    document,
+    faculty,
 };

@@ -15,6 +15,7 @@ const imagekitSvc = require('./imagekit');
 const documentSvc = require('./document');
 const studyProgramSvc = require('./study_program');
 const userRoleSvc = require('./user_role');
+const facultySvc = require('./faculty');
 
 module.exports = {
     postSvc,
@@ -33,5 +34,6 @@ module.exports = {
     imagekitSvc,
     documentSvc,
     studyProgramSvc,
-    userRoleSvc
+    userRoleSvc,
+    facultySvc,
 };
