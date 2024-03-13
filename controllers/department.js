@@ -214,5 +214,38 @@ module.exports = {
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        let transaction;
+        let imagekitId = null;
+        try {
+            const { id } = req.params;
+
+            const department = await departmentSvc.getDepartmentById(id);
+            if (!department) return err.not_found(res, 'Department not found!');
+
+            transaction = await sequelize.transaction();
+
+            if (department.cover) {
+                imagekitId = department.cover.file.imagekit_id;
+                await photoSvc.deletePhoto(department.cover.id, { transaction });
+                await fileSvc.deleteFile(department.cover.file_id, { transaction });
+            }
+
+            await departmentSvc.deleteDepartment(department.id, { transaction });
+
+            await transaction.commit();
+            if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Department successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
     }
 };

@@ -1,4 +1,4 @@
-const { sequelize, Department, File, Photo, Division, Program, Management } = require('../models');
+const { sequelize, Department, File, Photo, Division, Program, Management, AwardeeManagement } = require('../models');
 const { Op, QueryTypes } = require('sequelize');
 
 module.exports = {
@@ -169,4 +169,32 @@ module.exports = {
             throw error;
         }
     },
+
+    deleteDepartment: async (id, options = {}) => {
+        try {
+            await Division.destroy({
+                where: { department_id: id },
+                ...options
+            });
+
+            await Program.destroy({
+                where: { department_id: id },
+                ...options
+            });
+
+            await AwardeeManagement.destroy({
+                where: { department_id: id },
+                ...options
+            });
+
+            const department = await Department.destroy({
+                where: { id },
+                ...options
+            });
+    
+            return department;
+        } catch (error) {
+            throw error;
+        }
+    }
 };
