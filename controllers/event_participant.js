@@ -115,5 +115,22 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const participant = await eventParticipantSvc.getParticipantById(id);
+            if (!participant) return err.not_found(res, "Participant not found!");
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Participant successfully retrieved',
+                data: participant
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
