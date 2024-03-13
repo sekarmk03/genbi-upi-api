@@ -37,4 +37,59 @@ const documentCategory = [
     'post_attachment',
 ];
 
-module.exports = { postType, imageCategory, eventType, eventStatus, documentCategory };
+const eventParticipantRole = [
+    'Student',
+    'Teacher/Instructor',
+    'Researcher',
+    'Enthusiast',
+    'Professional',
+    'Expert',
+    'Executive',
+    'Manager',
+    'Administrator',
+    'Analyst',
+    'Consultant',
+    'Entrepreneur',
+    'Developer',
+    'Designer',
+    'Engineer',
+    'Artist',
+    'Organizer',
+    'Other'
+];
+
+const eventParticipantField = [
+    'Education',
+    'Science and Research',
+    'Technology',
+    'Information Technology',
+    'Social Services',
+    'Environmental',
+    'Art and Culture',
+    'Design',
+    'Business',
+    'Healthcare',
+    'Economics',
+    'Finance',
+    'Marketing',
+    'Human Resources',
+    'Engineering',
+    'Law and Legal',
+    'Manufacturing',
+    'Media and Communication',
+    'Public Relations',
+    'Hospitality',
+    'Tourism',
+    'Food and Beverage',
+    'Transportation and Logistic',
+    'Sport',
+    'Pharmaceutical and Biotechnology',
+    'Agriculture',
+    'Forestry',
+    'Fishery',
+    'Mining',
+    'Other'
+];
+
+
+module.exports = { postType, imageCategory, eventType, eventStatus, documentCategory, eventParticipantRole, eventParticipantField };

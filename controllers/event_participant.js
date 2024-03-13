@@ -4,6 +4,7 @@ const paginate = require('../utils/generate_pagination');
 const { eventParticipantSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
+const { eventParticipantRole, eventParticipantField } = require('../common/ref_option');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -128,6 +129,30 @@ module.exports = {
                 status: 'OK',
                 message: 'Participant successfully retrieved',
                 data: participant
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    optRole: (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Participant role options successfully retrieved',
+                data: eventParticipantRole
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    optField: (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Participant field options successfully retrieved',
+                data: eventParticipantField
             });
         } catch (error) {
             next(error);
