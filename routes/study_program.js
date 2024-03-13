@@ -4,5 +4,6 @@ const { studyProgram } = require('../controllers');
 const authorize = require('../middlewares/authorize');
 
 router.get('/', authorize(), studyProgram.index);
+router.get('/:id', authorize(), studyProgram.show);
 
 module.exports = router;

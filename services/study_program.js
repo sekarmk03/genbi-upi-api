@@ -30,5 +30,28 @@ module.exports = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getStudyProgramById: async (id) => {
+        const studyProgram = await StudyProgram.findOne({
+            where: { id },
+            include: [
+                { model: Faculty, as: 'faculty' }
+            ]
+        });
+
+        return studyProgram;
+    },
+
+    createStudyProgram: async (name, facultyId, jenjang) => {
+        const studyProgram = await StudyProgram.create({
+            name,
+            faculty_id: facultyId,
+            jenjang,
+            created_at: new Date(),
+            updated_at: new Date()
+        });
+
+        return studyProgram;
     }
 };

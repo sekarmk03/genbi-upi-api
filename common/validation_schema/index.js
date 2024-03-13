@@ -12,6 +12,7 @@ const eventSchema = require('./event');
 const documentSchema = require('./document');
 const managementSchema = require('./management');
 const departmentSchema = require('./department');
+const studyProgramSchema = require('./study_program');
 
 module.exports = {
     contactUsSchema,
@@ -28,4 +29,5 @@ module.exports = {
     documentSchema,
     managementSchema,
     departmentSchema,
+    studyProgramSchema,
 };
