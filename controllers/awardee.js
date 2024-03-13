@@ -222,6 +222,7 @@ module.exports = {
             const awardee = await awardeeSvc.getAwardeeById(id);
             if (!awardee) return err.not_found(res, 'Awardee not found!');
 
+            if (body.user_id) body.user_id = parseInt(body.user_id);
             if (body.scholarship) body.scholarship = parseInt(body.scholarship);
             if (body.study_program_id) body.study_program_id = parseInt(body.study_program_id);
             if (body.smt1_ip) body.smt1_ip = parseFloat(body.smt1_ip);
@@ -349,6 +350,7 @@ module.exports = {
 
             const updatedAwardee = await awardeeSvc.updateAwardee(
                 awardee,
+                body.user_id || awardee.user_id,
                 body.name || awardee.name,
                 photo_id,
                 body.birth_date || awardee.birth_date,

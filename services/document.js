@@ -1,12 +1,12 @@
 const { Document, File } = require('../models');
 
 module.exports = {
-    addDocument: async (file_id, category, post_id, options = {}) => {
+    addDocument: async (fileId, category, postId, options = {}) => {
         try {
             const document = await Document.create({
-                file_id,
+                file_id: fileId,
                 category,
-                post_id,
+                post_id: postId,
                 created_at: new Date(),
                 updated_at: new Date(),
             }, options);
@@ -17,12 +17,12 @@ module.exports = {
         }
     },
 
-    updateDocument: async (id, file_id, category, post_id, options = {}) => {
+    updateDocument: async (id, fileId, category, postId, options = {}) => {
         try {
             const document = await Document.update({
-                file_id,
+                fileId,
                 category,
-                post_id,
+                postId,
                 updated_at: new Date(),
             }, {
                 where: {

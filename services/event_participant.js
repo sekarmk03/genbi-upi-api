@@ -1,9 +1,9 @@
 const { EventParticipant, Event } = require('../models');
 
 module.exports = {
-    registerParticipant: async (event_id, name, email, institution, role, field, telp, city) => {
+    registerParticipant: async (eventId, name, email, institution, role, field, telp, city) => {
         const newParticipant = await EventParticipant.create({
-            event_id,
+            event_id: eventId,
             name,
             email,
             institution,
@@ -36,10 +36,10 @@ module.exports = {
         return participants;
     },
 
-    getParticipantsByEventId: async (event_id, sort, sortType, startPage, limit) => {
+    getParticipantsByEventId: async (eventId, sort, sortType, startPage, limit) => {
         const participants = await EventParticipant.findAndCountAll({
             where: {
-                event_id
+                event_id: eventId
             },
             order: [
                 [sort, sortType]

@@ -1,13 +1,13 @@
 const { File } = require('../models');
 
 module.exports = {
-    addFile: async (file_name, imagekit_id, imagekit_url, imagekit_path, mimetype, options = {}) => {
+    addFile: async (fileName, imagekitId, imagekitUrl, imagekitPath, mimetype, options = {}) => {
         try {
             const file = await File.create({
-                file_name,
-                imagekit_id,
-                imagekit_url,
-                imagekit_path,
+                file_name: fileName,
+                imagekit_id: imagekitId,
+                imagekit_url: imagekitUrl,
+                imagekit_path: imagekitPath,
                 mimetype,
                 created_at: new Date(),
                 updated_at: new Date(),
@@ -19,13 +19,13 @@ module.exports = {
         }
     },
 
-    updateFile: async (id, file_name, imagekit_id, imagekit_url, imagekit_path, mimetype, options = {}) => {
+    updateFile: async (id, fileName, imagekitId, imagekitUrl, imagekitPath, mimetype, options = {}) => {
         try {
             const file = await File.update({
-                file_name,
-                imagekit_id,
-                imagekit_url,
-                imagekit_path,
+                file_name: fileName,
+                imagekit_id: imagekitId,
+                imagekit_url: imagekitUrl,
+                imagekit_path: imagekitPath,
                 mimetype,
                 updated_at: new Date(),
             }, {

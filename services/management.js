@@ -92,19 +92,19 @@ module.exports = {
         return management;
     },
 
-    addManagement: async (name, photo_id, video_id, description, vision, mission, period_year, period_start_date, period_end_date, is_active, options = {}) => {
+    addManagement: async (name, photoId, videoId, description, vision, mission, periodYear, periodStartDate, periodEndDate, isActive, options = {}) => {
         try {
             const management = await Management.create({
                 name,
-                photo_id,
-                video_id,
+                photo_id: photoId,
+                video_id: videoId,
                 description,
                 vision,
                 mission,
-                period_year,
-                period_start_date,
-                period_end_date,
-                is_active,
+                period_year: periodYear,
+                period_start_date: periodStartDate,
+                period_end_date: periodEndDate,
+                is_active: isActive,
                 created_at: new Date(),
                 updated_at: new Date()
             }, options);
@@ -115,19 +115,19 @@ module.exports = {
         }
     },
 
-    updateManagement: async (management, name, photo_id, video_id, description, vision, mission, period_year, period_start_date, period_end_date, is_active, options = {}) => {
+    updateManagement: async (management, name, photoId, videoId, description, vision, mission, periodYear, periodStartDate, periodEndDate, isActive, options = {}) => {
         try {
             const updated = await management.update({
                 name,
-                photo_id,
-                video_id,
+                photo_id: photoId,
+                video_id: videoId,
                 description,
                 vision,
                 mission,
-                period_year,
-                period_start_date,
-                period_end_date,
-                is_active,
+                period_year: periodYear,
+                period_start_date: periodStartDate,
+                period_end_date: periodEndDate,
+                is_active: isActive,
                 updated_at: new Date()
             }, options);
     

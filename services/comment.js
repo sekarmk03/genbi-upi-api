@@ -2,10 +2,10 @@ const { Comment } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
-    getCommentsByPost: async (post_id, sort, sortType, startPage, limit) => {
+    getCommentsByPost: async (postId, sort, sortType, startPage, limit) => {
         const comments = await Comment.findAndCountAll({
             where: {
-                post_id: post_id,
+                post_id: postId,
                 level: 0
             },
             include: [
@@ -25,10 +25,10 @@ module.exports = {
         return comments;
     },
 
-    addNewComment: async (post_id, comment_id, level, name, content) => {
+    addNewComment: async (postId, commentId, level, name, content) => {
         const newComment = await Comment.create({
-            post_id,
-            comment_id,
+            post_id: postId,
+            comment_id: commentId,
             level,
             name,
             content,
@@ -53,10 +53,10 @@ module.exports = {
         return comment;
     },
 
-    updateComment: async (comment, post_id, comment_id, level, name, content) => {
+    updateComment: async (comment, postId, commentId, level, name, content) => {
         const commentUpdate = await comment.update({
-            post_id,
-            comment_id,
+            post_id: postId,
+            comment_id: commentId,
             level,
             name,
             content,

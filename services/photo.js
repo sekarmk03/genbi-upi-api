@@ -111,15 +111,15 @@ module.exports = {
         }
     },
 
-    addPhoto: async (file_id, alt, caption, category, featured, post_id, options = {}) => {
+    addPhoto: async (fileId, alt, caption, category, featured, postId, options = {}) => {
         try {
             const photo = await Photo.create({
-                file_id,
+                file_id: fileId,
                 alt,
                 caption,
                 category,
                 featured,
-                post_id,
+                post_id: postId,
                 created_at: new Date(),
                 updated_at: new Date(),
             }, options);
@@ -130,15 +130,15 @@ module.exports = {
         }
     },
 
-    updatePhoto: async (id, file_id, alt, caption, category, featured, post_id, options = {}) => {
+    updatePhoto: async (id, fileId, alt, caption, category, featured, postId, options = {}) => {
         try {
             const photo = await Photo.update({
-                file_id,
+                file_id: fileId,
                 alt,
                 caption,
                 category,
                 featured,
-                post_id,
+                post_id: postId,
                 updated_at: new Date(),
             }, {
                 where: {

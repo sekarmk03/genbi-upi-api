@@ -49,14 +49,14 @@ module.exports = {
         return appreciation;
     },
 
-    addAppreciation: async (title, cover_id, given_date, instagram_url, post_id, caption, options = {}) => {
+    addAppreciation: async (title, coverId, givenDate, instagramUrl, postId, caption, options = {}) => {
         try {
             const appreciation = await Appreciation.create({
                 title,
-                cover_id,
-                given_date,
-                instagram_url,
-                post_id,
+                cover_id: coverId,
+                given_date: givenDate,
+                instagram_url: instagramUrl,
+                post_id: postId,
                 caption,
                 created_at: new Date(),
                 updated_at: new Date()
@@ -68,14 +68,14 @@ module.exports = {
         }
     },
 
-    updateAppreciation: async (appreciation, title, cover_id, given_date, instagram_url, post_id, caption, options = {}) => {
+    updateAppreciation: async (appreciation, title, coverId, givenDate, instagramUrl, postId, caption, options = {}) => {
         try {
             const updatedAppreciation = await appreciation.update({
                 title,
-                cover_id,
-                given_date,
-                instagram_url,
-                post_id,
+                cover_id: coverId,
+                given_date: givenDate,
+                instagram_url: instagramUrl,
+                post_id: postId,
                 caption,
                 updated_at: new Date()
             }, options);
