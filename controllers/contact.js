@@ -3,6 +3,7 @@ const { contactUsSchema } = require('../common/validation_schema');
 const err = require('../common/custom_error');
 const Validator = require('fastest-validator');
 const v = new Validator;
+const textPurify = require('../utils/text_purify');
 const {
     EMAIL_ADDRESS
 } = process.env;
@@ -11,6 +12,8 @@ module.exports = {
     sendEmail: async (req, res, next) => {
         try {
             const body = req.body;
+
+            body.message = textPurify(body.message);
 
             const val = v.validate(body, contactUsSchema.send_message);
             if (val.length) return err.bad_request(res, val[0].message);

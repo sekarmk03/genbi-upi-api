@@ -7,6 +7,7 @@ const { managementSchema, fileSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
+const textPurify = require('../utils/text_purify');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -128,6 +129,8 @@ module.exports = {
 
             body.is_active = body.is_active ? (body.is_active.toLowerCase() === 'true' ? true : false) : false;
             body.mission = JSON.parse(body.mission);
+            body.description = textPurify(body.description);
+            body.vision = textPurify(body.vision);
 
             const val = v.validate(body, managementSchema.createManagement);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -226,6 +229,8 @@ module.exports = {
 
             body.is_active = body.is_active ? (body.is_active.toLowerCase() === 'true' ? true : false) : false;
             if (body.mission) body.mission = typeof body.mission === 'string' ? JSON.parse(body.mission) : body.mission;
+            if (body.description) body.description = textPurify(body.description);
+            if (body.vision) body.vision = textPurify(body.vision);
 
             const val = v.validate(body, managementSchema.updateManagement);
             if (val.length) return err.bad_request(res, val[0].message);

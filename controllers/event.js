@@ -10,6 +10,7 @@ const v = new Validator;
 const { sequelize } = require('../models');
 const detStatus = require('../utils/det_event_status');
 const { eventType } = require('../common/ref_option');
+const textPurify = require('../utils/text_purify');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -162,6 +163,7 @@ module.exports = {
             body.program_id = body.program_id ? parseInt(body.program_id) : null;
             body.tag1 = 'GenBIUPI';
             body.tags = JSON.parse(body.tags);
+            body.description = textPurify(body.description);
             // calculate status event
             body.status = detStatus(body.start_date, body.end_date, body.start_reg_date, body.end_reg_date);
 
@@ -296,6 +298,7 @@ module.exports = {
 
             if (body.program_id) body.program_id = parseInt(body.program_id);
             if (body.tags) body.tags = typeof body.tags === 'string' ? JSON.parse(body.tags) : body.tags;
+            if (body.description) body.description = textPurify(body.description);
             body.status = detStatus(event.start_date, event.end_date, event.start_reg_date, event.end_reg_date);
 
             const val = v.validate(body, eventSchema.updateEvent);

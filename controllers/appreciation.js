@@ -6,6 +6,7 @@ const { appreciationSchema, fileSchema } = require('../common/validation_schema'
 const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
+const textPurify = require('../utils/text_purify');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -57,6 +58,8 @@ module.exports = {
         try {
             const body = req.body;
             const coverFile = req.file ?? null;
+
+            body.caption = textPurify(body.caption);
 
             const val = v.validate(body, appreciationSchema.createAppreciation);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -120,6 +123,8 @@ module.exports = {
             const { id } = req.params;
             const body = req.body;
             const coverFile = req.file ?? null;
+
+            if (body.caption) body.caption = textPurify(body.caption);
 
             const appreciation = await appreciationSvc.getAppreciationById(id);
             if (!appreciation) return err.not_found(res, "Appreciation not found!");

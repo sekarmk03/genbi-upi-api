@@ -9,6 +9,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const { postType } = require('../common/ref_option');
+const textPurify = require('../utils/text_purify');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -243,6 +244,7 @@ module.exports = {
             body.event_id = body.event_id ? parseInt(body.event_id) : null;
             body.tag1 = 'GenBIUPI';
             body.tags = JSON.parse(body.tags);
+            body.content = textPurify(body.content);
 
             const val = v.validate(body, postSchema.createPost);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -387,6 +389,7 @@ module.exports = {
             if (body.event_id) body.event_id = parseInt(body.event_id) ?? null;
             body.tag1 = 'GenBIUPI';
             if (body.tags) body.tags = typeof body.tags === 'string' ? JSON.parse(body.tags) : body.tags;
+            if (body.content) body.content = textPurify(body.content);
 
             const val = v.validate(body, postSchema.updatePost);
             if (val.length) return err.bad_request(res, val[0].message);
