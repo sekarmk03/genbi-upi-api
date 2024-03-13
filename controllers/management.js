@@ -325,5 +325,46 @@ module.exports = {
             }
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        let transaction;
+        let imagekitIds = [];
+        try {
+            const { id } = req.params;
+
+            const management = await managementSvc.getManagementById(id);
+            if (!management) return err.not_found(res, "Management not found!");
+
+            transaction = await sequelize.transaction();
+
+            if (management.photo) {
+                imagekitIds.push(management.photo.file.imagekit_id);
+                await photoSvc.deletePhoto(management.photo.id, { transaction });
+                await fileSvc.deleteFile(management.photo.file_id, { transaction });
+            }
+
+            if (management.video) {
+                imagekitIds.push(management.video.file.imagekit_id);
+                await photoSvc.deletePhoto(management.video.id, { transaction });
+                await fileSvc.deleteFile(management.video.file_id, { transaction });
+            }
+
+            await managementSvc.deleteManagement(management, { transaction });
+
+            await transaction.commit();
+            for (let id of imagekitIds) {
+                await imagekitSvc.deleteImgkt(id);
+            }
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Management successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            next(error);
+        }
     }
 };

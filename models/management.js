@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       Management.belongsTo(models.Photo, { foreignKey: 'photo_id', as: 'photo' });
       Management.belongsTo(models.Photo, { foreignKey: 'video_id', as: 'video' });
       Management.hasMany(models.Program, { foreignKey: 'management_id', as: 'programs' });
-      // Management.belongsToMany(models.Department, { through: models.ManagementDepartment, foreignKey: 'management_id', as: 'departments' });
       Management.hasMany(models.Department, { foreignKey: 'management_id', as: 'departments' });
       Management.hasMany(models.AwardeeManagement, { foreignKey: 'management_id', as: 'awardee_managements' });
     }

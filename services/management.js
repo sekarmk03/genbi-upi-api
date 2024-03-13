@@ -136,4 +136,35 @@ module.exports = {
             throw error;
         }
     },
+
+    deleteManagement: async (management, options = {}) => {
+        try {
+            await Program.destroy({
+                where: {
+                    management_id: management.id
+                },
+                ...options
+            });
+
+            await Department.destroy({
+                where: {
+                    management_id: management.id
+                },
+                ...options
+            });
+
+            await AwardeeManagement.destroy({
+                where: {
+                    management_id: management.id
+                },
+                ...options
+            });
+
+            const deleted = await management.destroy(options);
+
+            return deleted;
+        } catch (error) {
+            throw error;
+        }
+    }
 };
