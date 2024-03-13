@@ -92,14 +92,19 @@ module.exports = {
 
     deleteUser: async (id, options = {}) => {
         try {
-            const { transaction } = options;
-            const deleteOptions = transaction ? { transaction } : {};
-
+            await UserRole.destroy({
+                where: {
+                    user_id: id
+                },
+                ...options
+            });
+            
             const deleted = await User.destroy({
                 where: {
                     id: id
-                }
-            }, deleteOptions);
+                },
+                ...options
+            });
 
             return deleted;
         } catch (error) {

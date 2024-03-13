@@ -377,10 +377,14 @@ module.exports = {
 
     deleteAwardee: async (awardeeData, options = {}) => {
         try {
-            const { transaction } = options;
-            const deleteOptions = transaction ? { transaction } : {};
-    
-            const deleted = await awardeeData.destroy(deleteOptions);
+            await AwardeeManagement.destroy({
+                where: {
+                    awardee_id: awardeeData.id
+                },
+                ...options
+            });
+            
+            const deleted = await awardeeData.destroy(options);
     
             return deleted;
         } catch (error) {

@@ -1,4 +1,4 @@
-const { Event, File, Photo, Program, Department, Management } = require('../models');
+const { Event, File, Photo, Program, Department, Management, EventParticipant } = require('../models');
 const { Op } = require('sequelize');
 const generateSlug = require('../utils/generate-slug');
 
@@ -314,6 +314,13 @@ module.exports = {
 
     deleteEvent: async (id, options = {}) => {
         try {
+            await EventParticipant.destroy({
+                where: {
+                    event_id: id
+                },
+                ...options
+            });
+            
             const event = await Event.destroy({
                 where: {
                     id

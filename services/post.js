@@ -1,4 +1,4 @@
-const { Post, Department, User, Awardee, Event, Photo, Document, File, Sequelize } = require('../models');
+const { Post, Department, User, Awardee, Event, Photo, Document, File, Sequelize, Comment } = require('../models');
 const { Op } = require('sequelize');
 const generateSlug = require('../utils/generate-slug');
 
@@ -434,10 +434,14 @@ module.exports = {
 
     deletePost: async (post, options = {}) => {
         try {
-            const { transaction } = options;
-            const deleteOptions = transaction ? { transaction } : {};
-
-            const deleted = await post.destroy(deleteOptions);
+            await Comment.destroy({
+                where: {
+                    post_id: post.id
+                },
+                ...options
+            });
+            
+            const deleted = await post.destroy(options);
 
             return deleted;
         } catch (error) {
