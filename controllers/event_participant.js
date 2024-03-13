@@ -10,7 +10,7 @@ module.exports = {
     index: async (req, res, next) => {
         try {
             let {
-                sort = "created_at", type = "desc", page = "1", limit = "10", filter = ''
+                sort = "created_at", type = "desc", page = "1", limit = "10", search = ''
             } = req.query;
 
             page = parseInt(page);
@@ -18,7 +18,7 @@ module.exports = {
             let start = 0 + (page - 1) * limit;
             let end = page * limit;
 
-            const participants = await eventParticipantSvc.getAllEventParticipants(sort, type, start, limit);
+            const participants = await eventParticipantSvc.getAllEventParticipants(sort, type, start, limit, search);
 
             const pagination = paginate(participants.count, participants.rows.length, limit, page, start, end);
 

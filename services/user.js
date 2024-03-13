@@ -125,12 +125,12 @@ module.exports = {
                 [Op.or]: [
                     {
                         username: {
-                            [Op.like]: `%${search}%`
+                            [Op.iLike]: `%${search}%`
                         }
                     },
                     {
                         email: {
-                            [Op.like]: `%${search}%`
+                            [Op.iLike]: `%${search}%`
                         }
                     }
                 ]

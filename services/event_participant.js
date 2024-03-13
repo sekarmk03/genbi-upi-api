@@ -1,4 +1,5 @@
 const { EventParticipant, Event } = require('../models');
+const { Op } = require('sequelize');
 
 module.exports = {
     addParticipant: async (eventId, name, email, institution, role, field, telp, city) => {
@@ -18,8 +19,19 @@ module.exports = {
         return newParticipant;
     },
 
-    getAllEventParticipants: async (sort, sortType, startPage, limit) => {
+    getAllEventParticipants: async (sort, sortType, startPage, limit, search) => {
         const participants = await EventParticipant.findAndCountAll({
+            where: {
+                [Op.or]: [
+                    { name: { [Op.iLike]: `%${search}%` } },
+                    { email: { [Op.iLike]: `%${search}%` } },
+                    { institution: { [Op.iLike]: `%${search}%` } },
+                    { role: { [Op.iLike]: `%${search}%` } },
+                    { field: { [Op.iLike]: `%${search}%` } },
+                    { telp: { [Op.iLike]: `%${search}%` } },
+                    { city: { [Op.iLike]: `%${search}%` } }
+                ]
+            },
             include: {
                 model: Event,
                 as: 'event',
