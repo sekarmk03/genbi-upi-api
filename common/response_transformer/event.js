@@ -1,4 +1,5 @@
 const imageTransformer = require('./image');
+const htmlToText = require('../../utils/html_to_text');
 
 module.exports = {
     eventListPreview: (events) => {
@@ -10,6 +11,7 @@ module.exports = {
                 type: event.type,
                 status: event.status,
                 thumbnail: imageTransformer.imageDetail(event.thumbnail),
+                description_preview: htmlToText(event.description),
                 description: event.description,
                 start_date: event.start_date,
                 end_date: event.end_date,
@@ -32,6 +34,7 @@ module.exports = {
             thumbnail: imageTransformer.imageDetail(event.thumbnail),
             poster: imageTransformer.imageDetail(event.poster),
             banner: imageTransformer.imageDetail(event.banner),
+            description_preview: htmlToText(event.description),
             description: event.description,
             start_date: event.start_date,
             end_date: event.end_date,
