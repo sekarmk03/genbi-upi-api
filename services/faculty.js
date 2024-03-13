@@ -54,5 +54,19 @@ module.exports = {
         });
 
         return faculty;
-    }
+    },
+
+    updateFaculty: async (id, name, abbr) => {
+        const faculty = await Faculty.update({
+            name,
+            abbr,
+            updated_at: new Date()
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        return faculty;
+    },
 }

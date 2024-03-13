@@ -60,5 +60,25 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    update: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const { name, abbr } = req.body;
+
+            const faculty = await facultySvc.getFacultyById(id);
+            if (!faculty) return err.not_found(res, 'Faculty not found!');
+
+            await facultySvc.updateFaculty(id, name, abbr);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Faculty Updated',
+                data: { id }
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
