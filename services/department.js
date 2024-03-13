@@ -132,5 +132,22 @@ module.exports = {
         });
 
         return departments;
+    },
+
+    addDepartment: async (name, description, coverId, managementId, options = {}) => {
+        try {
+            const department = await Department.create({
+                name,
+                description,
+                cover_id: coverId,
+                management_id: managementId,
+                created_at: new Date(),
+                updated_at: new Date()
+            }, options);
+    
+            return department;
+        } catch (error) {
+            throw error;
+        }
     }
 };

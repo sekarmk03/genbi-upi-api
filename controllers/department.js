@@ -1,7 +1,12 @@
 const err = require('../common/custom_error');
-const { departmentSvc, awardeeSvc } = require('../services');
+const { departmentSvc, awardeeSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const halson = require('halson');
 const { department: departmentTransformer, awardee: awardeeTransformer, division: divisionTransformer } = require('../common/response_transformer');
+const { departmentSchema, fileSchema } = require('../common/validation_schema');
+const Validator = require('fastest-validator');
+const v = new Validator;
+const { sequelize } = require('../models');
+const textPurify = require('../utils/text_purify');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -81,4 +86,59 @@ module.exports = {
             next(error);
         }
     },
+
+    create: async (req, res, next) => {
+        let transaction;
+        let imagekitId = null;
+        try {
+            const body = req.body;
+            const coverFile = req.file ? req.file : null;
+
+            body.management_id = parseInt(body.management_id);
+            body.description = textPurify(body.description);
+
+            const val = v.validate(body, departmentSchema.createDepartment);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            if (!coverFile) return err.bad_request(res, 'Cover file is required!');
+            const coverVal = fileSchema.photo(coverFile);
+            if (coverVal.length) return err.bad_request(res, coverVal[0]);
+
+            transaction = await sequelize.transaction();
+
+            let imagekitCover = await imagekitSvc.uploadImgkt(coverFile);
+            imagekitId = imagekitCover.fileId;
+            const cfile = await fileSvc.addFile(
+                imagekitCover.name,
+                imagekitCover.fileId,
+                imagekitCover.url,
+                imagekitCover.filePath,
+                coverFile.mimetype,
+                { transaction }
+            );
+            const cover = await photoSvc.addPhoto(
+                cfile.id,
+                cfile.file_name,
+                'Department' + body.name,
+                'department_cover',
+                false,
+                null,
+                { transaction }
+            );
+
+            const department = await departmentSvc.addDepartment(body.name, body.description, cover.id, body.management_id, { transaction });
+
+            await transaction.commit();
+
+            return res.status(201).json({
+                status: 'OK',
+                message: 'Department successfully created',
+                data: department
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+            next(error);
+        }
+    }
 };

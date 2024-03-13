@@ -11,6 +11,7 @@ const appreciationSchema = require('./appreciation');
 const eventSchema = require('./event');
 const documentSchema = require('./document');
 const managementSchema = require('./management');
+const departmentSchema = require('./department');
 
 module.exports = {
     contactUsSchema,
@@ -25,5 +26,6 @@ module.exports = {
     appreciationSchema,
     eventSchema,
     documentSchema,
-    managementSchema
+    managementSchema,
+    departmentSchema,
 };
