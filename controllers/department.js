@@ -140,5 +140,79 @@ module.exports = {
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
         }
+    },
+
+    update: async (req, res, next) => {
+        let transaction;
+        let imagekitId = null;
+        try {
+            const body = req.body;
+            const { id } = req.params;
+            const coverFile = req.file ? req.file : null;
+
+            const department = await departmentSvc.getDepartmentById(id);
+            if (!department) return err.not_found(res, 'Department not found!');
+
+            if (body.management_id) body.management_id = parseInt(body.management_id);
+            if (body.description) body.description = textPurify(body.description);
+
+            const val = v.validate(body, departmentSchema.updateDepartment);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            if (coverFile) {
+                const coverVal = fileSchema.photo(coverFile);
+                if (coverVal.length) return err.bad_request(res, coverVal[0]);
+            }
+
+            transaction = await sequelize.transaction();
+
+            let oldImagekitCoverId = null;
+            if (coverFile) {
+                const imagekitCover = await imagekitSvc.uploadImgkt(coverFile);
+                imagekitId = imagekitCover.fileId;
+                oldImagekitCoverId = department.cover.file.imagekit_id;
+                await fileSvc.updateFile(
+                    department.cover.file_id,
+                    imagekitCover.name,
+                    imagekitCover.fileId,
+                    imagekitCover.url,
+                    imagekitCover.filePath,
+                    coverFile.mimetype,
+                    { transaction }
+                );
+                await photoSvc.updatePhoto(
+                    department.cover.id,
+                    department.cover.file_id,
+                    imagekitCover.name,
+                    'Department' + (body.name || department.name),
+                    'department_cover',
+                    false,
+                    null,
+                    { transaction }
+                );
+            }
+
+            await departmentSvc.updateDepartment(
+                id,
+                body.name || department.name,
+                body.description || department.description,
+                department.cover.id,
+                body.management_id || department.management_id,
+                { transaction }
+            );
+
+            await transaction.commit();
+            if (oldImagekitCoverId) await imagekitSvc.deleteImgkt(oldImagekitCoverId);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Department successfully updated',
+                data: { id }
+            });
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
+            next(error);
+        }
     }
 };

@@ -40,11 +40,11 @@ module.exports = {
                 {
                     model: Photo,
                     as: 'cover',
-                    attributes: ['id', 'alt'],
+                    attributes: ['id', 'file_id', 'alt'],
                     include: {
                         model: File,
                         as: 'file',
-                        attributes: ['imagekit_url', 'mimetype']
+                        attributes: ['imagekit_id', 'imagekit_url', 'mimetype']
                     }
                 },
                 {
@@ -149,5 +149,24 @@ module.exports = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    updateDepartment: async (id, name, description, coverId, managementId, options = {}) => {
+        try {
+            const department = await Department.update({
+                name,
+                description,
+                cover_id: coverId,
+                management_id: managementId,
+                updated_at: new Date()
+            }, {
+                where: { id },
+                ...options
+            });
+    
+            return department;
+        } catch (error) {
+            throw error;
+        }
+    },
 };
