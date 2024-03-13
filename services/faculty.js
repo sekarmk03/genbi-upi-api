@@ -30,4 +30,29 @@ module.exports = {
             throw error;
         }
     },
+
+    getFacultyById: async (id) => {
+        const faculty = await Faculty.findOne({
+            where: {
+                id: id
+            },
+            include: {
+                model: StudyProgram,
+                as: 'study_programs'
+            }
+        });
+
+        return faculty;
+    },
+
+    addFaculty: async (name, abbr) => {
+        const faculty = await Faculty.create({
+            name,
+            abbr,
+            created_at: new Date(),
+            updated_at: new Date()
+        });
+
+        return faculty;
+    }
 }

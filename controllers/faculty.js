@@ -28,5 +28,37 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const faculty = await facultySvc.getFacultyById(id);
+            if (!faculty) return err.not_found(res, 'Faculty not found!');
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Get Faculty Success',
+                data: faculty
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    create: async (req, res, next) => {
+        try {
+            const { name, abbr } = req.body;
+
+            const faculty = await facultySvc.addFaculty(name, abbr);
+            return res.status(201).json({
+                status: 'CREATED',
+                message: 'Faculty Created',
+                data: faculty
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
