@@ -1,4 +1,4 @@
-const { StudyProgram, Faculty } = require('../models');
+const { StudyProgram, Faculty, sequelize } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -69,4 +69,32 @@ module.exports = {
 
         return faculty;
     },
+
+    deleteFaculty: async (id) => {
+        let transaction;
+        try {
+            transaction = await sequelize.transaction();
+    
+            const sprograms = await StudyProgram.findAll({
+                where: {
+                    faculty_id: id
+                },
+                transaction
+            });
+    
+            const faculty = await Faculty.destroy({
+                where: {
+                    id: id
+                },
+                transaction
+            });
+
+            await transaction.commit();
+    
+            return faculty;
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            throw error;
+        }
+    }
 }
