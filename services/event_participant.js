@@ -80,5 +80,15 @@ module.exports = {
         });
 
         return deleted;
+    },
+
+    getParticipantById: async (id) => {
+        const participant = await EventParticipant.findOne({
+            where: {
+                id
+            }
+        });
+
+        return participant;
     }
 };

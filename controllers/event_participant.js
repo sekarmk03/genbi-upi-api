@@ -96,5 +96,24 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const participant = await eventParticipantSvc.getParticipantById(id);
+            if (!participant) return err.not_found(res, "Participant not found!");
+
+            await eventParticipantSvc.deleteParticipant(id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Participant successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
