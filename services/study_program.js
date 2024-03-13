@@ -66,5 +66,13 @@ module.exports = {
         });
 
         return studyProgram;
+    },
+
+    deleteStudyProgram: async (id) => {
+        const studyProgram = await StudyProgram.destroy({
+            where: { id }
+        });
+
+        return studyProgram;
     }
 };

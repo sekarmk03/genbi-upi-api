@@ -8,5 +8,6 @@ router.get('/', authorize(), studyProgram.index);
 router.get('/:id', authorize(), studyProgram.show);
 router.post('/', authorize([role.SUPER_ADMIN]), studyProgram.create);
 router.put('/:id', authorize([role.SUPER_ADMIN]), studyProgram.update);
+router.delete('/:id', authorize([role.SUPER_ADMIN]), studyProgram.delete);
 
 module.exports = router;

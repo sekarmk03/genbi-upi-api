@@ -75,7 +75,7 @@ module.exports = {
             const body = req.body;
 
             const studyProgram = await studyProgramSvc.getStudyProgramById(id);
-            if (!studyProgram) return err.not_found(res, 'Study Program not found.');
+            if (!studyProgram) return err.not_found(res, 'Study Program not found!');
 
             const val = v.validate(body, studyProgramSchema.updateStudyProgram);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -96,4 +96,23 @@ module.exports = {
             next(error);
         }
     },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const studyProgram = await studyProgramSvc.getStudyProgramById(id);
+            if (!studyProgram) return err.not_found(res, 'Study Program not found!');
+
+            await studyProgramSvc.deleteStudyProgram(id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Study Program successfully deleted.',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
