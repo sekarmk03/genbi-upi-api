@@ -45,5 +45,27 @@ module.exports = {
         });
 
         return programs;
+    },
+
+    getProgramById: async (id) => {
+        const program = await Program.findOne({
+            where: {
+                id
+            },
+            include: [
+                {
+                    model: Department,
+                    as: 'department',
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Management,
+                    as: 'management',
+                    attributes: ['id', 'name', 'period_year']
+                }
+            ]
+        });
+
+        return program;
     }
 };
