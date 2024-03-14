@@ -34,5 +34,14 @@ module.exports = {
         });
         
         return position;
+    },
+
+    addPosition: async (name, description) => {
+        const position = await Position.create({
+            name,
+            description
+        });
+
+        return position;
     }
 }

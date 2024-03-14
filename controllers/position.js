@@ -1,9 +1,9 @@
 const { positionSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
-// const { positionSchema } = require('../common/validation_schema');
-// const Validator = require('fastest-validator');
-// const v = new Validator;
+const { positionSchema } = require('../common/validation_schema');
+const Validator = require('fastest-validator');
+const v = new Validator;
 
 module.exports = {
     index: async (req, res, next) => {
@@ -42,6 +42,25 @@ module.exports = {
             return res.status(200).json({
                 status: 'OK',
                 message: 'Position successfully retrieved',
+                data: position
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    create: async (req, res, next) => {
+        try {
+            const body = req.body;
+
+            const val = v.validate(body, positionSchema.createPosition);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            const position = await positionSvc.addPosition(body.name, body.description);
+
+            return res.status(201).json({
+                status: 'OK',
+                message: 'Position successfully created',
                 data: position
             });
         } catch (error) {
