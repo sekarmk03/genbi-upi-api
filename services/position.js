@@ -59,5 +59,15 @@ module.exports = {
         });
 
         return position;
+    },
+
+    deletePosition: async (id) => {
+        const position = await Position.destroy({
+            where: {
+                id
+            }
+        });
+
+        return position;
     }
 }

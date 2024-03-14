@@ -89,5 +89,24 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const position = await positionSvc.getPositionById(id);
+            if (!position) return err.not_found(res, "Position not found!");
+
+            await positionSvc.deletePosition(id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Position successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
