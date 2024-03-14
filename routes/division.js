@@ -8,5 +8,6 @@ router.get('/', authorize(), division.index);
 router.get('/:id', authorize(), division.show);
 router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), division.create);
 router.put('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), division.update);
+router.delete('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), division.delete);
 
 module.exports = router;

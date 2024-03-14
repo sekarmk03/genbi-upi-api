@@ -94,5 +94,24 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const division = await divisionSvc.getDivisionById(id);
+            if (!division) return err.not_found(res, "Division not found!");
+
+            await divisionSvc.deleteDivision(id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Division successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }

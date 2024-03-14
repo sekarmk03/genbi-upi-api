@@ -87,4 +87,14 @@ module.exports = {
 
         return division;
     },
+
+    deleteDivision: async (id) => {
+        const deleted = await Division.destroy({
+            where: {
+                id: id
+            }
+        });
+
+        return deleted;
+    }
 }
