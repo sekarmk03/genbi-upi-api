@@ -104,5 +104,15 @@ module.exports = {
         });
 
         return program;
+    },
+
+    deleteProgram: async (id) => {
+        const program = await Program.destroy({
+            where: {
+                id
+            }
+        });
+
+        return program;
     }
 };

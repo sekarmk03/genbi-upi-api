@@ -117,5 +117,24 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const program = await programSvc.getProgramById(id);
+            if (!program) return err.not_found(res, "Program not found!");
+
+            await programSvc.deleteProgram(id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Program successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
