@@ -17,6 +17,7 @@ const studyProgram = require('./study_program');
 const user = require('./user');
 const document = require('./document');
 const faculty = require('./faculty');
+const division = require('./division');
 
 router.get('/', (req, res) => {
     const ip_addr = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -38,5 +39,6 @@ router.use('/study_programs', studyProgram);
 router.use('/users', user);
 router.use('/documents', document);
 router.use('/faculties', faculty);
+router.use('/divisions', division);
 
 module.exports = router;
