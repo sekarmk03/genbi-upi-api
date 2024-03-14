@@ -66,5 +66,28 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    update: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const body = req.body;
+
+            const position = await positionSvc.getPositionById(id);
+            if (!position) return err.not_found(res, "Position not found!");
+
+            const val = v.validate(body, positionSchema.updatePosition);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            await positionSvc.updatePosition(id, body.name, body.description);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Position successfully updated',
+                data: { id }
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }

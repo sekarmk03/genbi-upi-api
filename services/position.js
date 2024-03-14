@@ -39,7 +39,23 @@ module.exports = {
     addPosition: async (name, description) => {
         const position = await Position.create({
             name,
-            description
+            description,
+            created_at: new Date(),
+            updated_at: new Date()
+        });
+
+        return position;
+    },
+
+    updatePosition: async (id, name, description) => {
+        const position = await Position.update({
+            name,
+            description,
+            updated_at: new Date()
+        }, {
+            where: {
+                id
+            }
         });
 
         return position;
