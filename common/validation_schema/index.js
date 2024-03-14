@@ -13,6 +13,7 @@ const documentSchema = require('./document');
 const managementSchema = require('./management');
 const departmentSchema = require('./department');
 const studyProgramSchema = require('./study_program');
+const divisionSchema = require('./division');
 
 module.exports = {
     contactUsSchema,
@@ -30,4 +31,5 @@ module.exports = {
     managementSchema,
     departmentSchema,
     studyProgramSchema,
+    divisionSchema,
 };

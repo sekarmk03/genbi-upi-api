@@ -59,5 +59,17 @@ module.exports = {
         });
 
         return division;
+    },
+
+    addDivision: async (name, departmentId, description) => {
+        const division = await Division.create({
+            name,
+            department_id: departmentId,
+            description,
+            created_at: new Date(),
+            updated_at: new Date()
+        });
+
+        return division;
     }
 }

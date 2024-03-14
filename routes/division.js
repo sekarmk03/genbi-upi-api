@@ -6,5 +6,6 @@ const authorize = require('../middlewares/authorize');
 
 router.get('/', authorize(), division.index);
 router.get('/:id', authorize(), division.show);
+router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), division.create);
 
 module.exports = router;
