@@ -71,5 +71,20 @@ module.exports = {
         });
 
         return division;
-    }
+    },
+
+    updateDivision: async (id, name, departmentId, description) => {
+        const division = await Division.update({
+            name,
+            department_id: departmentId,
+            description,
+            updated_at: new Date()
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        return division;
+    },
 }
