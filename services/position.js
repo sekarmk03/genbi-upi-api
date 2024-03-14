@@ -24,5 +24,15 @@ module.exports = {
         });
 
         return positions;
+    },
+
+    getPositionById: async (id) => {
+        const position = await Position.findOne({
+            where: {
+                id
+            }
+        });
+        
+        return position;
     }
 }
