@@ -78,5 +78,44 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    update: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const body = req.body;
+
+            const program = await programSvc.getProgramById(id);
+            if (!program) return err.not_found(res, "Program not found!");
+
+            const val = v.validate(body, programSchema.updateProgram);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            let department;
+            if (body.department_id) {
+                department = await departmentSvc.getDepartmentById(body.department_id);
+                if (!department) return err.not_found(res, "Department not found!");
+            }
+
+            await programSvc.updateProgram(
+                id,
+                body.name || program.name,
+                body.description || program.description,
+                body.type || program.type,
+                body.implementation_desc || program.implementation_desc,
+                body.date_start || program.date_start,
+                body.date_end || program.date_end,
+                body.department_id || program.department_id,
+                department.management_id || program.management_id
+            );
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Program successfully updated',
+                data: { id }
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }

@@ -84,5 +84,25 @@ module.exports = {
         });
 
         return program;
+    },
+
+    updateProgram: async (id, name, description, type, implementationDesc, dateStart, dateEnd, departmentId, managementId) => {
+        const program = await Program.update({
+            name,
+            description,
+            type,
+            implementation_desc: implementationDesc,
+            date_start: dateStart,
+            date_end: dateEnd,
+            department_id: departmentId,
+            management_id: managementId,
+            updated_at: new Date()
+        }, {
+            where: {
+                id
+            }
+        });
+
+        return program;
     }
 };
