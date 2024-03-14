@@ -16,6 +16,7 @@ const document = require('./document');
 const faculty = require('./faculty');
 const division = require('./division');
 const position = require('./position');
+const program = require('./program');
 
 module.exports = {
     summary,
@@ -36,4 +37,5 @@ module.exports = {
     faculty,
     division,
     position,
+    program,
 };
