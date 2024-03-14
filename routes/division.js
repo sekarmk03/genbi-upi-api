@@ -5,5 +5,6 @@ const role = require('../common/role');
 const authorize = require('../middlewares/authorize');
 
 router.get('/', authorize(), division.index);
+router.get('/:id', authorize(), division.show);
 
 module.exports = router;

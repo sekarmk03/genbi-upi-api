@@ -1,5 +1,6 @@
 const { divisionSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
+const err = require('../common/custom_error');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -22,6 +23,23 @@ module.exports = {
                 message: 'Divisions successfully retrieved',
                 pagination,
                 data: divisions.rows,
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const division = await divisionSvc.getDivisionById(id);
+            if (!division) return err.not_found(res, "Division not found!");
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Division successfully retrieved',
+                data: division
             });
         } catch (error) {
             next(error);

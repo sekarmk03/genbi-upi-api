@@ -1,4 +1,4 @@
-const { Division } = require('../models');
+const { Division, Department, Management, AwardeeManagement } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -37,5 +37,27 @@ module.exports = {
         });
 
         return divisions;
+    },
+
+    getDivisionById: async (id) => {
+        const division = await Division.findOne({
+            where: {
+                id: id
+            },
+            include: [
+                {
+                    model: Department,
+                    as: 'department',
+                    attributes: ['id', 'name'],
+                    include: {
+                        model: Management,
+                        as: 'management',
+                        attributes: ['id', 'name', 'period_year']
+                    }
+                }
+            ]
+        });
+
+        return division;
     }
 }
