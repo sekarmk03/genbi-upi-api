@@ -15,6 +15,7 @@ const user = require('./user');
 const document = require('./document');
 const faculty = require('./faculty');
 const division = require('./division');
+const position = require('./position');
 
 module.exports = {
     summary,
@@ -34,4 +35,5 @@ module.exports = {
     document,
     faculty,
     division,
+    position,
 };
