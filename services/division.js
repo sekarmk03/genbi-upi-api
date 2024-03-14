@@ -24,5 +24,18 @@ module.exports = {
         });
 
         return divisions;
+    },
+
+    getDivisionsByDepartmentId: async (departmentId) => {
+        const divisions = await Division.findAll({
+            where: {
+                department_id: departmentId
+            },
+            order: [
+                ['name', 'asc']
+            ],
+        });
+
+        return divisions;
     }
 }

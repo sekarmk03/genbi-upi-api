@@ -2,9 +2,21 @@ const { sequelize, Department, File, Photo, Division, Program, Management, Award
 const { Op, QueryTypes } = require('sequelize');
 
 module.exports = {
-    getDepartments: async () => {
-        const departments = await Department.findAll({
-            attributes: ['id', 'name', 'description', 'cover_id'],
+    getDepartments: async (sort, type, startPage, limit, search, options) => {
+        let opts = {};
+        if (options == 'false') {
+            opts = {
+                offset: startPage,
+                limit: limit,
+            }
+        }
+
+        const departments = await Department.findAndCountAll({
+            where: {
+                name: {
+                    [Op.iLike]: `%${search}%`
+                }
+            },
             include: [
                 {
                     model: Photo,
@@ -21,7 +33,11 @@ module.exports = {
                     as: 'divisions',
                     attributes: ['id', 'name', 'description']
                 }
-            ]
+            ],
+            order: [
+                [sort, type]
+            ],
+            ...opts
         });
 
         return departments;

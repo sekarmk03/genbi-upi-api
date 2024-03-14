@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { departmentSvc, awardeeSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
+const { departmentSvc, awardeeSvc, imagekitSvc, fileSvc, photoSvc, divisionSvc } = require('../services');
 const halson = require('halson');
 const { department: departmentTransformer, awardee: awardeeTransformer, division: divisionTransformer } = require('../common/response_transformer');
 const { departmentSchema, fileSchema } = require('../common/validation_schema');
@@ -7,11 +7,19 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const textPurify = require('../utils/text_purify');
+const paginate = require('../utils/generate_pagination');
 
 module.exports = {
     index: async (req, res, next) => {
         try {
-            let { options = 'false', unique = 'true' } = req.query;
+            let {
+                sort = "created_at", type = "desc", page = "1", limit = "10", search = '', options = 'false', unique = 'true'
+            } = req.query;
+
+            page = parseInt(page);
+            limit = parseInt(limit);
+            let start = 0 + (page - 1) * limit;
+            let end = page * limit;
 
             if (options === 'true') {
                 let depts;
@@ -25,9 +33,11 @@ module.exports = {
                 });
             }
 
-            const departments = await departmentSvc.getDepartments();
+            const departments = await departmentSvc.getDepartments(sort, type, start, limit, search, options);
+            let pagination = null;
+            if (options == 'false') pagination = paginate(departments.count, departments.rows.length, limit, page, start, end);
 
-            const departmentResources = departments.map(department => {
+            const departmentResources = departments.rows.map(department => {
                 const departmentResource = halson(department.toJSON())
                     .addLink('self', `/departments/${department.id}`)
 
@@ -37,6 +47,7 @@ module.exports = {
             return res.status(200).json({
                 status: 'OK',
                 message: 'Departments successfully retrieved',
+                pagination,
                 data: departmentResources
             });
         } catch (error) {
@@ -245,6 +256,25 @@ module.exports = {
             });
         } catch (error) {
             if (transaction) await transaction.rollback();
+            next(error);
+        }
+    },
+
+    division: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const department = await departmentSvc.getDepartmentById(id);
+            if (!department) return err.not_found(res, 'Department not found!');
+
+            const divisions = await divisionSvc.getDivisionsByDepartmentId(department.id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Divisions successfully retrieved',
+                data: divisions
+            });
+        } catch (error) {
             next(error);
         }
     }
