@@ -59,7 +59,7 @@ module.exports = {
             const division = await divisionSvc.addDivision(body.name, body.department_id, body.description);
 
             return res.status(201).json({
-                status: 'OK',
+                status: 'CREATED',
                 message: 'Division successfully created',
                 data: division
             });

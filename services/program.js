@@ -67,5 +67,22 @@ module.exports = {
         });
 
         return program;
+    },
+
+    addProgram: async (name, description, type, implementationDesc, dateStart, dateEnd, departmentId, managementId) => {
+        const program = await Program.create({
+            name,
+            description,
+            type,
+            implementation_desc: implementationDesc,
+            date_start: dateStart,
+            date_end: dateEnd,
+            department_id: departmentId,
+            management_id: managementId,
+            created_at: new Date(),
+            updated_at: new Date()
+        });
+
+        return program;
     }
 };

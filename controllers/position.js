@@ -59,7 +59,7 @@ module.exports = {
             const position = await positionSvc.addPosition(body.name, body.description);
 
             return res.status(201).json({
-                status: 'OK',
+                status: 'CREATED',
                 message: 'Position successfully created',
                 data: position
             });

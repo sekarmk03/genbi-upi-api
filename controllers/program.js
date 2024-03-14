@@ -1,7 +1,7 @@
-const { programSvc } = require('../services');
+const { programSvc, departmentSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
-// const { programSchema } = require('../common/validation_schema');
+const { programSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
 
@@ -42,6 +42,37 @@ module.exports = {
             return res.status(200).json({
                 status: 'OK',
                 message: 'Program successfully retrieved',
+                data: program
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    create: async (req, res, next) => {
+        try {
+            const body = req.body;
+
+            const val = v.validate(body, programSchema.createProgram);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            const department = await departmentSvc.getDepartmentById(body.department_id);
+            if (!department) return err.not_found(res, "Department not found!");
+
+            const program = await programSvc.addProgram(
+                body.name,
+                body.description,
+                body.type,
+                body.implementation_desc,
+                body.date_start,
+                body.date_end,
+                body.department_id,
+                department.management_id
+            );
+
+            return res.status(201).json({
+                status: 'CREATED',
+                message: 'Program successfully created',
                 data: program
             });
         } catch (error) {

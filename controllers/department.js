@@ -142,7 +142,7 @@ module.exports = {
             await transaction.commit();
 
             return res.status(201).json({
-                status: 'OK',
+                status: 'CREATED',
                 message: 'Department successfully created',
                 data: department
             });
