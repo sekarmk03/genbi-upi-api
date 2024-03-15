@@ -16,6 +16,7 @@ const studyProgramSchema = require('./study_program');
 const divisionSchema = require('./division');
 const positionSchema = require('./position');
 const programSchema = require('./program');
+const roleSchema = require('./role');
 
 module.exports = {
     contactUsSchema,
@@ -36,4 +37,5 @@ module.exports = {
     divisionSchema,
     positionSchema,
     programSchema,
+    roleSchema,
 };

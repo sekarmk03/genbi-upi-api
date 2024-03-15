@@ -2,6 +2,9 @@ const { roleSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
 const { role: roleTransformer } = require('../common/response_transformer');
+const { roleSchema } = require('../common/validation_schema');
+const Validator = require('fastest-validator');
+const v = new Validator;
 
 module.exports = {
     index: async (req, res, next) => {
@@ -41,6 +44,25 @@ module.exports = {
                 status: 'OK',
                 message: 'Role successfully retrieved',
                 data: roleTransformer.roleDetail(role)
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    create: async (req, res, next) => {
+        try {
+            const body = req.body;
+
+            const val = v.validate(body, roleSchema.createRole);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            const role = await roleSvc.addRole(body.role_name, body.description);
+
+            return res.status(201).json({
+                status: 'CREATED',
+                message: 'Role successfully created',
+                data: role
             });
         } catch (error) {
             next(error);

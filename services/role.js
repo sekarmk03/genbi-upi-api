@@ -34,5 +34,16 @@ module.exports = {
         });
 
         return role;
+    },
+
+    addRole: async (roleName, description) => {
+        const role = await Role.create({
+            role_name: roleName,
+            description,
+            created_at: new Date(),
+            updated_at: new Date()
+        });
+
+        return role;
     }
 }
