@@ -1,4 +1,4 @@
-const { Role, User } = require('../models');
+const { Role, User, UserRole, sequelize } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -57,5 +57,29 @@ module.exports = {
         });
 
         return role;
+    },
+
+    deleteRole: async (id) => {
+        let transaction;
+        try {
+            transaction = await sequelize.transaction();
+    
+            await UserRole.destroy({
+                where: { role_id: id },
+                transaction
+            });
+    
+            const deleted = await Role.destroy({
+                where: { id },
+                transaction
+            });
+
+            await transaction.commit();
+    
+            return deleted;
+        } catch (error) {
+            if (transaction) await transaction.rollback();
+            throw error;
+        }
     }
 }

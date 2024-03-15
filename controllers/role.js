@@ -90,5 +90,24 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const role = await roleSvc.getRoleById(id);
+            if (!role) return err.not_found(res, "Role not found!");
+
+            await roleSvc.deleteRole(role.id);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Role successfully deleted',
+                data: null
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }
