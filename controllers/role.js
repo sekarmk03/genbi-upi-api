@@ -67,5 +67,28 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+
+    update: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const body = req.body;
+
+            const role = await roleSvc.getRoleById(id);
+            if (!role) return err.not_found(res, "Role not found!");
+
+            const val = v.validate(body, roleSchema.updateRole);
+            if (val.length) return err.bad_request(res, val[0].message);
+
+            await roleSvc.updateRole(role.id, body.role_name, body.description);
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Role successfully updated',
+                data: { id }
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 }

@@ -45,5 +45,17 @@ module.exports = {
         });
 
         return role;
+    },
+
+    updateRole: async (id, roleName, description) => {
+        const role = await Role.update({
+            role_name: roleName,
+            description,
+            updated_at: new Date()
+        }, {
+            where: { id }
+        });
+
+        return role;
     }
 }
