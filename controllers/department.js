@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { departmentSvc, awardeeSvc, imagekitSvc, fileSvc, photoSvc, divisionSvc } = require('../services');
 const halson = require('halson');

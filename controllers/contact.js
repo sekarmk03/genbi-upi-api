@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const mail = require('../utils/mailer');
 const { contactUsSchema } = require('../common/validation_schema');
 const err = require('../common/custom_error');

@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const { userSvc, authSvc, awardeeSvc } = require('../services');
 const bcrypt = require('bcrypt');
 const err = require('../common/custom_error');

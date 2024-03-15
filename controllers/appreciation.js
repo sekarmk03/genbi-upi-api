@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const { appreciationSvc, fileSvc, imagekitSvc, photoSvc } = require('../services');
 const { appreciation: appreciationTransformer } = require('../common/response_transformer');
 const paginate = require('../utils/generate_pagination');

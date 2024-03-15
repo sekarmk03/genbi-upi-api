@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { commentSvc } = require('../services');
 const { commentSchema } = require('../common/validation_schema');

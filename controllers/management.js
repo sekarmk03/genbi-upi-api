@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { managementSvc, awardeeSvc, departmentSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');

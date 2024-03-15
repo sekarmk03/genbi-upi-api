@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { studyProgramSvc } = require('../services');
 const { studyProgram: studyProgramTransformer } = require('../common/response_transformer');

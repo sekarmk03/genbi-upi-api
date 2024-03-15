@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const { roleSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');

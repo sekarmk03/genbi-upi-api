@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { eventSvc, postSvc, eventParticipantSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const halson = require('halson');
