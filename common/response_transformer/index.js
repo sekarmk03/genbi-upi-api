@@ -10,6 +10,7 @@ const event = require('./event');
 const document = require('./document');
 const studyProgram = require('./study_program');
 const user = require('./user');
+const role = require('./role');
 
 module.exports = {
     post,
@@ -24,4 +25,5 @@ module.exports = {
     document,
     studyProgram,
     user,
+    role,
 };

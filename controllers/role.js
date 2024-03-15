@@ -1,6 +1,7 @@
 const { roleSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
+const { role: roleTransformer } = require('../common/response_transformer');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -23,6 +24,23 @@ module.exports = {
                 message: 'Roles successfully retrieved',
                 pagination,
                 data: roles.rows,
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    show: async (req, res, next) => {
+        try {
+            const { id } = req.params;
+
+            const role = await roleSvc.getRoleById(id);
+            if (!role) return err.not_found(res, "Role not found!");
+
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Role successfully retrieved',
+                data: roleTransformer.roleDetail(role)
             });
         } catch (error) {
             next(error);
