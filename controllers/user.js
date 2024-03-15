@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { userSvc, userRoleSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
@@ -39,6 +40,7 @@ module.exports = {
                 data: usersTransform,
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -56,6 +58,7 @@ module.exports = {
                 data: user,
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -88,6 +91,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }
@@ -131,6 +135,7 @@ module.exports = {
                 data: user,
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }
@@ -159,6 +164,7 @@ module.exports = {
                 data: null,
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }

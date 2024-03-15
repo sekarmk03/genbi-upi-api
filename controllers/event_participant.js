@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { eventSvc, eventParticipantSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
@@ -29,6 +30,7 @@ module.exports = {
                 data: participants.rows
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -62,6 +64,7 @@ module.exports = {
                 data: newParticipant
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -95,6 +98,7 @@ module.exports = {
                 data: { id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -114,6 +118,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -131,6 +136,7 @@ module.exports = {
                 data: participant
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -143,6 +149,7 @@ module.exports = {
                 data: eventParticipantRole
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -155,6 +162,7 @@ module.exports = {
                 data: eventParticipantField
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

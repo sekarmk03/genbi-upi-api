@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { userSvc, authSvc, awardeeSvc } = require('../services');
 const bcrypt = require('bcrypt');
 const err = require('../common/custom_error');
@@ -34,6 +35,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -55,6 +57,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

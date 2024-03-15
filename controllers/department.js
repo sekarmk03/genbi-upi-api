@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { departmentSvc, awardeeSvc, imagekitSvc, fileSvc, photoSvc, divisionSvc } = require('../services');
 const halson = require('halson');
@@ -51,6 +52,7 @@ module.exports = {
                 data: departmentResources
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -65,6 +67,7 @@ module.exports = {
                 data: tags.map(tag => tag.name)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -93,7 +96,7 @@ module.exports = {
                 data: data
             });
         } catch (error) {
-            console.log(error);
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -147,6 +150,7 @@ module.exports = {
                 data: department
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -221,6 +225,7 @@ module.exports = {
                 data: { id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -255,6 +260,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }
@@ -275,6 +281,7 @@ module.exports = {
                 data: divisions
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

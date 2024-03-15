@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { documentSvc, fileSvc, imagekitSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
@@ -31,6 +32,7 @@ module.exports = {
                 data: documents.rows
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -49,6 +51,7 @@ module.exports = {
                 data: document
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -98,6 +101,7 @@ module.exports = {
                 data: document
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -163,6 +167,7 @@ module.exports = {
                 data: { id: document.id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -193,6 +198,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }
@@ -206,6 +212,7 @@ module.exports = {
                 data: documentCategory
             })
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

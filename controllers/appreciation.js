@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { appreciationSvc, fileSvc, imagekitSvc, photoSvc } = require('../services');
 const { appreciation: appreciationTransformer } = require('../common/response_transformer');
 const paginate = require('../utils/generate_pagination');
@@ -31,6 +32,7 @@ module.exports = {
                 data: appreciationTransformer.appreciationList(appreciations.rows)
             })
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -48,6 +50,7 @@ module.exports = {
                 data: appreciationTransformer.appreciationDetail(appreciation)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -110,6 +113,7 @@ module.exports = {
                 data: appreciation
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -186,6 +190,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -218,6 +223,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }

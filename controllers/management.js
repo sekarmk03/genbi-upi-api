@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { managementSvc, awardeeSvc, departmentSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
@@ -39,6 +40,7 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -76,6 +78,7 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -114,7 +117,7 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
-            console.log(error);
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -207,6 +210,7 @@ module.exports = {
                 data: management
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             for (let id of imagekitIds) {
                 await imagekitSvc.deleteImgkt(id);
@@ -324,6 +328,7 @@ module.exports = {
                 data: { id: management.id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             for (let id of imagekitIds) {
                 await imagekitSvc.deleteImgkt(id);
@@ -368,6 +373,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }

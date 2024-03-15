@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { positionSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const err = require('../common/custom_error');
@@ -28,6 +29,7 @@ module.exports = {
                 data: positions.rows,
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -45,6 +47,7 @@ module.exports = {
                 data: position
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -64,6 +67,7 @@ module.exports = {
                 data: position
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -87,6 +91,7 @@ module.exports = {
                 data: { id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -106,6 +111,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

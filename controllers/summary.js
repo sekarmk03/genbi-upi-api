@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { Post, Awardee, Management, Event } = require('../models');
 
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

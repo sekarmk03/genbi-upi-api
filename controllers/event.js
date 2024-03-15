@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { eventSvc, postSvc, eventParticipantSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
 const halson = require('halson');
@@ -48,6 +49,7 @@ module.exports = {
                 data: eventTransformer.eventListPreview(eventResources)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -86,6 +88,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -117,6 +120,7 @@ module.exports = {
                 data: eventTransformer.eventListPreview(eventResources)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -147,6 +151,7 @@ module.exports = {
                 data: participants.rows
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -342,6 +347,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }
@@ -397,6 +403,7 @@ module.exports = {
                 data: eventType
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

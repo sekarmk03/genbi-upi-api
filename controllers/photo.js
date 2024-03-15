@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { photoSvc, fileSvc, imagekitSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
@@ -19,6 +20,7 @@ module.exports = {
                 data: photoTransformer.imageDetailList(photos)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -45,6 +47,7 @@ module.exports = {
                 data: photoTransformer.imageDetailList(photos.rows)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -71,6 +74,7 @@ module.exports = {
                 data: photos.rows
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -89,6 +93,7 @@ module.exports = {
                 data: photo
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -151,7 +156,7 @@ module.exports = {
         } catch (error) {
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
-            console.log(error);
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -226,6 +231,7 @@ module.exports = {
                 data: { id: photo.id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             if (imagekitId) await imagekitSvc.deleteImgkt(imagekitId);
             next(error);
@@ -256,6 +262,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             if (transaction) await transaction.rollback();
             next(error);
         }
@@ -269,6 +276,7 @@ module.exports = {
                 data: imageCategory
             })
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

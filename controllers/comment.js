@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { commentSvc } = require('../services');
 const { commentSchema } = require('../common/validation_schema');
@@ -32,6 +33,7 @@ module.exports = {
                 data: commentTransformer.commentDetail(commentResource)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -61,6 +63,7 @@ module.exports = {
                 data: commentTransformer.commentDetail(newComment)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -80,6 +83,7 @@ module.exports = {
                 data: commentTransformer.commentDetail(commentResource)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -112,6 +116,7 @@ module.exports = {
                 }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -131,6 +136,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -167,6 +173,7 @@ module.exports = {
 
             return res.status(200).json(response);
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }

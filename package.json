@@ -23,6 +23,7 @@
   "homepage": "https://github.com/sekarmk03/genbi-upi-api#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "chalk": "^5.3.0",
     "cors": "^2.8.5",
     "dompurify": "^3.0.9",
     "dotenv": "^16.3.1",

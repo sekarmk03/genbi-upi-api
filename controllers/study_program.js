@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const err = require('../common/custom_error');
 const { studyProgramSvc } = require('../services');
 const { studyProgram: studyProgramTransformer } = require('../common/response_transformer');
@@ -30,6 +31,7 @@ module.exports = {
                 data: studyProgramTransformer.studyProgramList(studyPrograms.rows)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -46,6 +48,7 @@ module.exports = {
                 data: studyProgramTransformer.studyProgramDetail(studyProgram)
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -65,6 +68,7 @@ module.exports = {
                 data: studyProgram
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -93,6 +97,7 @@ module.exports = {
                 data: { id }
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     },
@@ -112,6 +117,7 @@ module.exports = {
                 data: null
             });
         } catch (error) {
+            console.log("ERROR: ", error);
             next(error);
         }
     }
