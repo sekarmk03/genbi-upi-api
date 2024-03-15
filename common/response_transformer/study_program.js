@@ -1,5 +1,6 @@
 module.exports = {
     studyProgramList: (studyPrograms) => {
+        if (studyPrograms.length == 0) return [];
         return studyPrograms.map((sp) => {
             let newstudyprograms = {
                 id: sp.id,
@@ -16,6 +17,7 @@ module.exports = {
     },
 
     studyProgramDetail: (studyProgram) => {
+        if (!studyProgram) return null;
         let newstudyprograms = {
             id: studyProgram.id,
             name: studyProgram.name,

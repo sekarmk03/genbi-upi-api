@@ -1,5 +1,6 @@
 module.exports = {
     roleList: (roles) => {
+        if (roles.length == 0) return [];
         return roles.map((role) => {
             let newrole = {
                 id: role.id,
@@ -16,6 +17,7 @@ module.exports = {
     },
 
     roleDetail: (role) => {
+        if (!role) return null;
         let newrole = {
             id: role.id,
             role_name: role.role_name,

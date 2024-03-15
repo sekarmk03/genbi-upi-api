@@ -1,5 +1,6 @@
 module.exports = {
     userListPreview: (users) => {
+        if (users.length == 0) return [];
         return users.map((user) => {
             let newuser = {
                 id: user.id,
@@ -20,6 +21,7 @@ module.exports = {
     },
 
     userAwardeeDetail: (user) => {
+        if (!user) return null;
         let newuser = {
             id: user.id,
             username: user.username,

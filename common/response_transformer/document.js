@@ -1,5 +1,6 @@
 module.exports = {
     documentList: (documents) => {
+        if (documents.length == 0) return [];
         return documents.map((document) => {
             let newdocument = {
                 id: document.id,
@@ -14,6 +15,7 @@ module.exports = {
     },
 
     documentDetail: (document) => {
+        if (!document) return null;
         let newdocument = {
             id: document.id,
             file_name: document.file.file_name,

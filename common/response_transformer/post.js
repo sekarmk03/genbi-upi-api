@@ -4,6 +4,7 @@ const htmlToText = require('../../utils/html_to_text');
 
 module.exports = {
     postList: (posts) => {
+        if (posts.length == 0) return [];
         return posts.map((post) => {
             let newpost = {
                 id: post.id,
@@ -30,6 +31,7 @@ module.exports = {
     },
 
     postDetail: (post) => {
+        if (!post) return null;
         let newpost = {
             id: post.id,
             slug: post.slug,

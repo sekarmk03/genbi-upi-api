@@ -2,6 +2,7 @@ const imageTransformer = require('./image');
 
 module.exports = {
     appreciationList: (appreciations) => {
+        if (appreciations.length == 0) return [];
         return appreciations.map((appreciation) => {
             let newappreciation = {
                 id: appreciation.id,
@@ -19,6 +20,7 @@ module.exports = {
     },
 
     appreciationDetail: (appreciation) => {
+        if (!appreciation) return null;
         let newappreciation = {
             id: appreciation.id,
             title: appreciation.title,

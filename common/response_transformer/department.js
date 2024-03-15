@@ -1,9 +1,8 @@
 const imageTransformer = require('./image');
-const awardeeTransformer = require('./awardee');
-const divisionTransformer = require('./division');
 
 module.exports = {
     departmentListPreview: (departments) => {
+        if (departments.length == 0) return [];
         return departments.map((department) => {
             let newdepartment = {
                 id: department.id,
@@ -18,6 +17,7 @@ module.exports = {
     },
 
     departmentDetail: (department) => {
+        if (!department) return null;
         let newdepartment = {
             id: department.id,
             name: department.name,

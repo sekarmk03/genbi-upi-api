@@ -1,5 +1,6 @@
 module.exports = {
     imageList: (images) => {
+        if (images.length == 0) return [];
         return images.map((image) => {
             let newimage = {
                 id: image.id,
@@ -15,6 +16,7 @@ module.exports = {
     },
 
     imageDetail: (image) => {
+        if (!image) return null;
         let newimage = {
             id: image.id,
             category: image.category,
@@ -33,6 +35,7 @@ module.exports = {
     },
     
     imageDetailList: (images) => {
+        if (images.length == 0) return [];
         return images.map((image) => {
             let newimage = {
                 id: image.id,

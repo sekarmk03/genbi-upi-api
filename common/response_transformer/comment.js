@@ -19,6 +19,7 @@ let commentDetail = (comment) => {
 
 module.exports = {
     commentList: (comments) => {
+        if (comments.length == 0) return [];
         return comments.map((comment) => {
             let newcomment = {
                 ...commentDetail(comment),
@@ -30,6 +31,7 @@ module.exports = {
     },
 
     commentDetail: (comment) => {
+        if (!comment) return null;
         return commentDetail(comment);
     }
 }

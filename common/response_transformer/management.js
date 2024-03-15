@@ -2,6 +2,7 @@ const imageTransformer = require('./image');
 
 module.exports = {
     managementDetail: (management) => {
+        if (!management) return null;
         let newmanagement = {
             id: management.id,
             name: management.name,
@@ -22,6 +23,7 @@ module.exports = {
     },
 
     awardeeManagementList: (awardeeManagements) => {
+        if (awardeeManagements.length == 0) return [];
         return awardeeManagements.map((am) => {
             let newawardeeManagement = {
                 id: am.id,

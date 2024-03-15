@@ -3,6 +3,7 @@ const htmlToText = require('../../utils/html_to_text');
 
 module.exports = {
     eventListPreview: (events) => {
+        if (events.length == 0) return [];
         return events.map(event => {
             let newevent = {
                 id: event.id,
@@ -25,6 +26,7 @@ module.exports = {
     },
 
     eventDetail: (event) => {
+        if (!event) return null;
         let newevent = {
             id: event.id,
             title: event.title,

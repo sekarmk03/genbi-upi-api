@@ -4,6 +4,7 @@ const managementTransformer = require('./management');
 
 module.exports = {
     awardeeListPreview: (awardees) => {
+        if (awardees.length == 0) return [];
         return awardees.map((a) => {
             let newawardee = {
                 id: a.id,
@@ -25,6 +26,7 @@ module.exports = {
     },
 
     awardeeDetailPreview: (a) => {
+        if (!a) return null;
         let newawardee = {
             id: a.id,
             awardee_id: a.awardee.id,
@@ -44,6 +46,7 @@ module.exports = {
     },
 
     awardeeDetailList: (awardees) => {
+        if (awardees.length == 0) return [];
         return awardees.map((a) => {
             let newawardee = {
                 id: a.id,
@@ -73,6 +76,7 @@ module.exports = {
     },
 
     awardeeDetail: (a) => {
+        if (!a) return null;
         let newawardee = {
             id: a.id,
             name: a.name,
@@ -119,6 +123,7 @@ module.exports = {
     },
 
     awardeeDetailManagementPreview: (awardee) => {
+        if (!awardee) return null;
         let newawardee = {
             id: awardee.id,
             name: awardee.name,
