@@ -76,16 +76,16 @@ module.exports = {
             const department = await departmentSvc.getDepartmentById(id);
             if (!department) return err.not_found(res, 'Department not found!');
 
-            const manager = await awardeeSvc.getManagerByDepartmentId(id);
-            const awardees = await awardeeSvc.getAwardeesByDepartmentId(id);
+            const manager = await awardeeSvc.getManagerByDepartmentId(department.id);
+            const awardees = await awardeeSvc.getAwardeesByDepartmentId(department.id);
 
             const data = {
                 department: departmentTransformer.departmentDetail(department),
-                structure: {
-                    manager: awardeeTransformer.awardeeDetailPreview(manager),
-                    awardees: divisionTransformer.divisionList(awardees)
-                }
+                structure: {}
             };
+
+            if (manager) data.structure.manager = awardeeTransformer.awardeeDetailPreview(manager);
+            if (awardees.length) data.structure.awardees = divisionTransformer.divisionList(awardees);
 
             return res.status(200).json({
                 status: 'OK',
