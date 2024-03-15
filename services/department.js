@@ -32,6 +32,11 @@ module.exports = {
                     model: Division,
                     as: 'divisions',
                     attributes: ['id', 'name', 'description']
+                },
+                {
+                    model: Management,
+                    as: 'management',
+                    attributes: ['id', 'name', 'period_year']
                 }
             ],
             order: [
