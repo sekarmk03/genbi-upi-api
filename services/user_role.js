@@ -1,4 +1,4 @@
-const { UserRole } = require('../models');
+const { UserRole, User, Role } = require('../models');
 
 module.exports = {
     addUserRole: async (userId, roleId, options = {}) => {
@@ -26,6 +26,20 @@ module.exports = {
             }, options);
 
             return deleted;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getRolesByUserId: async (userId, options = {}) => {
+        try {
+            const roles = await UserRole.findAll({
+                where: {
+                    user_id: userId
+                }
+            }, options);
+
+            return roles;
         } catch (error) {
             throw error;
         }

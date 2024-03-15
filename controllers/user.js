@@ -54,7 +54,7 @@ module.exports = {
             return res.status(200).json({
                 status: "OK",
                 message: "Successfully fetched user",
-                data: user,
+                data: userTransformer.userAwardeeDetail(user),
             });
         } catch (error) {
             console.log("ERROR: ", error);

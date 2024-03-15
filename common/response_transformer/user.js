@@ -28,7 +28,22 @@ module.exports = {
             email: user.email,
         }
 
-        if (user.roles) newuser.roles = user.roles.map((role) => role.role_name);
+        if (user.uuid) newuser.uuid = user.uuid;
+        if (user.password) newuser.password = user.password;
+
+        if (user.roles) {
+            newuser.roles = user.roles.map((role) => {
+                return {
+                    id: role.id,
+                    role_name: role.role_name
+                }
+            });
+        } else {
+            newuser.roles = [];
+        }
+
+        if (user.awardee) newuser.awardee = user.awardee;
+        else newuser.awardee = null;
 
         if (user.createdAt) newuser.created_at = user.createdAt;
         if (user.updatedAt) newuser.updated_at = user.updatedAt;

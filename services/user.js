@@ -25,10 +25,17 @@ module.exports = {
             where: {
                 id: id
             },
-            include: {
-                model: Role,
-                as: 'roles',
-            },
+            include: [
+                {
+                    model: Role,
+                    as: 'roles',
+                },
+                {
+                    model: Awardee,
+                    as: 'awardee',
+                    attributes: ['id', 'name']
+                },
+            ],
             distinct: true
         });
 
@@ -37,6 +44,7 @@ module.exports = {
 
     getUserByUuid: async (uuid) => {
         const user = await User.findOne({
+            attributes: ['id', 'uuid', 'username', 'email', 'created_at', 'updated_at'],
             where: {
                 uuid: uuid
             },
