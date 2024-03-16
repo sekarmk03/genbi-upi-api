@@ -27,11 +27,48 @@ module.exports = {
         return awardeeManagements.map((am) => {
             let newawardeeManagement = {
                 id: am.id,
+                awardee: am.awardee ? am.awardee.name : null,
                 management: am.management ? am.management.name : null,
                 department: am.department ? am.department.name : null,
                 division: am.division ? am.division.name : null,
                 position: am.position ? am.position.name : null
             };
+
+            if (am.awardee) {
+                newawardeeManagement.awardee = {
+                    id: am.awardee.id,
+                    name: am.awardee.name
+                };
+            }
+
+            if (am.management) {
+                newawardeeManagement.management = {
+                    id: am.management.id,
+                    name: am.management.name,
+                    period_year: am.management.period_year
+                }
+            }
+
+            if (am.department) {
+                newawardeeManagement.department = {
+                    id: am.department.id,
+                    name: am.department.name
+                };
+            }
+            
+            if (am.division) {
+                newawardeeManagement.division = {
+                    id: am.division.id,
+                    name: am.division.name
+                };
+            }
+            
+            if (am.position) {
+                newawardeeManagement.position = {
+                    id: am.position.id,
+                    name: am.position.name
+                };
+            }
 
             return newawardeeManagement;
         });

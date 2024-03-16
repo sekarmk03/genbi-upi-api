@@ -29,7 +29,7 @@ module.exports = {
         return managements;
     },
 
-    getAwardeeByManagementId: async (id) => {
+    getAwardeesByManagementId: async (id) => {
         const awardees = await AwardeeManagement.findAll({
             where: {
                 management_id: id

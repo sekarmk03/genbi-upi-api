@@ -1,5 +1,5 @@
 const err = require('../common/custom_error');
-const { managementSvc, awardeeSvc, departmentSvc, imagekitSvc, fileSvc, photoSvc } = require('../services');
+const { managementSvc, awardeeSvc, departmentSvc, imagekitSvc, fileSvc, photoSvc, awardeeManagementSvc } = require('../services');
 const paginate = require('../utils/generate_pagination');
 const halson = require('halson');
 const { management: managementTransformer, department: departmentTransformer, awardee: awardeeTransformer } = require('../common/response_transformer');
@@ -85,27 +85,33 @@ module.exports = {
     show: async (req, res, next) => {
         try {
             const { id } = req.params;
+            const { admin = 'false' } = req.query;
 
             let management = await managementSvc.getManagementById(id);
-
             if (!management) return err.not_found(res, "Management not found!");
 
-            const executives = await awardeeSvc.getExecutiveByManagementId(management.id);
-
-            const depts = await departmentSvc.getDepartmentsByManagementId(management.id);
-            const departments = depts.map(department => {
-                const departmentResource = halson(department.toJSON())
-                    .addLink('self', `/departments/${department.id}`)
-
-                return departmentResource;
-            });
-
-            const data = {
+            let data = {
                 management: managementTransformer.managementDetail(management),
-                structure: {
+            };
+            if (admin == 'false') {
+                const executives = await awardeeSvc.getExecutiveByManagementId(management.id);
+    
+                const depts = await departmentSvc.getDepartmentsByManagementId(management.id);
+                const departments = depts.map(department => {
+                    const departmentResource = halson(department.toJSON())
+                        .addLink('self', `/departments/${department.id}`)
+    
+                    return departmentResource;
+                });
+
+                data.structure = {
                     executives: awardeeTransformer.awardeeListPreview(executives),
                     departments: departmentTransformer.departmentListPreview(departments)
                 }
+            } else {
+                const awardees = await awardeeManagementSvc.getAwardeesByManagementId(management.id);
+
+                data.awardees = managementTransformer.awardeeManagementList(awardees);
             }
 
             const response = {
