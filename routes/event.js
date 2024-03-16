@@ -9,6 +9,7 @@ const upload = multer();
 router.get('/', event.index);
 router.get('/search', event.search);
 router.get('/types', event.eventType);
+router.get('/scopes', event.eventScope);
 router.get('/:id', event.show);
 router.get('/:id/participants', event.participants);
 router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), upload.fields([{ name: 'thumbnail' }, { name: 'poster' }, { name: 'banner' }]), event.create);

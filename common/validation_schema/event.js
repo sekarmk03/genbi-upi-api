@@ -1,4 +1,4 @@
-const { eventType, eventStatus } = require('../ref_option');
+const { eventType, eventStatus, eventScope } = require('../ref_option');
 
 module.exports = {
     createEvent: {
@@ -16,7 +16,8 @@ module.exports = {
         end_reg_date: { type: 'string', format: 'datetime', isAfter: 'start_reg_date' },
         contact: { type: 'string', format: 'url', min: 5, max: 100 },
         tag1: { type: 'string', min: 3, max: 50 },
-        tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true }
+        tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true },
+        scope: { type: 'enum', values: eventScope }
     },
     updateEvent: {
         title: { type: 'string', min: 10, max: 200, optional: true },
@@ -33,6 +34,7 @@ module.exports = {
         end_reg_date: { type: 'string', format: 'datetime', isAfter: 'start_reg_date', optional: true },
         contact: { type: 'string', format: 'url', min: 5, max: 100, optional: true },
         tag1: { type: 'string', min: 3, max: 50, optional: true },
-        tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true }
+        tags: { type: 'array', items: 'string', max: 4, optional: true, unique: true },
+        scope: { type: 'enum', values: eventScope, optional: true }
     },
 }

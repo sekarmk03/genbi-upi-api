@@ -237,7 +237,7 @@ module.exports = {
         return update;
     },
 
-    addEvent: async (title, programId, type, status, thumbnailId, posterId, bannerId, description, startDate, endDate, location, locationUrl, registrationLink, startRegDate, endRegDate, contact, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+    addEvent: async (title, programId, type, status, thumbnailId, posterId, bannerId, description, startDate, endDate, location, locationUrl, registrationLink, startRegDate, endRegDate, contact, tag1, tag2, tag3, tag4, tag5, scope, options = {}) => {
         try {
             const event = await Event.create({
                 title,
@@ -263,6 +263,7 @@ module.exports = {
                 tag3,
                 tag4,
                 tag5,
+                scope,
                 created_at: new Date(),
                 updated_at: new Date()
             }, options);
@@ -273,7 +274,7 @@ module.exports = {
         }
     },
 
-    updateEvent: async (id, title, programId, type, status, thumbnailId, posterId, bannerId, description, startDate, endDate, location, locationUrl, registrationLink, startRegDate, endRegDate, contact, tag1, tag2, tag3, tag4, tag5, options = {}) => {
+    updateEvent: async (id, title, programId, type, status, thumbnailId, posterId, bannerId, description, startDate, endDate, location, locationUrl, registrationLink, startRegDate, endRegDate, contact, tag1, tag2, tag3, tag4, tag5, scope, options = {}) => {
         try {
             const event = await Event.update({
                 title,
@@ -299,6 +300,7 @@ module.exports = {
                 tag3,
                 tag4,
                 tag5,
+                scope,
                 updated_at: new Date()
             }, {
                 where: {

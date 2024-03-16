@@ -96,6 +96,9 @@ module.exports = {
       tag5: {
         type: Sequelize.STRING
       },
+      scope: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         field: 'created_at',
         allowNull: false,

@@ -9,7 +9,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const detStatus = require('../utils/det_event_status');
-const { eventType } = require('../common/ref_option');
+const { eventType, eventScope } = require('../common/ref_option');
 const textPurify = require('../utils/text_purify');
 
 module.exports = {
@@ -270,6 +270,7 @@ module.exports = {
                 body.tags[1],
                 body.tags[2],
                 body.tags[3],
+                body.scope,
                 { transaction }
             );
 
@@ -310,7 +311,7 @@ module.exports = {
 
             transaction = await sequelize.transaction();
 
-            const updatedEvent = await eventSvc.updateEvent(
+            await eventSvc.updateEvent(
                 event.id,
                 body.title || event.title,
                 body.program_id || event.program_id,
@@ -333,6 +334,7 @@ module.exports = {
                 (body.tags.length > 1 ? body.tags[1] : null),
                 (body.tags.length > 2 ? body.tags[2] : null),
                 (body.tags.length > 3 ? body.tags[3] : null),
+                body.scope || event.scope,
                 { transaction }
             );
 
@@ -405,5 +407,18 @@ module.exports = {
             console.log("ERROR: ", error);
             next(error);
         }
-    }
+    },
+
+    eventScope: (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Event scopes successfully retrieved',
+                data: eventScope
+            });
+        } catch (error) {
+            console.log("ERROR: ", error);
+            next(error);
+        }
+    },
 };

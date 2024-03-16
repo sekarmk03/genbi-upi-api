@@ -99,7 +99,20 @@ const programType = [
     "Quarterly",
     "Semiannually",
     "Annually"
-]
+];
+
+const eventScope = [
+    "Public",
+    "Internal",
+    "Executive",
+    "Manager",
+    "Department",
+    "Division",
+    "External",
+    "Collaboration",
+    "UPI",
+    "Other"
+];
 
 module.exports = {
     postType,
@@ -109,5 +122,6 @@ module.exports = {
     documentCategory,
     eventParticipantRole,
     eventParticipantField,
-    programType
+    programType,
+    eventScope,
 };

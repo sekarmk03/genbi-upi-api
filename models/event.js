@@ -92,7 +92,8 @@ module.exports = (sequelize, DataTypes) => {
     tag2: DataTypes.STRING,
     tag3: DataTypes.STRING,
     tag4: DataTypes.STRING,
-    tag5: DataTypes.STRING
+    tag5: DataTypes.STRING,
+    scope: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Event',

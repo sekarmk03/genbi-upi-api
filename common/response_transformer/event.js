@@ -32,6 +32,7 @@ module.exports = {
             title: event.title,
             slug: event.slug,
             type: event.type,
+            scope: event.scope,
             status: event.status,
             thumbnail: imageTransformer.imageDetail(event.thumbnail),
             poster: imageTransformer.imageDetail(event.poster),
