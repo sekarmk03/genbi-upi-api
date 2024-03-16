@@ -91,5 +91,23 @@ const eventParticipantField = [
     'Other'
 ];
 
+const programType = [
+    "Conditional",
+    "Weekly",
+    "Biweekly",
+    "Monthly",
+    "Quarterly",
+    "Semiannually",
+    "Annually"
+]
 
-module.exports = { postType, imageCategory, eventType, eventStatus, documentCategory, eventParticipantRole, eventParticipantField };
+module.exports = {
+    postType,
+    imageCategory,
+    eventType,
+    eventStatus,
+    documentCategory,
+    eventParticipantRole,
+    eventParticipantField,
+    programType
+};

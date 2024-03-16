@@ -4,6 +4,7 @@ const err = require('../common/custom_error');
 const { programSchema } = require('../common/validation_schema');
 const Validator = require('fastest-validator');
 const v = new Validator;
+const { programType } = require('../common/ref_option');
 
 module.exports = {
     index: async (req, res, next) => {
@@ -136,6 +137,19 @@ module.exports = {
                 status: 'OK',
                 message: 'Program successfully deleted',
                 data: null
+            });
+        } catch (error) {
+            console.log("ERROR: ", error);
+            next(error);
+        }
+    },
+
+    type: async (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Program types successfully retrieved',
+                data: programType
             });
         } catch (error) {
             console.log("ERROR: ", error);

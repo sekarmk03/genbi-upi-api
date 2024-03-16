@@ -5,6 +5,7 @@ const role = require('../common/role');
 const authorize = require('../middlewares/authorize');
 
 router.get('/', authorize([role.SUPER_ADMIN, role.ADMIN]), program.index);
+router.get('/types', authorize([role.SUPER_ADMIN, role.ADMIN]), program.type);
 router.get('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), program.show);
 router.post('/', authorize([role.SUPER_ADMIN, role.ADMIN]), program.create);
 router.put('/:id', authorize([role.SUPER_ADMIN, role.ADMIN]), program.update);
