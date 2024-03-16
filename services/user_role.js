@@ -43,5 +43,20 @@ module.exports = {
         } catch (error) {
             throw error;
         }
+    },
+
+    checkRoleExist: async (userId, roleId, options = {}) => {
+        try {
+            const userrole = await UserRole.findOne({
+                where: {
+                    user_id: userId,
+                    role_id: roleId
+                }
+            }, options);
+
+            return userrole;
+        } catch (error) {
+            throw error;
+        }
     }
 }
