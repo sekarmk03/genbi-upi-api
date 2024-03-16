@@ -4,7 +4,7 @@ module.exports = {
     createPost: {
         type: { type: 'enum', values: postType },
         title: { type: 'string', min: 10, max: 200 },
-        content: { type: 'string', min: 150, max: 100000 },
+        content: { type: 'string', min: 150, max: 200000 },
         department_id: { type: 'number', integer: true, optional: true },
         author_id: { type: 'number', integer: true, optional: true },
         visitors: { type: 'number', integer: true, optional: true, default: 0 },
@@ -20,7 +20,7 @@ module.exports = {
     updatePost: {
         type: { type: 'enum', values: postType, optional: true },
         title: { type: 'string', min: 10, max: 200, optional: true },
-        content: { type: 'string', min: 150, max: 100000, optional: true },
+        content: { type: 'string', min: 150, max: 200000, optional: true },
         department_id: { type: 'number', integer: true, optional: true },
         author_id: { type: 'number', integer: true, optional: true},
         visitors: { type: 'number', integer: true, optional: true, default: 0 },
