@@ -19,6 +19,7 @@ const position = require('./position');
 const program = require('./program');
 const role = require('./role');
 const userRole = require('./user_role');
+const awardeeManagement = require('./awardee_management');
 
 module.exports = {
     summary,
@@ -42,4 +43,5 @@ module.exports = {
     program,
     role,
     userRole,
+    awardeeManagement,
 };

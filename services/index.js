@@ -19,6 +19,7 @@ const facultySvc = require('./faculty');
 const divisionSvc = require('./division');
 const positionSvc = require('./position');
 const roleSvc = require('./role');
+const awardeeManagementSvc = require('./awardee_management');
 
 module.exports = {
     postSvc,
@@ -42,4 +43,5 @@ module.exports = {
     divisionSvc,
     positionSvc,
     roleSvc,
+    awardeeManagementSvc,
 };
