@@ -23,7 +23,7 @@ module.exports = {
         const managements = await Management.findAndCountAll({
             attributes: ['id', 'name', 'period_year'],
             order: [
-                ['created_at', 'desc']
+                ['id', 'desc']
             ],
         });
 
