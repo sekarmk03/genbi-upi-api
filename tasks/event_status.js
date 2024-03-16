@@ -9,7 +9,7 @@ module.exports = async () => {
         await eventSvc.updateEvent(
             event.id, event.title, event.program_id, event.type,
             status,
-            event.thumbnail_id, event.poster_id, event.banner_id, event.description, event.start_date, event.end_date, event.location, event.location_url, event.registration_link, event.start_reg_date, event.end_reg_date, event.contact, event.tag1, event.tag2, event.tag3, event.tag4, event.tag5,
+            event.thumbnail_id, event.poster_id, event.banner_id, event.description, event.start_date, event.end_date, event.location, event.location_url, event.registration_link, event.start_reg_date, event.end_reg_date, event.contact, event.tag1, event.tag2, event.tag3, event.tag4, event.tag5, event.scope,
             {}
         );
     }
