@@ -247,7 +247,7 @@ module.exports = {
 
             body.department_id = parseInt(body.department_id);
             body.author_id = parseInt(body.author_id);
-            if (body.event_id) parseInt(body.event_id);
+            if (body.event_id) body.event_id = parseInt(body.event_id);
             body.tag1 = 'GenBIUPI';
             body.tags = JSON.parse(body.tags);
             body.content = textPurify(body.content);
