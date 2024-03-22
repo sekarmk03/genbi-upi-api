@@ -23,6 +23,7 @@ module.exports = {
             if (!isPasswordValid) return err.bad_request(res, "Invalid password");
             
             const token = authSvc.generateToken(req, user);
+            const roles = user.user_roles.map(role => role.role_id);
 
             return res.status(200).json({
                 status: 'OK',
@@ -30,7 +31,8 @@ module.exports = {
                 data: {
                     uuid: user.uuid,
                     username: user.username,
-                    token
+                    token,
+                    roles
                 }
             });
         } catch (error) {
