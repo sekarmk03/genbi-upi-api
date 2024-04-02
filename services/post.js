@@ -150,12 +150,19 @@ module.exports = {
                         as: 'file',
                         attributes: ['id', 'file_name', 'imagekit_id', 'imagekit_url']
                     },
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['id'],
                 }
             ],
             order: [
                 [{ model: Photo, as: 'images' }, 'id', 'ASC'],
             ]
         });
+
+        if (post) post.comments = post.comments ? post.comments.length : 0;
 
         return post;
     },

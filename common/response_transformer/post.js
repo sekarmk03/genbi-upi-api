@@ -53,6 +53,8 @@ module.exports = {
             event: post.event,
             // images: imageTransformer.imageList(post.images),
         }
+
+        if (post.comments) newpost.comments = post.comments;
         
         if (post.author) {
             newpost.author = {
