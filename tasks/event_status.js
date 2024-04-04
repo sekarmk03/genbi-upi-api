@@ -5,6 +5,7 @@ module.exports = async () => {
     const events = await eventSvc.getEventsPublic('id', 'desc', 0, 10, '');
     for (let event of events.rows) {
         let status = detStatus(event.start_date, event.end_date, event.start_reg_date, event.end_reg_date);
+        if (event.status === status) continue;
 
         await eventSvc.updateEvent(
             event.id, event.title, event.program_id, event.type,
