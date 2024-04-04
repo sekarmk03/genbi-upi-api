@@ -3,6 +3,7 @@ const detStatus = require('../utils/det_event_status');
 
 module.exports = async () => {
     const events = await eventSvc.getEventsPublic('id', 'desc', 0, 10, '');
+    let count = 0;
     for (let event of events.rows) {
         let status = detStatus(event.start_date, event.end_date, event.start_reg_date, event.end_reg_date);
         if (event.status === status) continue;
@@ -14,8 +15,9 @@ module.exports = async () => {
             {}
         );
 
+        count++;
         console.log(`INFO: Update event ${event.id} status from ${event.status} to ${status}`);
     }
 
-    console.log("INFO: Event status updated at " + new Date().toISOString());
+    console.log(`INFO: ${count} Event status updated at ${new Date().toISOString()}`);
 }
