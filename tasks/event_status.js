@@ -6,6 +6,8 @@ module.exports = async () => {
     for (let event of events.rows) {
         let status = detStatus(event.start_date, event.end_date, event.start_reg_date, event.end_reg_date);
 
+        console.log(`-------- INFO: Update event ${event.id} status from ${event.status} to ${status}`);
+
         await eventSvc.updateEvent(
             event.id, event.title, event.program_id, event.type,
             status,
