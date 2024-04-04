@@ -9,7 +9,7 @@ const Validator = require('fastest-validator');
 const v = new Validator;
 const { sequelize } = require('../models');
 const detStatus = require('../utils/det_event_status');
-const { eventType, eventScope } = require('../common/ref_option');
+const { eventType, eventScope, eventStatus } = require('../common/ref_option');
 const textPurify = require('../utils/text_purify');
 
 module.exports = {
@@ -421,4 +421,17 @@ module.exports = {
             next(error);
         }
     },
+
+    eventStatus: (req, res, next) => {
+        try {
+            return res.status(200).json({
+                status: 'OK',
+                message: 'Event statuses successfully retrieved',
+                data: eventStatus
+            });
+        } catch (error) {
+            console.log("ERROR: ", error);
+            next(error);
+        }
+    }
 };
