@@ -2,7 +2,7 @@ const { eventSvc } = require('../services');
 const detStatus = require('../utils/det_event_status');
 
 module.exports = async () => {
-    const events = await eventSvc.getEventsPublic('created_at', 'desc', 1, 10, '');
+    const events = await eventSvc.getEventsPublic('id', 'desc', 1, 10, '');
     for (let event of events.rows) {
         let status = detStatus(event.start_date, event.end_date, event.start_reg_date, event.end_reg_date);
 
