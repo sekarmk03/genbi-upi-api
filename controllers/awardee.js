@@ -84,7 +84,9 @@ module.exports = {
             const photoFile = req.files['photo'] ? req.files['photo'][0] : null;
             const transcriptFile = req.files['transcript'] ? req.files['transcript'][0] : null;
 
+            if (body.telp == 'undefined') body.telp = null;
             body.scholarship = parseInt(body.scholarship);
+            if (body.member_since == 'undefined') body.member_since = new Date();
             body.study_program_id = parseInt(body.study_program_id);
             body.smt1_ip = parseFloat(body.smt1_ip);
             body.smt2_ip = parseFloat(body.smt2_ip);

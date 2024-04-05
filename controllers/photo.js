@@ -173,6 +173,7 @@ module.exports = {
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
             body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
+            if (body.caption === '') delete body.caption;
 
             console.log('request body: ', body);
 

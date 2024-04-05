@@ -128,6 +128,10 @@ module.exports = {
             const coverFile = req.file ?? null;
 
             if (body.caption) body.caption = textPurify(body.caption);
+            if (body.title == 'undefined') delete body.title;
+            if (body.given_date == 'undefined') delete body.given_date;
+            if (body.instagram_url == 'undefined') delete body.instagram_url;
+            if (body.caption == 'undefined') delete body.caption;
 
             const appreciation = await appreciationSvc.getAppreciationById(id);
             if (!appreciation) return err.not_found(res, "Appreciation not found!");

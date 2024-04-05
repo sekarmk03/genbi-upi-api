@@ -1,11 +1,10 @@
 module.exports = {
     createAwardee: {
         name: { type: 'string', min: 3, max: 100 },
-        photo_id: { type: 'number', integer: true, optional: true },
         birth_date: { type: "string", format: "date" },
         linkedin_username: { type: 'string', min: 3, max: 100 },
         instagram_username: { type: 'string', min: 3, max: 100 },
-        telp: { type: 'string', optional: true, pattern: /^[0-9]+$/, min: 10, max: 15},
+        telp: { type: 'string', optional: true, pattern: /^[0-9]+$/, min: 10, max: 15, nullable: true},
         member_since: { type: 'string', format: "date", optional: true },
         scholarship: { type: 'number', integer: true, positive:true },
         nim: { type: 'string', min: 6, max: 8, pattern: /^[0-9]+$/ },
@@ -27,11 +26,9 @@ module.exports = {
         smt6_ipk: { type: 'number', optional: true, nullable: true },
         smt7_ipk: { type: 'number', optional: true, nullable: true },
         smt8_ipk: { type: 'number', optional: true, nullable: true },
-        transcript_id: { type: 'number', optional: true, nullable: true },
     },
     updateAwardee: {
         name: { type: 'string', min: 3, max: 100, optional: true },
-        photo_id: { type: 'number', integer: true, optional: true },
         birth_date: { type: "string", format: "date", optional: true },
         linkedin_username: { type: 'string', min: 3, max: 100, optional: true },
         instagram_username: { type: 'string', min: 3, max: 100, optional: true },
@@ -57,6 +54,5 @@ module.exports = {
         smt6_ipk: { type: 'number', optional: true, nullable: true },
         smt7_ipk: { type: 'number', optional: true, nullable: true },
         smt8_ipk: { type: 'number', optional: true, nullable: true },
-        transcript_id: { type: 'number', optional: true, nullable: true },
     },
 };
