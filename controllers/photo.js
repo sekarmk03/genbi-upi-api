@@ -171,9 +171,12 @@ module.exports = {
             const photo = await photoSvc.getPhotoById(id);
             if (!photo) return err.not_found(res, 'Photo not found!');
 
-            body.post_id = body.post_id ? parseInt(body.post_id) : null;
-            body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
+            if (!body.post_id || body.post_id == '' || body.post_id == 'undefined') body.post_id = null;
+            else body.post_id = parseInt(body.post_id);
+            if (!body.featured || body.featured == '' || body.featured == 'undefined') body.featured = false;
+            else body.featured = body.featured.toLowerCase() === 'true' ? true : false;
             if (body.caption == '') delete body.caption;
+            if (body.category == '') delete body.category;
 
             const val = v.validate(body, photoSchema.updatePhoto);
             if (val.length) return err.bad_request(res, val[0].message);
