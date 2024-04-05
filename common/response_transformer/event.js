@@ -39,6 +39,13 @@ module.exports = {
             banner: imageTransformer.imageDetail(event.banner),
             description_preview: htmlToText(event.description),
             description: event.description,
+            tags: [
+                event.tag1,
+                event.tag2,
+                event.tag3,
+                event.tag4,
+                event.tag5,
+            ],
             start_date: event.start_date,
             end_date: event.end_date,
             participants: event.participants,
@@ -52,6 +59,7 @@ module.exports = {
         };
         
         if (event.program) {
+            newevent.program_id = event.program.id;
             newevent.program_name = event.program.name;
             if (event.program.department) newevent.department_name = event.program.department.name;
             if (event.program.management) newevent.period_year = event.program.management.period_year;
