@@ -173,9 +173,7 @@ module.exports = {
 
             body.post_id = body.post_id ? parseInt(body.post_id) : null;
             body.featured = body.featured ? (body.featured.toLowerCase() === 'true' ? true : false) : false;
-            if (body.caption === '') delete body.caption;
-
-            console.log('request body: ', body);
+            if (body.caption == '') delete body.caption;
 
             const val = v.validate(body, photoSchema.updatePhoto);
             if (val.length) return err.bad_request(res, val[0].message);
@@ -212,18 +210,6 @@ module.exports = {
                     { transaction }
                 );
             }
-
-            let dtdump = {
-                id: photo.id,
-                file_id: photo.file.id,
-                alt: (imagekitPhoto ? imagekitPhoto.name : photo.file.file_name),
-                caption: body.caption || photo.caption,
-                category: body.category || photo.category,
-                featured: body.featured ?? photo.featured,
-                post_id: body.post_id || photo.post_id,
-            };
-
-            console.log("dtdump: ", dtdump);
 
             await photoSvc.updatePhoto(
                 photo.id,
